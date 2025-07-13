@@ -133,23 +133,28 @@ try {
 </ContentSection>
 
 <!-- Talent Modal -->
-<div id="talent-modal" class="modal hidden fixed inset-0 z-50 bg-black bg-opacity-60 backdrop-blur-sm" aria-hidden="true">
+<div id="talent-modal" class="modal hidden fixed inset-0 z-50 bg-black bg-opacity-60 backdrop-blur-sm" aria-hidden="true" role="dialog" aria-labelledby="talent-modal-title" aria-describedby="talent-modal-description">
   <div class="flex items-center justify-center min-h-screen p-4 min-w-0">
-    <div class="bg-default rounded-lg max-w-6xl w-full max-h-[95vh] overflow-y-auto shadow-2xl transform transition-transform duration-500 scale-95 opacity-0 min-w-0" id="talent-modal-content">
+    <div class="bg-default rounded-lg max-w-6xl w-full max-h-[95vh] overflow-y-auto shadow-2xl transform transition-transform duration-500 scale-95 opacity-0 min-w-0" id="talent-modal-content" role="document">
       <div class="p-6 min-w-0">
         <div class="flex justify-between items-start mb-6 min-w-0">
           <h2 id="talent-modal-title" class="text-3xl font-bold text-default bg-gradient-to-r from-purple-400 to-primary bg-clip-text text-transparent min-w-0">Talent Profile</h2>
           <button
             id="close-talent-modal"
             type="button"
-            class="text-default/60 hover:text-primary hover:rotate-90 transition-all duration-300 text-2xl font-bold"
-            aria-label="Close modal"
+            class="text-default/60 hover:text-primary hover:rotate-90 transition-all duration-300 text-2xl font-bold focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-full p-2"
+            aria-label="Close talent profile modal"
           >
             ×
           </button>
         </div>
 
         <div class="space-y-8 min-w-0">
+          <!-- Hidden description for screen readers -->
+          <div id="talent-modal-description" class="sr-only">
+            Modal dialog displaying talent profile information including photos, personal details, and portfolio download option. Use Tab to navigate between elements, Escape to close.
+          </div>
+          
           <div class="flex flex-col lg:flex-row gap-8 min-w-0">
             <!-- Photo Gallery Section -->
             <div class="lg:w-1/2 min-w-0">
@@ -320,19 +325,22 @@ try {
           thumbnailDiv.className = 'aspect-square bg-default/20 rounded overflow-hidden cursor-pointer hover:opacity-80 hover:ring-2 hover:ring-primary transition-all duration-200 focus:ring-2 focus:ring-primary focus:outline-none';
           thumbnailDiv.tabIndex = 0;
           thumbnailDiv.setAttribute('role', 'button');
-          thumbnailDiv.setAttribute('aria-label', 'View photo ' + (index + 1));
+          thumbnailDiv.setAttribute('aria-label', 'View photo ' + (index + 1) + ' of ' + photos.length);
+          thumbnailDiv.setAttribute('aria-pressed', index === 0 ? 'true' : 'false');
           thumbnailDiv.innerHTML = '<img src="' + photo + '" alt="' + name + ' - Photo ' + (index + 1) + '" class="w-full h-full object-cover" loading="lazy" />';
           
           var handleImageClick = function() {
             modalMainImage.src = photo;
             modalMainImage.alt = name + ' - Photo ' + (index + 1);
             
-            // Update active thumbnail styling
+            // Update active thumbnail styling and aria-pressed state
             var thumbs = thumbnailGallery.querySelectorAll('div');
             for (var j = 0; j < thumbs.length; j++) {
               thumbs[j].classList.remove('ring-2', 'ring-primary');
+              thumbs[j].setAttribute('aria-pressed', 'false');
             }
             thumbnailDiv.classList.add('ring-2', 'ring-primary');
+            thumbnailDiv.setAttribute('aria-pressed', 'true');
           };
           
           thumbnailDiv.addEventListener('click', handleImageClick);
@@ -349,6 +357,7 @@ try {
         // Mark first thumbnail as active
         if (thumbnailGallery.firstChild) {
           thumbnailGallery.firstChild.classList.add('ring-2', 'ring-primary');
+          thumbnailGallery.firstChild.setAttribute('aria-pressed', 'true');
         }
       } else {
         thumbnailGallery.classList.add('hidden');
@@ -389,6 +398,9 @@ try {
     // Set up modal button event listeners now that modal is visible
     setupModalButtonListeners();
     
+    // Initialize focus trap
+    initializeFocusTrap();
+    
     // Animate modal content
     setTimeout(() => {
       if (modalContent) {
@@ -413,6 +425,9 @@ try {
   function closeTalentModal() {
     var modal = document.getElementById('talent-modal');
     var modalContent = document.getElementById('talent-modal-content');
+    
+    // Destroy focus trap
+    destroyFocusTrap();
     
     // Animate modal content out
     if (modalContent) {
@@ -528,9 +543,16 @@ try {
     });
   }
 
-  // Close modal with Escape key
+  // Enhanced keyboard navigation with focus trap
   document.addEventListener('keydown', function(e) {
+    const modal = document.getElementById('talent-modal');
+    if (!modal || modal.classList.contains('hidden')) {
+      return;
+    }
+
+    // Close modal with Escape key
     if (e.key === 'Escape') {
+      e.preventDefault();
       closeTalentModal();
     }
   });
@@ -559,6 +581,91 @@ try {
       console.error('Error fetching talent PDF URL:', error);
       throw error;
     }
+  }
+
+  // Focus trap functionality
+  let focusableElements = [];
+  let firstFocusableElement = null;
+  let lastFocusableElement = null;
+  let previouslyFocusedElement = null;
+
+  function getFocusableElements(container) {
+    const focusableSelectors = [
+      'a[href]',
+      'button:not([disabled])',
+      'input:not([disabled])',
+      'select:not([disabled])',
+      'textarea:not([disabled])',
+      '[tabindex]:not([tabindex="-1"])',
+      '[contenteditable="true"]'
+    ];
+    
+    return container.querySelectorAll(focusableSelectors.join(', '));
+  }
+
+  function trapFocus(event) {
+    // Only trap focus if modal is open
+    const modal = document.getElementById('talent-modal');
+    if (!modal || modal.classList.contains('hidden')) {
+      return;
+    }
+
+    // If Tab key is pressed
+    if (event.key === 'Tab') {
+      // If Shift + Tab (backwards)
+      if (event.shiftKey) {
+        if (document.activeElement === firstFocusableElement) {
+          event.preventDefault();
+          lastFocusableElement.focus();
+        }
+      } else {
+        // If Tab (forwards)
+        if (document.activeElement === lastFocusableElement) {
+          event.preventDefault();
+          firstFocusableElement.focus();
+        }
+      }
+    }
+  }
+
+  function initializeFocusTrap() {
+    const modal = document.getElementById('talent-modal');
+    const modalContent = document.getElementById('talent-modal-content');
+    
+    if (!modal || !modalContent) return;
+
+    // Store the previously focused element
+    previouslyFocusedElement = document.activeElement;
+
+    // Get all focusable elements within the modal
+    focusableElements = getFocusableElements(modalContent);
+    
+    if (focusableElements.length > 0) {
+      firstFocusableElement = focusableElements[0];
+      lastFocusableElement = focusableElements[focusableElements.length - 1];
+      
+      // Focus the first focusable element (close button)
+      firstFocusableElement.focus();
+    }
+
+    // Add event listener for focus trapping
+    document.addEventListener('keydown', trapFocus);
+  }
+
+  function destroyFocusTrap() {
+    // Remove event listener
+    document.removeEventListener('keydown', trapFocus);
+    
+    // Restore focus to previously focused element
+    if (previouslyFocusedElement) {
+      previouslyFocusedElement.focus();
+      previouslyFocusedElement = null;
+    }
+    
+    // Clear focus trap variables
+    focusableElements = [];
+    firstFocusableElement = null;
+    lastFocusableElement = null;
   }
 </script>
 
@@ -637,5 +744,34 @@ try {
   .flex.flex-wrap > span {
     min-width: 0;
     flex-shrink: 0; /* Prevent tags from shrinking too much */
+  }
+  
+  /* Screen reader only class for accessibility */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+  
+  /* Focus trap visual enhancements */
+  .modal button:focus,
+  .modal [tabindex]:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+  
+  /* Ensure modal content is properly contained */
+  .modal[aria-hidden="false"] {
+    display: block !important;
+  }
+  
+  .modal[aria-hidden="true"] {
+    display: none !important;
   }
 </style>
