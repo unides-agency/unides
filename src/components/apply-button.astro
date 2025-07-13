@@ -1,0 +1,60 @@
+---
+import ApplyModal from './apply-modal.astro';
+---
+
+<button
+  type="button"
+  class="absolute top-4 right-4 z-10 bg-bright-lime text-deep-teal px-4 py-2 rounded-md font-bold text-base hover:bg-lime-muted transition-all focus:ring-2 focus:ring-bright-lime focus:ring-offset-2 apply-button"
+  onclick="openApplyModal()"
+>
+  Apply Now
+</button>
+
+<ApplyModal />
+<style>
+  button {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.25);
+    letter-spacing: 0.02em;
+  }
+  
+  .apply-button {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .apply-button::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: inherit;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  .apply-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  }
+  
+  .apply-button:hover::after {
+    opacity: 1;
+    animation: pulse-glow 1.5s infinite;
+  }
+  
+  @keyframes pulse-glow {
+    0% {
+      opacity: 0.3;
+    }
+    50% {
+      opacity: 0.5;
+    }
+    100% {
+      opacity: 0.3;
+    }
+  }
+</style>
+

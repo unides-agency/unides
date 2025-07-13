@@ -1,0 +1,175 @@
+---
+import { Icon } from "astro-icon/components";
+import ThemeSwitcher from "~/components/theme-switcher.astro";
+import type { NavItem } from "~/types";
+
+const navItems: Array<NavItem> = [
+  { title: "Talents", url: "#talents" },
+  { title: "Creatives", url: "#creatives" },
+  { title: "About Us", url: "#aboutus" },
+  { title: "Contact Us", url: "#contact" },
+];
+---
+
+<header
+  id="page-header"
+  class="absolute bottom-0 z-20 flex w-full items-center justify-between border-b border-transparent px-8 py-4"
+>
+  <a class="flex items-center gap-3 hover:!text-default" href="#">
+    <h1 class="sr-only">Unides</h1>
+    <img src="/unides_yellow.png" alt="Unides Logo" class="h-8 w-auto" />
+  </a>
+  <div class="flex-grow flex justify-center">
+    <nav class="hidden sm:block">
+      <ul class="flex items-center gap-8">
+        {
+          navItems.map(({ title, url }) => (
+            <li>
+              <a class="text-base font-medium nav-link" href={url}>
+                {title}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
+  <div>
+    <div class="flex items-center gap-6">
+      <button
+        id="open-nav-button"
+        type="button"
+        class="btn sm:hidden"
+        aria-label="Navigation"
+      >
+        <Icon name="mdi:menu" class="size-8" />
+      </button>
+      <ThemeSwitcher />
+    </div>
+    <div id="menu-modal" class="modal hidden" aria-hidden="true">
+      <div class="fixed inset-0 bg-default px-8 py-4 text-default">
+        <div class="space-y-4" role="dialog" aria-modal="true">
+          <header class="text-right">
+            <button
+              id="close-nav-button"
+              type="button"
+              class="btn"
+              aria-label="Close navigation"
+            >
+              <Icon name="mdi:close" class="size-8" />
+            </button>
+          </header>
+          <nav>
+            <ul class="flex flex-col">
+              {
+                navItems.map(({ title, url }) => (
+                  <li>
+                    <a class="block py-4 text-center text-xl font-medium mobile-nav-link" href={url}>
+                      {title}
+                    </a>
+                  </li>
+                ))
+              }
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<script>
+  import MicroModal from "micromodal";
+  import invariant from "tiny-invariant";
+
+  const menuModalId = "menu-modal";
+
+  const header = document.querySelector("#page-header") as HTMLElement;
+  const page = document.documentElement;
+  const menu = document.querySelector(`#${menuModalId} ul`);
+  const openNavButton = document.querySelector("#open-nav-button");
+  const closeNavButton = document.querySelector("#close-nav-button");
+
+  invariant(header, "header should not be null");
+  invariant(menu, "menu should not be null");
+  invariant(openNavButton, "openNavButton should not be null");
+  invariant(closeNavButton, "closeNavButton should not be null");
+
+  const openMenu = () => {
+    MicroModal.show(menuModalId, { disableScroll: true });
+  };
+
+  const closeMenu = () => {
+    MicroModal.close(menuModalId);
+  };
+
+  openNavButton.addEventListener("click", openMenu);
+  closeNavButton.addEventListener("click", closeMenu);
+
+  document.addEventListener("scroll", () => {
+    const d = page.clientHeight - page.scrollTop - header.offsetHeight;
+    header.classList.toggle("fixed-header", d < 0);
+  });
+
+  menu.addEventListener("click", (event) => {
+    if ((event.target as HTMLElement).tagName === "A") {
+      closeMenu();
+    }
+  });
+</script>
+
+<noscript>
+  <style>
+    #open-nav-button {
+      display: none;
+    }
+  </style>
+</noscript>
+
+<style>
+  .fixed-header {
+    @apply fixed bottom-auto top-0;
+    @apply border-default bg-default text-default;
+  }
+  .modal.is-open {
+    @apply block;
+  }
+  
+  .nav-link {
+    position: relative;
+    padding: 0.5rem 1rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    transition: all 0.2s ease;
+    border-radius: 6px;
+    background: transparent !important;
+    box-shadow: none;
+  }
+  
+  .nav-link:hover {
+    color: #fd5d13;
+    text-decoration: underline;
+    background: transparent !important;
+    transform: none;
+    box-shadow: none;
+  }
+  
+  .nav-link::before {
+    display: none;
+  }
+  
+  .nav-link::after {
+    display: none;
+  }
+  
+  .mobile-nav-link {
+    transition: all 0.3s ease;
+    font-weight: 500;
+  }
+  
+  .mobile-nav-link:hover {
+    color: var(--color-accent);
+    transform: scale(1.05);
+    text-shadow: 0 0 10px rgba(217, 253, 18, 0.5);
+  }
+</style>

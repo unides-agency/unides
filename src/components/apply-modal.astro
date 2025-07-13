@@ -1,0 +1,252 @@
+<!-- Apply Modal -->
+<div id="apply-modal" class="fixed inset-0 z-50 bg-black bg-opacity-50 hidden flex items-center justify-center p-4" aria-hidden="true">
+  <div class="bg-white dark:bg-gray-800 rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+    <div class="p-6">
+      <div class="flex justify-between items-start mb-4">
+        <h2 class="text-2xl font-bold text-purple-600 dark:text-purple-400">Apply to Join <span class="unides-brand">UNIDES</span></h2>
+        <button
+          id="close-apply-modal"
+          type="button"
+          class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 text-xl font-bold"
+          aria-label="Close modal"
+        >
+          ×
+        </button>
+      </div>
+
+      <form id="apply-form" class="space-y-4">
+        <div>
+          <label for="apply-name" class="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Name *</label>
+          <input 
+            type="text" 
+            id="apply-name" 
+            name="name" 
+            class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white" 
+            required
+          >
+        </div>
+
+        <div>
+          <label for="apply-email" class="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Email *</label>
+          <input 
+            type="email" 
+            id="apply-email" 
+            name="email" 
+            class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white" 
+            required
+          >
+        </div>
+
+        <div>
+          <label for="apply-instagram" class="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Instagram URL</label>
+          <input 
+            type="url" 
+            id="apply-instagram" 
+            name="instagram" 
+            placeholder="https://instagram.com/yourusername"
+            class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+          >
+        </div>
+
+        <div>
+          <label for="apply-description" class="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
+            Tell us about yourself *
+            <span class="text-xs text-gray-500">(minimum 200 characters)</span>
+          </label>
+          <textarea 
+            id="apply-description" 
+            name="description" 
+            rows="6" 
+            class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white" 
+            placeholder="Share your creative journey, your specialties, what makes you unique, and why you want to join UNIDES..."
+            required
+            minlength="200"
+          ></textarea>
+          <div class="text-xs text-gray-500 mt-1">
+            <span id="char-count">0</span> / 200 characters minimum
+          </div>
+        </div>
+
+        <div class="flex gap-4 pt-4">
+          <button
+            type="button"
+            id="cancel-apply"
+            class="flex-1 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 px-4 py-2 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+          >
+            Cancel
+          </button>
+          <button
+            type="submit"
+            id="submit-apply"
+            class="flex-1 bg-primary text-white px-4 py-2 rounded-md hover:bg-primary/90 transition-colors"
+          >
+            Submit Application
+          </button>
+        </div>
+        
+        <div id="apply-form-status" class="hidden text-center text-sm"></div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+  // Define global functions first
+  function openApplyModal() {
+    console.log('Opening apply modal...');
+    const modal = document.getElementById('apply-modal');
+    if (modal) {
+      modal.classList.remove('hidden');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      console.log('Modal opened');
+    } else {
+      console.error('Modal not found');
+    }
+  }
+
+  function closeApplyModal() {
+    const modal = document.getElementById('apply-modal');
+    if (modal) {
+      modal.classList.add('hidden');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = 'auto';
+      
+      // Reset form
+      const form = document.getElementById('apply-form');
+      if (form) {
+        form.reset();
+        updateCharCount();
+      }
+    }
+  }
+
+  function updateCharCount() {
+    const textarea = document.getElementById('apply-description');
+    const charCount = document.getElementById('char-count');
+    if (textarea && charCount) {
+      charCount.textContent = textarea.value.length;
+      
+      // Update color based on character count
+      if (textarea.value.length >= 200) {
+        charCount.style.color = '#22c55e'; // green
+      } else {
+        charCount.style.color = '#ef4444'; // red
+      }
+    }
+  }
+
+  // Make functions globally available
+  if (typeof window !== 'undefined') {
+    window.openApplyModal = openApplyModal;
+    window.closeApplyModal = closeApplyModal;
+  }
+
+  // Wait for DOM to be ready
+  document.addEventListener('DOMContentLoaded', function() {
+    // Check if EmailJS is available
+    if (typeof emailjs === 'undefined') {
+      console.error('EmailJS is not loaded. Make sure to include the EmailJS script.');
+      return;
+    }
+    
+    // Initialize EmailJS
+    emailjs.init({
+      publicKey: "HAJhQWntEy40S-xyj",
+    });
+
+    // Event listeners
+    const closeBtn = document.getElementById('close-apply-modal');
+    const cancelBtn = document.getElementById('cancel-apply');
+    const textarea = document.getElementById('apply-description');
+    const form = document.getElementById('apply-form');
+    const modal = document.getElementById('apply-modal');
+
+    if (closeBtn) closeBtn.addEventListener('click', closeApplyModal);
+    if (cancelBtn) cancelBtn.addEventListener('click', closeApplyModal);
+    if (textarea) textarea.addEventListener('input', updateCharCount);
+
+    // Form submission
+    if (form) {
+      form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const submitBtn = document.getElementById('submit-apply');
+        const formStatus = document.getElementById('apply-form-status');
+        const originalText = submitBtn?.textContent;
+        
+        // Validate description length
+        const description = document.getElementById('apply-description').value;
+        if (description.length < 200) {
+          if (formStatus) {
+            formStatus.textContent = 'Description must be at least 200 characters long.';
+            formStatus.className = 'block text-red-600 text-center text-sm';
+          }
+          return;
+        }
+
+        // Show loading state
+        if (submitBtn) {
+          submitBtn.textContent = 'Submitting...';
+          submitBtn.disabled = true;
+        }
+
+        // Hide previous status messages
+        if (formStatus) {
+          formStatus.classList.add('hidden');
+        }
+
+        // Send form using EmailJS
+        emailjs.sendForm('service_hm56mmb', 'template_i1utqhf', this)
+          .then(() => {
+            console.log('Application sent successfully!');
+            
+            // Show success message
+            if (formStatus) {
+              formStatus.textContent = 'Application submitted successfully! We\'ll review your application and get back to you soon.';
+              formStatus.className = 'block text-green-600 text-center text-sm';
+            }
+            
+            // Reset form after a delay
+            setTimeout(() => {
+              closeApplyModal();
+            }, 3000);
+          }, (error) => {
+            console.log('Application failed...', error);
+            
+            // Show error message
+            if (formStatus) {
+              formStatus.textContent = 'Failed to submit application. Please try again or contact us directly at info.unides@gmail.com';
+              formStatus.className = 'block text-red-600 text-center text-sm';
+            }
+          })
+          .finally(() => {
+            // Reset button state
+            if (submitBtn) {
+              submitBtn.textContent = originalText;
+              submitBtn.disabled = false;
+            }
+          });
+      });
+    }
+
+    // Close modal when clicking outside
+    if (modal) {
+      modal.addEventListener('click', (e) => {
+        if (e.target.id === 'apply-modal') {
+          closeApplyModal();
+        }
+      });
+    }
+
+    // Close modal with Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeApplyModal();
+      }
+    });
+
+    // Initialize character count
+    updateCharCount();
+  });
+</script>
