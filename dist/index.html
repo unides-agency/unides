@@ -1,0 +1,475 @@
+<!DOCTYPE html><html lang="en" class="h-full motion-safe:scroll-smooth" data-theme="dark"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><link rel="icon" href="/unides_agency_writing_pink.png" type="image/svg+xml"><meta name="generator" content="Astro v4.16.18"><!-- Google Fonts --><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Playfair+Display+SC:wght@700;900&display=swap" rel="stylesheet"><title>Unides - Talent Platform</title><meta name="description" content="Connect exceptional talent with amazing opportunities. Professional platform for creatives and businesses."><!-- social media --><meta property="og:title" content="Unides - Talent Platform"><meta property="og:type" content="website"><meta property="og:description" content="Connect exceptional talent with amazing opportunities. Professional platform for creatives and businesses."><meta property="og:image" content="https://unides.agency/social.jpg"><meta property="og:url" content="https://unides.agency/"><meta name="twitter:card" content="summary_large_image"><!-- EmailJS --><!-- initialize theme --><script>
+      const themeSaved = localStorage.getItem("theme");
+
+      if (themeSaved) {
+        document.documentElement.dataset.theme = themeSaved;
+      } else {
+        // Default to dark theme
+        document.documentElement.dataset.theme = "dark";
+      }
+
+      window
+        .matchMedia("(prefers-color-scheme: dark)")
+        .addEventListener("change", (event) => {
+          if (!localStorage.getItem("theme")) {
+            // Default to dark theme regardless of system preference
+            document.documentElement.dataset.theme = "dark";
+          }
+        });
+    </script><link rel="stylesheet" href="/_astro/impressum.Sfvre4RE.css">
+<link rel="stylesheet" href="/_astro/index.CEYfnsAk.css"><script type="module" src="/_astro/hoisted.DF4wPGJP.js"></script></head> <body class="h-full overflow-x-hidden bg-default text-default text-base selection:bg-secondary selection:text-white"> <header id="page-header" class="absolute bottom-0 z-20 flex w-full items-center justify-between border-b border-transparent px-8 py-4" data-astro-cid-hpnw4vwy> <a class="flex items-center gap-3 hover:!text-default" href="#" data-astro-cid-hpnw4vwy> <h1 class="sr-only" data-astro-cid-hpnw4vwy>Unides</h1> <img src="/unides_yellow.png" alt="Unides Logo" class="h-8 w-auto" data-astro-cid-hpnw4vwy> </a> <div class="flex-grow flex justify-center" data-astro-cid-hpnw4vwy> <nav class="hidden sm:block" data-astro-cid-hpnw4vwy> <ul class="flex items-center gap-8" data-astro-cid-hpnw4vwy> <li data-astro-cid-hpnw4vwy> <a class="text-base font-medium nav-link" href="#talents" data-astro-cid-hpnw4vwy> Talents </a> </li><li data-astro-cid-hpnw4vwy> <a class="text-base font-medium nav-link" href="#creatives" data-astro-cid-hpnw4vwy> Creatives </a> </li><li data-astro-cid-hpnw4vwy> <a class="text-base font-medium nav-link" href="#aboutus" data-astro-cid-hpnw4vwy> About Us </a> </li><li data-astro-cid-hpnw4vwy> <a class="text-base font-medium nav-link" href="#contact" data-astro-cid-hpnw4vwy> Contact Us </a> </li> </ul> </nav> </div> <div data-astro-cid-hpnw4vwy> <div class="flex items-center gap-6" data-astro-cid-hpnw4vwy> <button id="open-nav-button" type="button" class="btn sm:hidden" aria-label="Navigation" data-astro-cid-hpnw4vwy> <svg width="1em" height="1em" class="size-8" data-astro-cid-hpnw4vwy data-icon="mdi:menu">   <symbol id="ai:mdi:menu" viewBox="0 0 24 24"><path fill="currentColor" d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></symbol><use href="#ai:mdi:menu"></use>  </svg> </button> <!--
+  negative margin is sum of button width (6) and gap size of flex parent (6)
+  TODO don't hardcode these values
+--><button id="theme-switcher" type="button" class="-ml-12 origin-[right_center] scale-0 transition-all duration-500" data-astro-cid-l4aeqea3> <div id="icon-theme-light" data-astro-cid-l4aeqea3> <svg width="1em" height="1em" class="size-6" data-astro-cid-l4aeqea3 data-icon="mdi:white-balance-sunny">   <symbol id="ai:mdi:white-balance-sunny" viewBox="0 0 24 24"><path fill="currentColor" d="m3.55 19.09l1.41 1.41l1.8-1.79l-1.42-1.42M12 6c-3.31 0-6 2.69-6 6s2.69 6 6 6s6-2.69 6-6c0-3.32-2.69-6-6-6m8 7h3v-2h-3m-2.76 7.71l1.8 1.79l1.41-1.41l-1.79-1.8M20.45 5l-1.41-1.4l-1.8 1.79l1.42 1.42M13 1h-2v3h2M6.76 5.39L4.96 3.6L3.55 5l1.79 1.81zM1 13h3v-2H1m12 9h-2v3h2"/></symbol><use href="#ai:mdi:white-balance-sunny"></use>  </svg> <span class="sr-only" data-astro-cid-l4aeqea3>Use light theme</span> </div> <div id="icon-theme-dark" class="hidden" data-astro-cid-l4aeqea3> <svg width="1em" height="1em" class="size-6" data-astro-cid-l4aeqea3 data-icon="mdi:weather-night">   <symbol id="ai:mdi:weather-night" viewBox="0 0 24 24"><path fill="currentColor" d="m17.75 4.09l-2.53 1.94l.91 3.06l-2.63-1.81l-2.63 1.81l.91-3.06l-2.53-1.94L12.44 4l1.06-3l1.06 3zm3.5 6.91l-1.64 1.25l.59 1.98l-1.7-1.17l-1.7 1.17l.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85c-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14c.4-.4.82-.76 1.27-1.08c.75-.53 1.93.36 1.85 1.19c-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82c-2.81 3.14-2.7 7.96.31 10.98c3.02 3.01 7.84 3.12 10.98.31"/></symbol><use href="#ai:mdi:weather-night"></use>  </svg> <span class="sr-only" data-astro-cid-l4aeqea3>Use dark theme</span> </div> </button>   </div> <div id="menu-modal" class="modal hidden" aria-hidden="true" data-astro-cid-hpnw4vwy> <div class="fixed inset-0 bg-default px-8 py-4 text-default" data-astro-cid-hpnw4vwy> <div class="space-y-4" role="dialog" aria-modal="true" data-astro-cid-hpnw4vwy> <header class="text-right" data-astro-cid-hpnw4vwy> <button id="close-nav-button" type="button" class="btn" aria-label="Close navigation" data-astro-cid-hpnw4vwy> <svg width="1em" height="1em" class="size-8" data-astro-cid-hpnw4vwy data-icon="mdi:close">   <symbol id="ai:mdi:close" viewBox="0 0 24 24"><path fill="currentColor" d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12z"/></symbol><use href="#ai:mdi:close"></use>  </svg> </button> </header> <nav data-astro-cid-hpnw4vwy> <ul class="flex flex-col" data-astro-cid-hpnw4vwy> <li data-astro-cid-hpnw4vwy> <a class="block py-4 text-center text-xl font-medium mobile-nav-link" href="#talents" data-astro-cid-hpnw4vwy> Talents </a> </li><li data-astro-cid-hpnw4vwy> <a class="block py-4 text-center text-xl font-medium mobile-nav-link" href="#creatives" data-astro-cid-hpnw4vwy> Creatives </a> </li><li data-astro-cid-hpnw4vwy> <a class="block py-4 text-center text-xl font-medium mobile-nav-link" href="#aboutus" data-astro-cid-hpnw4vwy> About Us </a> </li><li data-astro-cid-hpnw4vwy> <a class="block py-4 text-center text-xl font-medium mobile-nav-link" href="#contact" data-astro-cid-hpnw4vwy> Contact Us </a> </li> </ul> </nav> </div> </div> </div> </div> </header>  <noscript> <style>
+    #open-nav-button {
+      display: none;
+    }
+  </style> </noscript>  <section class="relative h-full bg-gradient-to-br from-purple-base via-purple-600 to-purple-base overflow-hidden" data-astro-cid-3egmgwtg> <div class="texture-overlay" data-astro-cid-3egmgwtg></div> <div class="gradient-shimmer" data-astro-cid-3egmgwtg></div> <div class="color-accent color-accent-1" data-astro-cid-3egmgwtg></div> <div class="color-accent color-accent-2" data-astro-cid-3egmgwtg></div> <div class="color-accent color-accent-3" data-astro-cid-3egmgwtg></div> <div class="tropical-accent" data-astro-cid-3egmgwtg></div> <div class="folklore-pattern" data-astro-cid-3egmgwtg></div> <div class="cultural-motifs" data-astro-cid-3egmgwtg></div> <div class="brushstroke brushstroke-1" data-astro-cid-3egmgwtg></div> <div class="brushstroke brushstroke-2" data-astro-cid-3egmgwtg></div> <div class="brushstroke brushstroke-3" data-astro-cid-3egmgwtg></div> <div id="starfield" class="absolute inset-0" data-bg-color="rgba(169, 135, 255, 0.4)"> <canvas id="starfield-canvas"></canvas> </div>  <button type="button" class="absolute top-4 right-4 z-10 bg-bright-lime text-deep-teal px-4 py-2 rounded-md font-bold text-base hover:bg-lime-muted transition-all focus:ring-2 focus:ring-bright-lime focus:ring-offset-2 apply-button" onclick="openApplyModal()" data-astro-cid-mc2rzij4>
+Apply Now
+</button> <!-- Apply Modal --><div id="apply-modal" class="fixed inset-0 z-50 bg-black bg-opacity-50 hidden flex items-center justify-center p-4" aria-hidden="true"> <div class="bg-white dark:bg-gray-800 rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto"> <div class="p-6"> <div class="flex justify-between items-start mb-4"> <h2 class="text-2xl font-bold text-purple-600 dark:text-purple-400">Apply to Join <span class="unides-brand">UNIDES</span></h2> <button id="close-apply-modal" type="button" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 text-xl font-bold" aria-label="Close modal">
+×
+</button> </div> <form id="apply-form" class="space-y-4"> <div> <label for="apply-name" class="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Name *</label> <input type="text" id="apply-name" name="name" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white" required> </div> <div> <label for="apply-email" class="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Email *</label> <input type="email" id="apply-email" name="email" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white" required> </div> <div> <label for="apply-instagram" class="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Instagram URL</label> <input type="url" id="apply-instagram" name="instagram" placeholder="https://instagram.com/yourusername" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white"> </div> <div> <label for="apply-description" class="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
+Tell us about yourself *
+<span class="text-xs text-gray-500">(minimum 200 characters)</span> </label> <textarea id="apply-description" name="description" rows="6" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white" placeholder="Share your creative journey, your specialties, what makes you unique, and why you want to join UNIDES..." required minlength="200"></textarea> <div class="text-xs text-gray-500 mt-1"> <span id="char-count">0</span> / 200 characters minimum
+</div> </div> <div class="flex gap-4 pt-4"> <button type="button" id="cancel-apply" class="flex-1 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 px-4 py-2 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+Cancel
+</button> <button type="submit" id="submit-apply" class="flex-1 bg-primary text-white px-4 py-2 rounded-md hover:bg-primary/90 transition-colors">
+Submit Application
+</button> </div> <div id="apply-form-status" class="hidden text-center text-sm"></div> </form> </div> </div> </div> <script>
+  // Define global functions first
+  function openApplyModal() {
+    console.log('Opening apply modal...');
+    const modal = document.getElementById('apply-modal');
+    if (modal) {
+      modal.classList.remove('hidden');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      console.log('Modal opened');
+    } else {
+      console.error('Modal not found');
+    }
+  }
+
+  function closeApplyModal() {
+    const modal = document.getElementById('apply-modal');
+    if (modal) {
+      modal.classList.add('hidden');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = 'auto';
+      
+      // Reset form
+      const form = document.getElementById('apply-form');
+      if (form) {
+        form.reset();
+        updateCharCount();
+      }
+    }
+  }
+
+  function updateCharCount() {
+    const textarea = document.getElementById('apply-description');
+    const charCount = document.getElementById('char-count');
+    if (textarea && charCount) {
+      charCount.textContent = textarea.value.length;
+      
+      // Update color based on character count
+      if (textarea.value.length >= 200) {
+        charCount.style.color = '#22c55e'; // green
+      } else {
+        charCount.style.color = '#ef4444'; // red
+      }
+    }
+  }
+
+  // Make functions globally available
+  if (typeof window !== 'undefined') {
+    window.openApplyModal = openApplyModal;
+    window.closeApplyModal = closeApplyModal;
+  }
+
+  // Wait for DOM to be ready
+  document.addEventListener('DOMContentLoaded', function() {
+    // Check if EmailJS is available
+    if (typeof emailjs === 'undefined') {
+      console.error('EmailJS is not loaded. Make sure to include the EmailJS script.');
+      return;
+    }
+    
+    // Initialize EmailJS
+    emailjs.init({
+      publicKey: "HAJhQWntEy40S-xyj",
+    });
+
+    // Event listeners
+    const closeBtn = document.getElementById('close-apply-modal');
+    const cancelBtn = document.getElementById('cancel-apply');
+    const textarea = document.getElementById('apply-description');
+    const form = document.getElementById('apply-form');
+    const modal = document.getElementById('apply-modal');
+
+    if (closeBtn) closeBtn.addEventListener('click', closeApplyModal);
+    if (cancelBtn) cancelBtn.addEventListener('click', closeApplyModal);
+    if (textarea) textarea.addEventListener('input', updateCharCount);
+
+    // Form submission
+    if (form) {
+      form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const submitBtn = document.getElementById('submit-apply');
+        const formStatus = document.getElementById('apply-form-status');
+        const originalText = submitBtn?.textContent;
+        
+        // Validate description length
+        const description = document.getElementById('apply-description').value;
+        if (description.length < 200) {
+          if (formStatus) {
+            formStatus.textContent = 'Description must be at least 200 characters long.';
+            formStatus.className = 'block text-red-600 text-center text-sm';
+          }
+          return;
+        }
+
+        // Show loading state
+        if (submitBtn) {
+          submitBtn.textContent = 'Submitting...';
+          submitBtn.disabled = true;
+        }
+
+        // Hide previous status messages
+        if (formStatus) {
+          formStatus.classList.add('hidden');
+        }
+
+        // Send form using EmailJS
+        emailjs.sendForm('service_hm56mmb', 'template_i1utqhf', this)
+          .then(() => {
+            console.log('Application sent successfully!');
+            
+            // Show success message
+            if (formStatus) {
+              formStatus.textContent = 'Application submitted successfully! We\'ll review your application and get back to you soon.';
+              formStatus.className = 'block text-green-600 text-center text-sm';
+            }
+            
+            // Reset form after a delay
+            setTimeout(() => {
+              closeApplyModal();
+            }, 3000);
+          }, (error) => {
+            console.log('Application failed...', error);
+            
+            // Show error message
+            if (formStatus) {
+              formStatus.textContent = 'Failed to submit application. Please try again or contact us directly at info.unides@gmail.com';
+              formStatus.className = 'block text-red-600 text-center text-sm';
+            }
+          })
+          .finally(() => {
+            // Reset button state
+            if (submitBtn) {
+              submitBtn.textContent = originalText;
+              submitBtn.disabled = false;
+            }
+          });
+      });
+    }
+
+    // Close modal when clicking outside
+    if (modal) {
+      modal.addEventListener('click', (e) => {
+        if (e.target.id === 'apply-modal') {
+          closeApplyModal();
+        }
+      });
+    }
+
+    // Close modal with Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeApplyModal();
+      }
+    });
+
+    // Initialize character count
+    updateCharCount();
+  });
+</script>  <div id="splash-bg-fallback" class="absolute inset-0 hidden opacity-40" data-astro-cid-3egmgwtg> <div class="absolute inset-0 bg-gradient-to-br from-purple-base via-purple-600 to-purple-base" data-astro-cid-3egmgwtg></div> </div> <div class="relative grid h-full place-items-center px-4" data-astro-cid-3egmgwtg> <h2 class="flex flex-col items-center gap-2 sm:gap-4" data-astro-cid-3egmgwtg> <img src="/unides_writing_green.png" alt="Unides" class="h-24 md:h-32 lg:h-40 w-auto logo-glow" data-astro-cid-3egmgwtg> <img src="/unides_green.png" alt="Unides Logo" class="h-12 md:h-16 w-auto logo-glow" data-astro-cid-3egmgwtg> <p class="tagline mt-8 md:mt-12" data-astro-cid-3egmgwtg>
+We represent <span class="tagline-highlight" data-astro-cid-3egmgwtg>talents</span> that inspire
+</p> </h2> <div class="scroll-indicator" data-astro-cid-3egmgwtg> <div class="scroll-arrow" data-astro-cid-3egmgwtg></div> <div class="scroll-arrow" data-astro-cid-3egmgwtg></div> <div class="scroll-arrow" data-astro-cid-3egmgwtg></div> </div> </div> </section> <noscript> <style>
+    #splash-bg-fallback {
+      display: block;
+    }
+  </style> </noscript>  <div class="py-16"> <section id="talents" class="flex scroll-mt-24 flex-col items-center gap-4 space-y-8"> <div class="flex flex-col items-center gap-4">  <h2 class="gradient-text text-center font-extrabold tracking-tight text-6xl"> Talents </h2> </div> <p class="max-w-xl text-center font-extrabold text-2xl"> 
+Discover our <span class="text-primary">exceptional talents</span> ready to bring your vision to life.
+ </p>   <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-4"> <div class="talent-card bg-offset rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"> <div class="aspect-[2/3] bg-default/20 flex items-center justify-center relative"> <img src="https://unides.s3.eu-central-1.amazonaws.com/images/talents/Otavio+Fonseca/05.png" alt="Otavio Fonseca - undefined" class="w-full h-full object-cover" loading="lazy"> <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-2 text-white"> <div class="space-y-1">  <div class="text-white"> <h3 class="font-bold text-sm leading-tight">Otavio Fonseca</h3> </div>  <div class="flex flex-wrap gap-1 items-center"> <div class="bg-black/40 text-white text-xs py-0.5 px-1.5 rounded-full backdrop-blur-sm flex items-center"> <span class="mr-1">📍</span>Berlin </div>  <span class="bg-primary/80 text-white text-xs py-0.5 px-1.5 rounded-full"> Dancer </span> </div>  <div class="flex flex-wrap gap-1"> <span class="text-xs text-white bg-black/30 px-1.5 py-0.5 rounded backdrop-blur-sm" title="Height">
+📏 174cm
+</span> <span class="text-xs text-white bg-black/30 px-1.5 py-0.5 rounded backdrop-blur-sm" title="Shoe Size">
+👟 44 </span> <span class="text-xs text-white bg-black/30 px-1.5 py-0.5 rounded backdrop-blur-sm" title="Dress Size">
+👗 38 </span> <span class="text-xs text-white bg-black/30 px-1.5 py-0.5 rounded backdrop-blur-sm" title="Eye Color">
+👁️ brown </span> <span class="text-xs text-white bg-black/30 px-1.5 py-0.5 rounded backdrop-blur-sm" title="Hair Color">
+💇 black </span> </div> </div> </div> </div> <div class="p-3"> <div class="mb-2">  <div class="flex flex-wrap gap-1">  </div> </div> <button class="view-profile-btn w-full bg-primary text-white px-3 py-1.5 rounded-md hover:bg-primary/80 hover:bg-purple-600 focus:ring-2 focus:ring-purple-400 focus:outline-none transition-all duration-300 text-xs font-medium relative overflow-hidden group disabled:opacity-50 disabled:cursor-not-allowed" data-talent-id="Otavio Fonseca" data-talent-name="Otavio Fonseca" data-talent-specialties="Dancer, Model" data-talent-description="Bringing rhythm, passion, and precision to every performance, I specialize in expressive movement that bridges storytelling and style. Trained across multiple disciplines—from contemporary and hip-hop to Latin and freestyle—I thrive on creating moments that resonate emotionally and visually. Whether choreographed or improvised, my movement is grounded in musicality, cultural roots, and the power of presence." data-talent-image="https://unides.s3.eu-central-1.amazonaws.com/images/talents/Otavio+Fonseca/05.png"> <span class="relative z-10 group-hover:translate-x-1 transition-transform duration-300 inline-flex items-center"> <span class="loading-text">View Profile</span> <span class="loading-spinner hidden animate-spin ml-2">⏳</span> <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 ml-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 arrow-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path> </svg> </span> <span class="absolute inset-0 bg-gradient-to-r from-purple-600 to-primary transform scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300"></span> </button> </div> </div> </div> </section> <!-- Talent Modal --> <div id="talent-modal" class="modal hidden fixed inset-0 z-50 bg-black bg-opacity-60 backdrop-blur-sm" aria-hidden="true"> <div class="flex items-center justify-center min-h-screen p-4"> <div class="bg-default rounded-lg max-w-6xl w-full max-h-[95vh] overflow-y-auto shadow-2xl transform transition-transform duration-500 scale-95 opacity-0" id="talent-modal-content"> <div class="p-6"> <div class="flex justify-between items-start mb-6"> <h2 id="talent-modal-title" class="text-3xl font-bold text-default bg-gradient-to-r from-purple-400 to-primary bg-clip-text text-transparent">Talent Profile</h2> <button id="close-talent-modal" type="button" class="text-default/60 hover:text-primary hover:rotate-90 transition-all duration-300 text-2xl font-bold" aria-label="Close modal">
+×
+</button> </div> <div class="space-y-8"> <div class="flex flex-col lg:flex-row gap-8"> <!-- Photo Gallery Section --> <div class="lg:w-1/2"> <h4 class="font-semibold mb-4 text-lg">Photos</h4> <div id="talent-photo-gallery" class="space-y-4"> <!-- Main photo --> <div class="aspect-[3/4] bg-default/20 rounded-lg flex items-center justify-center overflow-hidden"> <img id="talent-modal-main-image" src="" alt="" class="w-full h-full object-cover rounded-lg hidden" loading="lazy"> <span id="talent-modal-main-image-placeholder" class="text-default/60 text-sm">Photo Coming Soon</span> </div> <!-- Thumbnail gallery --> <div id="talent-thumbnail-gallery" class="grid grid-cols-4 gap-2 hidden"> <!-- Thumbnails will be populated by JavaScript --> </div> </div> </div> <!-- Info Section --> <div class="lg:w-1/2 space-y-6"> <div> <h3 id="talent-modal-name" class="text-2xl font-bold text-default"></h3> <p id="talent-modal-specialty" class="text-primary font-medium text-lg"></p> </div> <div> <h4 class="font-semibold mb-3 text-lg">About</h4> <p id="talent-modal-description" class="text-default/80 leading-relaxed"></p> </div> <div> <h4 class="font-semibold mb-3 text-lg">Personal Details</h4> <div id="talent-modal-personal" class="grid grid-cols-2 gap-3 text-sm"> <!-- Personal details will be populated by JavaScript --> </div> </div> <div class="flex gap-4 pt-6 border-t border-default/20"> <button class="flex-1 border-2 border-primary text-primary px-8 py-4 rounded-lg hover:bg-primary/10 hover:border-purple-600 hover:text-purple-600 focus:ring-2 focus:ring-purple-400 focus:outline-none transition-all duration-300 font-semibold text-lg hover:shadow-lg hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"> <span class="portfolio-text">Download Portfolio</span> <span class="portfolio-spinner hidden animate-spin ml-2">⏳</span> </button> </div> </div> </div> </div> </div> </div> </div> </div>  </div> <div class="py-16"> <section id="creatives" class="flex scroll-mt-24 flex-col items-center gap-4 space-y-8"> <div class="flex flex-col items-center gap-4">  <h2 class="gradient-text text-center font-extrabold tracking-tight text-6xl"> Creatives </h2> </div> <p class="max-w-xl text-center font-extrabold text-2xl"> 
+Meet our <span class="text-primary" data-astro-cid-l5ohyn5v>creative professionals</span> who bring artistic vision
+    and technical expertise to every project.
+ </p>   <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-4" data-astro-cid-l5ohyn5v> <div class="talent-card bg-offset rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105" data-astro-cid-l5ohyn5v> <div class="aspect-[3/4] bg-default/20 flex items-center justify-center relative" data-astro-cid-l5ohyn5v> <img src="https://unides.s3.eu-central-1.amazonaws.com/images/talents/Eve+Queiroz/_DSC5369.jpg" alt="undefined - undefined" class="w-full h-full object-cover" loading="lazy" data-astro-cid-l5ohyn5v> <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-3 text-white" data-astro-cid-l5ohyn5v> <div class="space-y-2" data-astro-cid-l5ohyn5v>  <div class="text-white" data-astro-cid-l5ohyn5v> <h3 class="font-bold text-lg leading-tight" data-astro-cid-l5ohyn5v></h3> </div>  <div class="flex flex-wrap gap-2 items-center" data-astro-cid-l5ohyn5v> <div class="bg-black/40 text-white text-xs py-1 px-2 rounded-full backdrop-blur-sm flex items-center" data-astro-cid-l5ohyn5v> <span class="mr-1" data-astro-cid-l5ohyn5v>📍</span>Berlin </div>  <span class="bg-primary/80 text-white text-xs py-1 px-2 rounded-full" data-astro-cid-l5ohyn5v> Graffiti </span><span class="bg-primary/80 text-white text-xs py-1 px-2 rounded-full" data-astro-cid-l5ohyn5v> Illustration </span><span class="bg-primary/80 text-white text-xs py-1 px-2 rounded-full" data-astro-cid-l5ohyn5v> Tattoo </span><span class="bg-primary/80 text-white text-xs py-1 px-2 rounded-full" data-astro-cid-l5ohyn5v> Visual arts </span>  </div>  <div class="flex flex-wrap gap-1" data-astro-cid-l5ohyn5v>      </div> </div> </div> </div> <div class="p-4" data-astro-cid-l5ohyn5v> <div class="mb-3" data-astro-cid-l5ohyn5v>  <div class="flex flex-wrap gap-1" data-astro-cid-l5ohyn5v>  </div> </div> <p class="text-default/80 text-xs mb-3 leading-relaxed line-clamp-2" data-astro-cid-l5ohyn5v>Eve Queiroz is a Brazilian visual artist who has stood out for her creative trajectory, which moves between street art, illustration, tattoo and cannabis consultancy. She began her artistic career in 2009 with the Negahamburguer project, focused on graffiti, and over the years has expanded her work to other forms of expression, addressing social issues such as freedom of the body, blackness and women&#39;s rights. Her work reflects a strong connection with her identity and the search for freedom and social justice. Her most recent work integrates cannabis culture, and Eve also works as a consultant.</p> <button class="view-profile-btn w-full bg-primary text-white px-3 py-2 rounded-md hover:bg-primary/80 transition-all duration-300 text-xs font-medium relative overflow-hidden group" onclick="openCreativeModal('Eve Queiroz', 'undefined', 'undefined', 'Eve Queiroz is a Brazilian visual artist who has stood out for her creative trajectory, which moves between street art, illustration, tattoo and cannabis consultancy. She began her artistic career in 2009 with the Negahamburguer project, focused on graffiti, and over the years has expanded her work to other forms of expression, addressing social issues such as freedom of the body, blackness and women's rights. Her work reflects a strong connection with her identity and the search for freedom and social justice. Her most recent work integrates cannabis culture, and Eve also works as a consultant.', 'https://unides.s3.eu-central-1.amazonaws.com/images/talents/Eve+Queiroz/_DSC5369.jpg')" data-astro-cid-l5ohyn5v> <span class="relative z-10 group-hover:translate-x-1 transition-transform duration-300 inline-flex items-center" data-astro-cid-l5ohyn5v>
+View Portfolio
+<svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 ml-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" data-astro-cid-l5ohyn5v> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" data-astro-cid-l5ohyn5v></path> </svg> </span> <span class="absolute inset-0 bg-gradient-to-r from-purple-600 to-primary transform scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300" data-astro-cid-l5ohyn5v></span> </button> </div> </div><div class="talent-card bg-offset rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105" data-astro-cid-l5ohyn5v> <div class="aspect-[3/4] bg-default/20 flex items-center justify-center relative" data-astro-cid-l5ohyn5v> <img src="https://unides.s3.eu-central-1.amazonaws.com/images/talents/Hadryah/WhatsApp+Image+2025-07-12+at+15.52.14+(1).jpeg" alt="Hadryah - undefined" class="w-full h-full object-cover" loading="lazy" data-astro-cid-l5ohyn5v> <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-3 text-white" data-astro-cid-l5ohyn5v> <div class="space-y-2" data-astro-cid-l5ohyn5v>  <div class="text-white" data-astro-cid-l5ohyn5v> <h3 class="font-bold text-lg leading-tight" data-astro-cid-l5ohyn5v>Hadryah</h3> </div>  <div class="flex flex-wrap gap-2 items-center" data-astro-cid-l5ohyn5v> <div class="bg-black/40 text-white text-xs py-1 px-2 rounded-full backdrop-blur-sm flex items-center" data-astro-cid-l5ohyn5v> <span class="mr-1" data-astro-cid-l5ohyn5v>📍</span>Berlin </div>    </div>  <div class="flex flex-wrap gap-1" data-astro-cid-l5ohyn5v>      </div> </div> </div> </div> <div class="p-4" data-astro-cid-l5ohyn5v> <div class="mb-3" data-astro-cid-l5ohyn5v>  <div class="flex flex-wrap gap-1" data-astro-cid-l5ohyn5v>  </div> </div> <p class="text-default/80 text-xs mb-3 leading-relaxed line-clamp-2" data-astro-cid-l5ohyn5v>A self-taught and multidisciplinary artist, they move fluidly between music, visual arts, upcycling, clothing customization, and performance. Their creations don’t follow formulas — they emerge from a genuine impulse for expression, healing, and transformation. Each piece, each sound, each gesture carries the energy of someone who lives art as both therapy and a tool for expanding consciousness. Their brilliance shines through in the way they see possibilities where others see waste: garments are given new life in their hands, transformed with intention and care. Customization and material reuse are not just aesthetic choices, but a philosophy — a practice that blends sustainability, identity, and creative resistance. Whether on stage or in the studio, their presence is powerful, intuitive, and constantly evolving. With innovative ideas and a deep inner listening, they use art as a mirror and a portal — a path inward, outward, and toward the collective. Their journey is one of healing, and their language is art.</p> <button class="view-profile-btn w-full bg-primary text-white px-3 py-2 rounded-md hover:bg-primary/80 transition-all duration-300 text-xs font-medium relative overflow-hidden group" onclick="openCreativeModal('Hadryah', 'Hadryah', 'undefined', 'A self-taught and multidisciplinary artist, they move fluidly between music, visual arts, upcycling, clothing customization, and performance. Their creations don’t follow formulas — they emerge from a genuine impulse for expression, healing, and transformation. Each piece, each sound, each gesture carries the energy of someone who lives art as both therapy and a tool for expanding consciousness. Their brilliance shines through in the way they see possibilities where others see waste: garments are given new life in their hands, transformed with intention and care. Customization and material reuse are not just aesthetic choices, but a philosophy — a practice that blends sustainability, identity, and creative resistance. Whether on stage or in the studio, their presence is powerful, intuitive, and constantly evolving. With innovative ideas and a deep inner listening, they use art as a mirror and a portal — a path inward, outward, and toward the collective. Their journey is one of healing, and their language is art.', 'https://unides.s3.eu-central-1.amazonaws.com/images/talents/Hadryah/WhatsApp+Image+2025-07-12+at+15.52.14+(1).jpeg')" data-astro-cid-l5ohyn5v> <span class="relative z-10 group-hover:translate-x-1 transition-transform duration-300 inline-flex items-center" data-astro-cid-l5ohyn5v>
+View Portfolio
+<svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 ml-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" data-astro-cid-l5ohyn5v> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" data-astro-cid-l5ohyn5v></path> </svg> </span> <span class="absolute inset-0 bg-gradient-to-r from-purple-600 to-primary transform scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300" data-astro-cid-l5ohyn5v></span> </button> </div> </div><div class="talent-card bg-offset rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105" data-astro-cid-l5ohyn5v> <div class="aspect-[3/4] bg-default/20 flex items-center justify-center relative" data-astro-cid-l5ohyn5v> <span class="text-default/60 text-xs" data-astro-cid-l5ohyn5v>Portfolio Preview</span> <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-3 text-white" data-astro-cid-l5ohyn5v> <div class="space-y-2" data-astro-cid-l5ohyn5v>  <div class="text-white" data-astro-cid-l5ohyn5v> <h3 class="font-bold text-lg leading-tight" data-astro-cid-l5ohyn5v>House of Grace</h3> </div>  <div class="flex flex-wrap gap-2 items-center" data-astro-cid-l5ohyn5v> <div class="bg-black/40 text-white text-xs py-1 px-2 rounded-full backdrop-blur-sm flex items-center" data-astro-cid-l5ohyn5v> <span class="mr-1" data-astro-cid-l5ohyn5v>📍</span>Berlin </div>  <span class="bg-primary/80 text-white text-xs py-1 px-2 rounded-full" data-astro-cid-l5ohyn5v>  </span>  </div>  <div class="flex flex-wrap gap-1" data-astro-cid-l5ohyn5v>      </div> </div> </div> </div> <div class="p-4" data-astro-cid-l5ohyn5v> <div class="mb-3" data-astro-cid-l5ohyn5v>  <div class="flex flex-wrap gap-1" data-astro-cid-l5ohyn5v>  </div> </div> <p class="text-default/80 text-xs mb-3 leading-relaxed line-clamp-2" data-astro-cid-l5ohyn5v></p> <button class="view-profile-btn w-full bg-primary text-white px-3 py-2 rounded-md hover:bg-primary/80 transition-all duration-300 text-xs font-medium relative overflow-hidden group" onclick="openCreativeModal('House of Grace', 'House of Grace', 'undefined', 'undefined', '')" data-astro-cid-l5ohyn5v> <span class="relative z-10 group-hover:translate-x-1 transition-transform duration-300 inline-flex items-center" data-astro-cid-l5ohyn5v>
+View Portfolio
+<svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 ml-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" data-astro-cid-l5ohyn5v> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" data-astro-cid-l5ohyn5v></path> </svg> </span> <span class="absolute inset-0 bg-gradient-to-r from-purple-600 to-primary transform scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300" data-astro-cid-l5ohyn5v></span> </button> </div> </div><div class="talent-card bg-offset rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105" data-astro-cid-l5ohyn5v> <div class="aspect-[3/4] bg-default/20 flex items-center justify-center relative" data-astro-cid-l5ohyn5v> <span class="text-default/60 text-xs" data-astro-cid-l5ohyn5v>Portfolio Preview</span> <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-3 text-white" data-astro-cid-l5ohyn5v> <div class="space-y-2" data-astro-cid-l5ohyn5v>  <div class="text-white" data-astro-cid-l5ohyn5v> <h3 class="font-bold text-lg leading-tight" data-astro-cid-l5ohyn5v>Mallo</h3> </div>  <div class="flex flex-wrap gap-2 items-center" data-astro-cid-l5ohyn5v> <div class="bg-black/40 text-white text-xs py-1 px-2 rounded-full backdrop-blur-sm flex items-center" data-astro-cid-l5ohyn5v> <span class="mr-1" data-astro-cid-l5ohyn5v>📍</span>Berlin </div>  <span class="bg-primary/80 text-white text-xs py-1 px-2 rounded-full" data-astro-cid-l5ohyn5v> Dancer </span><span class="bg-primary/80 text-white text-xs py-1 px-2 rounded-full" data-astro-cid-l5ohyn5v> Fitness Trainer </span><span class="bg-primary/80 text-white text-xs py-1 px-2 rounded-full" data-astro-cid-l5ohyn5v> Choreographer </span>  </div>  <div class="flex flex-wrap gap-1" data-astro-cid-l5ohyn5v>      </div> </div> </div> </div> <div class="p-4" data-astro-cid-l5ohyn5v> <div class="mb-3" data-astro-cid-l5ohyn5v>  <div class="flex flex-wrap gap-1" data-astro-cid-l5ohyn5v>  </div> </div> <p class="text-default/80 text-xs mb-3 leading-relaxed line-clamp-2" data-astro-cid-l5ohyn5v>Fitness Trainer and Performer Mallo Santo brings extensive experience to the dance industry. Originally from Ceará in northeastern Brazil, Mallo has carved out a distinctive presence in Berlin&#39;s dance scene. Blending Brazilian and Caribbean influences, Mallo creates a dynamic and captivating repertoire that moves the Berlin audience. </p> <button class="view-profile-btn w-full bg-primary text-white px-3 py-2 rounded-md hover:bg-primary/80 transition-all duration-300 text-xs font-medium relative overflow-hidden group" onclick="openCreativeModal('Mallo', 'Mallo', 'undefined', 'Fitness Trainer and Performer Mallo Santo brings extensive experience to the dance industry. Originally from Ceará in northeastern Brazil, Mallo has carved out a distinctive presence in Berlin's dance scene. Blending Brazilian and Caribbean influences, Mallo creates a dynamic and captivating repertoire that moves the Berlin audience. ', '')" data-astro-cid-l5ohyn5v> <span class="relative z-10 group-hover:translate-x-1 transition-transform duration-300 inline-flex items-center" data-astro-cid-l5ohyn5v>
+View Portfolio
+<svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 ml-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" data-astro-cid-l5ohyn5v> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" data-astro-cid-l5ohyn5v></path> </svg> </span> <span class="absolute inset-0 bg-gradient-to-r from-purple-600 to-primary transform scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300" data-astro-cid-l5ohyn5v></span> </button> </div> </div><div class="talent-card bg-offset rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105" data-astro-cid-l5ohyn5v> <div class="aspect-[3/4] bg-default/20 flex items-center justify-center relative" data-astro-cid-l5ohyn5v> <img src="https://unides.s3.eu-central-1.amazonaws.com/images/talents/Mamede/drive-download-20250712T134016Z-1-001/mamede+1.jpeg" alt="Mamede - undefined" class="w-full h-full object-cover" loading="lazy" data-astro-cid-l5ohyn5v> <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-3 text-white" data-astro-cid-l5ohyn5v> <div class="space-y-2" data-astro-cid-l5ohyn5v>  <div class="text-white" data-astro-cid-l5ohyn5v> <h3 class="font-bold text-lg leading-tight" data-astro-cid-l5ohyn5v>Mamede</h3> </div>  <div class="flex flex-wrap gap-2 items-center" data-astro-cid-l5ohyn5v> <div class="bg-black/40 text-white text-xs py-1 px-2 rounded-full backdrop-blur-sm flex items-center" data-astro-cid-l5ohyn5v> <span class="mr-1" data-astro-cid-l5ohyn5v>📍</span>Berlin </div>    </div>  <div class="flex flex-wrap gap-1" data-astro-cid-l5ohyn5v>      </div> </div> </div> </div> <div class="p-4" data-astro-cid-l5ohyn5v> <div class="mb-3" data-astro-cid-l5ohyn5v>  <div class="flex flex-wrap gap-1" data-astro-cid-l5ohyn5v>  </div> </div> <p class="text-default/80 text-xs mb-3 leading-relaxed line-clamp-2" data-astro-cid-l5ohyn5v>Originally from Maranhão, Brazil, Mamede is a Berlin-based DJ whose sound bridges the vibrant pulse of the Brazilian Northeast with global dance floors. With past lives in Belém and São Paulo, and performances in cities like Tokyo, Amsterdam, Madrid, and Barcelona, Mamede brings a uniquely diasporic perspective to his sets. ​ Blending tribal, house, and disco, his music celebrates queer joy and cultural resilience. Mamede curates a monthly party in Berlin while continuously exploring new artistic and sonic territories.</p> <button class="view-profile-btn w-full bg-primary text-white px-3 py-2 rounded-md hover:bg-primary/80 transition-all duration-300 text-xs font-medium relative overflow-hidden group" onclick="openCreativeModal('Mamede', 'Mamede', 'undefined', 'Originally from Maranhão, Brazil, Mamede is a Berlin-based DJ whose sound bridges the vibrant pulse of the Brazilian Northeast with global dance floors. With past lives in Belém and São Paulo, and performances in cities like Tokyo, Amsterdam, Madrid, and Barcelona, Mamede brings a uniquely diasporic perspective to his sets. ​ Blending tribal, house, and disco, his music celebrates queer joy and cultural resilience. Mamede curates a monthly party in Berlin while continuously exploring new artistic and sonic territories.', 'https://unides.s3.eu-central-1.amazonaws.com/images/talents/Mamede/drive-download-20250712T134016Z-1-001/mamede+1.jpeg')" data-astro-cid-l5ohyn5v> <span class="relative z-10 group-hover:translate-x-1 transition-transform duration-300 inline-flex items-center" data-astro-cid-l5ohyn5v>
+View Portfolio
+<svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 ml-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" data-astro-cid-l5ohyn5v> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" data-astro-cid-l5ohyn5v></path> </svg> </span> <span class="absolute inset-0 bg-gradient-to-r from-purple-600 to-primary transform scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300" data-astro-cid-l5ohyn5v></span> </button> </div> </div> </div> </section> <!-- Creative Modal --> <div id="creative-modal" class="modal hidden fixed inset-0 z-50 bg-black bg-opacity-60 backdrop-blur-sm" aria-hidden="true" data-astro-cid-l5ohyn5v> <div class="flex items-center justify-center min-h-screen p-4" data-astro-cid-l5ohyn5v> <div id="creative-modal-content" class="bg-default rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl transform transition-transform duration-500 scale-95 opacity-0" data-astro-cid-l5ohyn5v> <div class="p-6" data-astro-cid-l5ohyn5v> <div class="flex justify-between items-start mb-6" data-astro-cid-l5ohyn5v> <h2 id="modal-title" class="text-2xl font-bold bg-gradient-to-r from-purple-400 to-primary bg-clip-text text-transparent" data-astro-cid-l5ohyn5v>Creative Portfolio</h2> <button id="close-creative-modal" type="button" class="text-default/60 hover:text-primary hover:rotate-90 transition-all duration-300 text-xl font-bold" aria-label="Close modal" data-astro-cid-l5ohyn5v>
+×
+</button> </div> <div class="space-y-6" data-astro-cid-l5ohyn5v> <div class="flex flex-col md:flex-row gap-6" data-astro-cid-l5ohyn5v> <div class="md:w-1/3" data-astro-cid-l5ohyn5v> <div id="modal-image-container" class="aspect-[3/4] bg-default/20 rounded-lg flex items-center justify-center overflow-hidden" data-astro-cid-l5ohyn5v> <img id="modal-image" src="" alt="" class="w-full h-full object-cover rounded-lg hidden" loading="lazy" data-astro-cid-l5ohyn5v> <span id="modal-image-placeholder" class="text-default/60 text-sm" data-astro-cid-l5ohyn5v>Portfolio Preview</span> </div> </div> <div class="md:w-2/3 space-y-4" data-astro-cid-l5ohyn5v> <div data-astro-cid-l5ohyn5v> <h3 id="modal-name" class="text-xl font-bold text-default" data-astro-cid-l5ohyn5v></h3> <p id="modal-specialty" class="text-primary font-medium" data-astro-cid-l5ohyn5v></p> </div> <div data-astro-cid-l5ohyn5v> <h4 class="font-semibold mb-2" data-astro-cid-l5ohyn5v>About</h4> <p id="modal-description" class="text-default/80 leading-relaxed" data-astro-cid-l5ohyn5v></p> </div> <div data-astro-cid-l5ohyn5v> <h4 class="font-semibold mb-3 text-lg" data-astro-cid-l5ohyn5v>Personal Details</h4> <div id="modal-personal" class="grid grid-cols-2 gap-3 text-sm mb-4" data-astro-cid-l5ohyn5v> <!-- Personal details will be populated by JavaScript --> </div> </div> <div data-astro-cid-l5ohyn5v> <h4 class="font-semibold mb-3 text-lg" data-astro-cid-l5ohyn5v>Skills & Experience</h4> <div id="modal-stats" class="grid grid-cols-2 gap-3 text-sm" data-astro-cid-l5ohyn5v> <!-- Stats will be populated by JavaScript --> </div> </div> </div> </div> <div class="flex gap-4 pt-6 border-t border-default/20" data-astro-cid-l5ohyn5v> <button class="flex-1 bg-primary text-white px-6 py-3 rounded-md hover:bg-primary/80 transition-all duration-300 font-medium shadow-md hover:shadow-lg hover:-translate-y-0.5" data-astro-cid-l5ohyn5v>
+Contact Creative
+</button> <button id="download-portfolio-btn" class="flex-1 border border-primary text-primary px-6 py-3 rounded-md hover:bg-primary/10 transition-all duration-300 font-medium hover:shadow-md hover:-translate-y-0.5" onclick="downloadPortfolio()" data-astro-cid-l5ohyn5v>
+Download Portfolio
+</button> </div> </div> </div> </div> </div> </div>  <!-- Hidden data for JavaScript --> <script id="creatives-data" type="application/json">[{"id":"Eve Queiroz","image":"https://unides.s3.eu-central-1.amazonaws.com/images/talents/Eve+Queiroz/_DSC5369.jpg","enabled":true,"name ":"Eve Queiroz","location":"Berlin","specialties":["Graffiti","Illustration","Tattoo","Visual arts"],"description":"Eve Queiroz is a Brazilian visual artist who has stood out for her creative trajectory, which moves between street art, illustration, tattoo and cannabis consultancy. She began her artistic career in 2009 with the Negahamburguer project, focused on graffiti, and over the years has expanded her work to other forms of expression, addressing social issues such as freedom of the body, blackness and women's rights. Her work reflects a strong connection with her identity and the search for freedom and social justice. Her most recent work integrates cannabis culture, and Eve also works as a consultant.","behance":"https://www.behance.net/evelynqueiroz?","imgs":["https://unides.s3.eu-central-1.amazonaws.com/images/talents/Eve+Queiroz/_DSC5477.jpg","https://unides.s3.eu-central-1.amazonaws.com/images/talents/Eve+Queiroz/_DSC5488.jpg","https://unides.s3.eu-central-1.amazonaws.com/images/talents/Eve+Queiroz/_DSC5698.jpg"]},{"id":"Hadryah","imgs":["https://unides.s3.eu-central-1.amazonaws.com/images/talents/Hadryah/WhatsApp+Image+2025-07-12+at+15.52.13.jpeg","https://unides.s3.eu-central-1.amazonaws.com/images/talents/Hadryah/WhatsApp+Image+2025-07-12+at+15.52.14+(1).jpeg","https://unides.s3.eu-central-1.amazonaws.com/images/talents/Hadryah/WhatsApp+Image+2025-07-12+at+15.52.14+(2).jpeg","https://unides.s3.eu-central-1.amazonaws.com/images/talents/Hadryah/WhatsApp+Image+2025-07-12+at+15.52.14+(3).jpeg","https://unides.s3.eu-central-1.amazonaws.com/images/talents/Hadryah/WhatsApp+Image+2025-07-12+at+15.52.14.jpeg"],"description":"A self-taught and multidisciplinary artist, they move fluidly between music, visual arts, upcycling, clothing customization, and performance. Their creations don’t follow formulas — they emerge from a genuine impulse for expression, healing, and transformation. Each piece, each sound, each gesture carries the energy of someone who lives art as both therapy and a tool for expanding consciousness. Their brilliance shines through in the way they see possibilities where others see waste: garments are given new life in their hands, transformed with intention and care. Customization and material reuse are not just aesthetic choices, but a philosophy — a practice that blends sustainability, identity, and creative resistance. Whether on stage or in the studio, their presence is powerful, intuitive, and constantly evolving. With innovative ideas and a deep inner listening, they use art as a mirror and a portal — a path inward, outward, and toward the collective. Their journey is one of healing, and their language is art.","location":"Berlin","image":"https://unides.s3.eu-central-1.amazonaws.com/images/talents/Hadryah/WhatsApp+Image+2025-07-12+at+15.52.14+(1).jpeg","name":"Hadryah","enabled":true},{"id":"House of Grace","enabled":true,"specialties":[""],"about":"House of Grace  is a DJ, producer, and curator with over 25 years of international experience. A Black, lesbian woman from Bahia, Brazil, she built her career in Berlin by bringing the sounds of Brazilian culture to the global stage. Having performed at major festivals in countries like Morocco and Uzbekistan, she now leads House Of Grace — a project rooted in house music, identity, and representation. A trailblazer in the LGBTQIAPN+ scene, Grace blends deep experience with bold vision and an inspiring story.","Youtube":["https://www.youtube.com/watch?v=i2ooUALGaZo","https://www.youtube.com/watch?v=TyOzH5vabec"],"name":"House of Grace","location":"Berlin"},{"id":"Mallo","specialties":["Dancer","Fitness Trainer","Choreographer"],"name":"Mallo","description":"Fitness Trainer and Performer Mallo Santo brings extensive experience to the dance industry. Originally from Ceará in northeastern Brazil, Mallo has carved out a distinctive presence in Berlin's dance scene. Blending Brazilian and Caribbean influences, Mallo creates a dynamic and captivating repertoire that moves the Berlin audience. ","enabled":true,"location":"Berlin"},{"id":"Mamede","description":"Originally from Maranhão, Brazil, Mamede is a Berlin-based DJ whose sound bridges the vibrant pulse of the Brazilian Northeast with global dance floors. With past lives in Belém and São Paulo, and performances in cities like Tokyo, Amsterdam, Madrid, and Barcelona, Mamede brings a uniquely diasporic perspective to his sets. ​ Blending tribal, house, and disco, his music celebrates queer joy and cultural resilience. Mamede curates a monthly party in Berlin while continuously exploring new artistic and sonic territories.","youtube":["https://www.youtube.com/live/xUa9-b5gCL","https://www.youtube.com/watch?v=3WEMfi2f2Ww"],"soundcloud":["https://soundcloud.com/xoxanyc/xoxa-blend-236-mamede?si=d6462d87fe5442a281b4243b57ba5167&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing","https://soundcloud.com/otherstothefront/house-of-others-088?si=2f62cb5d7b354072b8c7c2d58a6838b7&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing","https://soundcloud.com/edgeberlin/miss-cis-you-think-youre-fierce-mamede-edge-mix-010?si=84836b7ec94948929dd543ca838e01a9&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing","https://soundcloud.com/vice-v-versa/mix-radio-019-mamede"],"enabled":true,"name":"Mamede","location":"Berlin","image":"https://unides.s3.eu-central-1.amazonaws.com/images/talents/Mamede/drive-download-20250712T134016Z-1-001/mamede+1.jpeg"}]</script>  </div> <div class="py-16"> <section id="aboutus" class="flex scroll-mt-24 flex-col items-center gap-4 space-y-8"> <div class="flex flex-col items-center gap-4">  <h2 class="gradient-text text-center font-extrabold tracking-tight text-6xl"> About Us </h2> </div> <p class="max-w-xl text-center font-extrabold text-2xl"> 
+At <span class="text-primary unides-brand">UNIDES</span>, we bring culture to life through <span class="text-primary">unforgettable events</span> where music, art, and community meet. <span class="text-primary">Talent. Culture. Impact.</span>  </p>   <div class="max-w-4xl mx-auto space-y-8"> <div class="grid md:grid-cols-2 gap-8"> <div> <h3 class="font-bold text-xl mb-4 text-purple-600">Our Mission</h3> <p class="text-default/80 leading-relaxed">
+Elevate the next generation of Latinx visionaries—from underground musicians to boundary-pushing visual artists.
+ Connect authentic creativity with brands and audiences hungry for something real.
+Redefining what „Latin art“ means in Europe—breaking stereotypes with unstoppable innovation.
+</p> </div> <div> <h3 class="font-bold text-xl mb-4 text-purple-600">Our Vision</h3> <p class="text-default/80 leading-relaxed">
+Uniting Latinx talent and culture to transform the creative landscape—boldly, purposefully, together. </p> </div> </div> <div class="text-center py-12"> <h3 class="font-bold text-xl mb-8 text-purple-600">Our Values</h3> <div class="grid md:grid-cols-3 gap-6"> <div class="values-card bg-offset p-6 rounded-lg"> <h4 class="font-semibold text-primary mb-2">Rooted in Culture</h4> <p class="text-sm text-default/80">We honor our Latin American heritage and celebrate the diversity that makes us powerful.</p> </div> <div class="values-card bg-offset p-6 rounded-lg"> <h4 class="font-semibold text-primary mb-2">Together We Rise</h4> <p class="text-sm text-default/80">Growth means nothing if we don't rise together. We build careers through real collaboration and community.</p> </div> <div class="values-card bg-offset p-6 rounded-lg"> <h4 class="font-semibold text-primary mb-2">Support & Elevation</h4> <p class="text-sm text-default/80">We understand how hard this path can be. That's why we're not just agents—we're allies.</p> </div> </div> <div class="grid md:grid-cols-1 gap-6 mt-6"> <div class="values-card bg-offset p-6 rounded-lg"> <h4 class="font-semibold text-primary mb-2">Trust & Respect</h4> <p class="text-sm text-default/80">Every relationship we build is grounded in mutual respect, transparency, and long-term trust.
+
+From day one, our goal has been clear: to unite incredible talent with the right platforms, people, and opportunities, while staying true to who we are.</p> </div> </div> </div> <div class="about-section-divider"></div> <div class="text-center py-12"> <h3 class="font-bold text-xl mb-8 text-purple-600">Meet the Founder</h3> <div class="grid md:grid-cols-1 gap-6"> <div class="bg-offset p-8 rounded-lg shadow-md"> <div class="grid md:grid-cols-2 gap-8 items-center"> <div class="flex justify-center"> <div class="w-full max-w-xs h-110 overflow-hidden rounded-lg shadow-lg"> <img src="https://unides.s3.eu-central-1.amazonaws.com/images/about/_DSC4263.JPG" alt="Grasi" class="w-full h-full object-cover object-center"> </div> </div> <div class="text-center md:text-left"> <h4 class="font-semibold text-xl mb-1">Grasi</h4> <p class="text-primary text-sm mb-4">Founder</p> <p class="text-sm text-default/80 leading-relaxed">
+With over 7 years of experience in operations and logistics, I bring structure, strategy, and creative problem-solving to the heart of talent management. I'm passionate about building systems that work efficiently, intuitively, and with room to grow. My background in streamlining complex processes is complemented by a lifelong love of art, which inspires fresh, human-centered solutions. At our agency, I focus on making things run smoothly behind the scenes so talent and creativity can take center stage. I'm excited to shape a space where artists thrive and ideas move with intention.
+</p> </div> </div> </div> </div> </div> <div class="about-section-divider"></div> <div class="text-center bg-offset p-10 rounded-xl shadow-lg my-12"> <h3 class="font-bold text-xl mb-6 text-purple-600">Ready to Build Something Real?</h3> <p class="text-default/80 mb-8 max-w-2xl mx-auto">
+Whether you're a visionary artist ready to rise or a brand searching for authentic, culture-shaping talent—we're here to make powerful, purposeful connections. Let's create something unforgettable, together.
+</p> <button class="cta-button bg-primary text-white px-8 py-4 rounded-lg hover:bg-primary/90 transition-all font-medium text-lg shadow-md" onclick="openApplyModal()">
+Apply now
+</button> <!-- Apply Modal --><div id="apply-modal" class="fixed inset-0 z-50 bg-black bg-opacity-50 hidden flex items-center justify-center p-4" aria-hidden="true"> <div class="bg-white dark:bg-gray-800 rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto"> <div class="p-6"> <div class="flex justify-between items-start mb-4"> <h2 class="text-2xl font-bold text-purple-600 dark:text-purple-400">Apply to Join <span class="unides-brand">UNIDES</span></h2> <button id="close-apply-modal" type="button" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 text-xl font-bold" aria-label="Close modal">
+×
+</button> </div> <form id="apply-form" class="space-y-4"> <div> <label for="apply-name" class="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Name *</label> <input type="text" id="apply-name" name="name" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white" required> </div> <div> <label for="apply-email" class="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Email *</label> <input type="email" id="apply-email" name="email" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white" required> </div> <div> <label for="apply-instagram" class="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Instagram URL</label> <input type="url" id="apply-instagram" name="instagram" placeholder="https://instagram.com/yourusername" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white"> </div> <div> <label for="apply-description" class="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
+Tell us about yourself *
+<span class="text-xs text-gray-500">(minimum 200 characters)</span> </label> <textarea id="apply-description" name="description" rows="6" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white" placeholder="Share your creative journey, your specialties, what makes you unique, and why you want to join UNIDES..." required minlength="200"></textarea> <div class="text-xs text-gray-500 mt-1"> <span id="char-count">0</span> / 200 characters minimum
+</div> </div> <div class="flex gap-4 pt-4"> <button type="button" id="cancel-apply" class="flex-1 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 px-4 py-2 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+Cancel
+</button> <button type="submit" id="submit-apply" class="flex-1 bg-primary text-white px-4 py-2 rounded-md hover:bg-primary/90 transition-colors">
+Submit Application
+</button> </div> <div id="apply-form-status" class="hidden text-center text-sm"></div> </form> </div> </div> </div> <script>
+  // Define global functions first
+  function openApplyModal() {
+    console.log('Opening apply modal...');
+    const modal = document.getElementById('apply-modal');
+    if (modal) {
+      modal.classList.remove('hidden');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      console.log('Modal opened');
+    } else {
+      console.error('Modal not found');
+    }
+  }
+
+  function closeApplyModal() {
+    const modal = document.getElementById('apply-modal');
+    if (modal) {
+      modal.classList.add('hidden');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = 'auto';
+      
+      // Reset form
+      const form = document.getElementById('apply-form');
+      if (form) {
+        form.reset();
+        updateCharCount();
+      }
+    }
+  }
+
+  function updateCharCount() {
+    const textarea = document.getElementById('apply-description');
+    const charCount = document.getElementById('char-count');
+    if (textarea && charCount) {
+      charCount.textContent = textarea.value.length;
+      
+      // Update color based on character count
+      if (textarea.value.length >= 200) {
+        charCount.style.color = '#22c55e'; // green
+      } else {
+        charCount.style.color = '#ef4444'; // red
+      }
+    }
+  }
+
+  // Make functions globally available
+  if (typeof window !== 'undefined') {
+    window.openApplyModal = openApplyModal;
+    window.closeApplyModal = closeApplyModal;
+  }
+
+  // Wait for DOM to be ready
+  document.addEventListener('DOMContentLoaded', function() {
+    // Check if EmailJS is available
+    if (typeof emailjs === 'undefined') {
+      console.error('EmailJS is not loaded. Make sure to include the EmailJS script.');
+      return;
+    }
+    
+    // Initialize EmailJS
+    emailjs.init({
+      publicKey: "HAJhQWntEy40S-xyj",
+    });
+
+    // Event listeners
+    const closeBtn = document.getElementById('close-apply-modal');
+    const cancelBtn = document.getElementById('cancel-apply');
+    const textarea = document.getElementById('apply-description');
+    const form = document.getElementById('apply-form');
+    const modal = document.getElementById('apply-modal');
+
+    if (closeBtn) closeBtn.addEventListener('click', closeApplyModal);
+    if (cancelBtn) cancelBtn.addEventListener('click', closeApplyModal);
+    if (textarea) textarea.addEventListener('input', updateCharCount);
+
+    // Form submission
+    if (form) {
+      form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const submitBtn = document.getElementById('submit-apply');
+        const formStatus = document.getElementById('apply-form-status');
+        const originalText = submitBtn?.textContent;
+        
+        // Validate description length
+        const description = document.getElementById('apply-description').value;
+        if (description.length < 200) {
+          if (formStatus) {
+            formStatus.textContent = 'Description must be at least 200 characters long.';
+            formStatus.className = 'block text-red-600 text-center text-sm';
+          }
+          return;
+        }
+
+        // Show loading state
+        if (submitBtn) {
+          submitBtn.textContent = 'Submitting...';
+          submitBtn.disabled = true;
+        }
+
+        // Hide previous status messages
+        if (formStatus) {
+          formStatus.classList.add('hidden');
+        }
+
+        // Send form using EmailJS
+        emailjs.sendForm('service_hm56mmb', 'template_i1utqhf', this)
+          .then(() => {
+            console.log('Application sent successfully!');
+            
+            // Show success message
+            if (formStatus) {
+              formStatus.textContent = 'Application submitted successfully! We\'ll review your application and get back to you soon.';
+              formStatus.className = 'block text-green-600 text-center text-sm';
+            }
+            
+            // Reset form after a delay
+            setTimeout(() => {
+              closeApplyModal();
+            }, 3000);
+          }, (error) => {
+            console.log('Application failed...', error);
+            
+            // Show error message
+            if (formStatus) {
+              formStatus.textContent = 'Failed to submit application. Please try again or contact us directly at info.unides@gmail.com';
+              formStatus.className = 'block text-red-600 text-center text-sm';
+            }
+          })
+          .finally(() => {
+            // Reset button state
+            if (submitBtn) {
+              submitBtn.textContent = originalText;
+              submitBtn.disabled = false;
+            }
+          });
+      });
+    }
+
+    // Close modal when clicking outside
+    if (modal) {
+      modal.addEventListener('click', (e) => {
+        if (e.target.id === 'apply-modal') {
+          closeApplyModal();
+        }
+      });
+    }
+
+    // Close modal with Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeApplyModal();
+      }
+    });
+
+    // Initialize character count
+    updateCharCount();
+  });
+</script> </div> </div>  </section> </div> <div class="py-16"> <section id="contact" class="flex scroll-mt-24 flex-col items-center gap-4 space-y-8"> <div class="flex flex-col items-center gap-4">  <h2 class="gradient-text text-center font-extrabold tracking-tight text-6xl"> Contact Us </h2> </div> <p class="max-w-xl text-center font-extrabold text-2xl">  <span class="text-primary unides-brand">Unides</span> stands for <span class="text-primary">united</span>. We're crafting <span class="text-primary">more</span> than just a team.
+ </p>   <div class="max-w-4xl mx-auto"> <div class="grid md:grid-cols-2 gap-8"> <div class="space-y-6"> <div> <h3 class="font-bold text-lg mb-2 text-purple-600">Get in Touch</h3> <p class="text-offset">Your idea is the spark—we’ll help turn it into reality. Send us a message and we'll respond as soon as possible.</p> </div> <div class="space-y-4"> <div> <h4 class="font-semibold text-sm md:text-base">Email</h4> <p class="text-offset text-sm md:text-base font-medium">info@unides-agency.com</p> </div> <div> <h4 class="font-semibold text-sm md:text-base">Phone</h4> <p class="text-offset text-sm md:text-base font-medium">+49 (172) 802 7395</p> </div> <div> <h4 class="font-semibold text-sm md:text-base">Address</h4> <p class="text-offset text-sm md:text-base font-medium leading-6">Soldiner Straße 72<br>13359 Berlin</p> </div> </div> </div> <form id="contact-form" class="space-y-4"> <div> <label for="name" class="block text-sm font-medium mb-1">Name</label> <input type="text" id="name" name="name" placeholder="Your full name" class="w-full px-4 py-3 bg-[#0a353a] border border-[#c6a2ff] rounded-md focus:outline-none focus:ring-2 focus:ring-[#d9fd12] text-white placeholder:text-gray-400" required> </div> <div> <label for="email" class="block text-sm font-medium mb-1">Email</label> <input type="email" id="email" name="email" placeholder="your.email@example.com" class="w-full px-4 py-3 bg-[#0a353a] border border-[#c6a2ff] rounded-md focus:outline-none focus:ring-2 focus:ring-[#d9fd12] text-white placeholder:text-gray-400" required> </div> <div> <label for="message" class="block text-sm font-medium mb-1">Message</label> <textarea id="message" name="message" rows="4" placeholder="Tell us about your project or idea..." class="w-full px-4 py-3 bg-[#0a353a] border border-[#c6a2ff] rounded-md focus:outline-none focus:ring-2 focus:ring-[#d9fd12] text-white placeholder:text-gray-400" required></textarea> </div> <button type="submit" id="submit-btn" class="w-full bg-primary text-white px-4 py-3 rounded-md hover:bg-primary/90 transition-colors font-medium">
+Send Message
+</button> <div id="form-status" class="hidden text-center text-sm md:text-base font-medium mt-3"></div> </form> </div> </div>  </section> <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script> <script type="text/javascript">
+    (function() {
+        // Initialize EmailJS with your public key
+        emailjs.init({
+          publicKey: "HAJhQWntEy40S-xyj",
+        });
+    })();
+</script> <script type="text/javascript">
+    window.onload = function() {
+        document.getElementById('contact-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const submitBtn = document.getElementById('submit-btn');
+            const formStatus = document.getElementById('form-status');
+            const originalText = submitBtn?.textContent;
+
+            // Show loading state
+            if (submitBtn) {
+                submitBtn.textContent = 'Sending...';
+                submitBtn.disabled = true;
+            }
+
+            // Hide previous status messages
+            if (formStatus) {
+                formStatus.classList.add('hidden');
+            }
+
+            // Send form using EmailJS
+            emailjs.sendForm('service_hm56mmb', 'template_xsjmtjf', this)
+                .then(() => {
+                    console.log('SUCCESS!');
+                    
+                    // Show success message
+                    if (formStatus) {
+                        formStatus.textContent = 'Message sent successfully! We\'ll get back to you soon.';
+                        formStatus.className = 'block text-green-600 text-center text-sm md:text-base font-medium mt-3';
+                    }
+                    
+                    // Reset form
+                    this.reset();
+                }, (error) => {
+                    console.log('FAILED...', error);
+                    
+                    // Show error message
+                    if (formStatus) {
+                        formStatus.textContent = 'Failed to send message. Please try again or email us directly at info.unides@gmail.com';
+                        formStatus.className = 'block text-red-600 text-center text-sm md:text-base font-medium mt-3';
+                    }
+                })
+                .finally(() => {
+                    // Reset button state
+                    if (submitBtn) {
+                        submitBtn.textContent = originalText;
+                        submitBtn.disabled = false;
+                    }
+                });
+        });
+    }
+</script> </div> <div class="py-16"></div> <footer class="footer relative flex h-64 items-center justify-center"> <div class="absolute inset-0 overflow-hidden opacity-40"> <div class="absolute inset-0 bg-gradient-to-br from-blue-900 via-purple-900 to-slate-900"></div> </div> <!-- Logomark in bottom right --> <div class="absolute bottom-8 right-8"> <img src="/unides_agency_orange.png" alt="Unides" class="h-16 w-auto"> </div> <!-- Social links centered --> <div class="relative flex flex-col items-center space-y-4 w-full max-w-lg mx-auto px-4"> <div class="text-center mb-2"> <h3 class="text-lg font-medium text-white/90 mb-1">Let's connect.</h3> <p class="text-sm text-white/80">Follow us and say hi.</p> </div> <ul class="flex justify-center items-center gap-6 w-full"> <li> <a class="flex size-16 items-center justify-center rounded-full border-2 border-current p-4 hover:scale-110 hover:bg-white/10 transition-all duration-200 ease-in-out" href="https://instagram.com/unidesagency" title="Instagram"> <span class="sr-only">Follow Unides on Instagram</span> <svg width="0.88em" height="1em" class="size-full" data-icon="fa-brands:instagram">   <symbol id="ai:fa-brands:instagram" viewBox="0 0 448 512"><path fill="currentColor" d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9S287.7 141 224.1 141m0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7s74.7 33.5 74.7 74.7s-33.6 74.7-74.7 74.7m146.4-194.3c0 14.9-12 26.8-26.8 26.8c-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8s26.8 12 26.8 26.8m76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9c-26.2-26.2-58-34.4-93.9-36.2c-37-2.1-147.9-2.1-184.9 0c-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9c1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0c35.9-1.7 67.7-9.9 93.9-36.2c26.2-26.2 34.4-58 36.2-93.9c2.1-37 2.1-147.8 0-184.8M398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6c-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6c-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6c29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6c11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1"/></symbol><use href="#ai:fa-brands:instagram"></use>  </svg> </a> </li><li> <a class="flex size-16 items-center justify-center rounded-full border-2 border-current p-4 hover:scale-110 hover:bg-white/10 transition-all duration-200 ease-in-out" href="https://wa.me/1728027395" title="WhatsApp"> <span class="sr-only">Contact Unides on WhatsApp</span> <svg width="0.88em" height="1em" class="size-full" data-icon="fa-brands:whatsapp">   <symbol id="ai:fa-brands:whatsapp" viewBox="0 0 448 512"><path fill="currentColor" d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222c0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222c0-59.3-25.2-115-67.1-157m-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4l-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2c0-101.7 82.8-184.5 184.6-184.5c49.3 0 95.6 19.2 130.4 54.1s56.2 81.2 56.1 130.5c0 101.8-84.9 184.6-186.6 184.6m101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18c-5.1-1.9-8.8-2.8-12.5 2.8s-14.3 18-17.6 21.8c-3.2 3.7-6.5 4.2-12 1.4c-32.6-16.3-54-29.1-75.5-66c-5.7-9.8 5.7-9.1 16.3-30.3c1.8-3.7.9-6.9-.5-9.7s-12.5-30.1-17.1-41.2c-4.5-10.8-9.1-9.3-12.5-9.5c-3.2-.2-6.9-.2-10.6-.2s-9.7 1.4-14.8 6.9c-5.1 5.6-19.4 19-19.4 46.3s19.9 53.7 22.6 57.4c2.8 3.7 39.1 59.7 94.8 83.8c35.2 15.2 49 16.5 66.6 13.9c10.7-1.6 32.8-13.4 37.4-26.4s4.6-24.1 3.2-26.4c-1.3-2.5-5-3.9-10.5-6.6"/></symbol><use href="#ai:fa-brands:whatsapp"></use>  </svg> </a> </li><li> <a class="flex size-16 items-center justify-center rounded-full border-2 border-current p-4 hover:scale-110 hover:bg-white/10 transition-all duration-200 ease-in-out" href="https://www.youtube.com/@UnidesAgency" title="YouTube"> <span class="sr-only">Watch Unides on YouTube</span> <svg width="1.13em" height="1em" class="size-full" data-icon="fa-brands:youtube">   <symbol id="ai:fa-brands:youtube" viewBox="0 0 576 512"><path fill="currentColor" d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64S117.22 64 74.629 75.486c-23.497 6.322-42.003 24.947-48.284 48.597c-11.412 42.867-11.412 132.305-11.412 132.305s0 89.438 11.412 132.305c6.281 23.65 24.787 41.5 48.284 47.821C117.22 448 288 448 288 448s170.78 0 213.371-11.486c23.497-6.321 42.003-24.171 48.284-47.821c11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305m-317.51 213.508V175.185l142.739 81.205z"/></symbol><use href="#ai:fa-brands:youtube"></use>  </svg> </a> </li> </ul> <!-- Legal links --> <div class="flex gap-4 text-xs text-white/60"> <a href="/impressum" class="hover:text-white/80 transition-colors">Impressum</a> <span>•</span> <a href="/privacy" class="hover:text-white/80 transition-colors">Privacy Policy</a> </div> <p class="text-sm text-white/70">© 2025 Unides. All rights reserved.</p> </div> </footer> </body></html>

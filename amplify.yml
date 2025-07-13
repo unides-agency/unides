@@ -3,6 +3,9 @@ frontend:
   phases:
     preBuild:
       commands:
+        - nvm install 20
+        - nvm use 20
+        - node -v   # check version
         - npm ci --cache .npm --prefer-offline
     build:
       commands:
@@ -15,5 +18,3 @@ frontend:
     paths:
       - node_modules/**/*
       - .npm/**/*
-  runtime:
-    version: 20

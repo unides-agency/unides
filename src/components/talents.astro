@@ -208,7 +208,9 @@ try {
 </div>
 
 <script>
-  const talentsData = JSON.parse(document.getElementById('talents-data') ? document.getElementById('talents-data').textContent : '[]');
+  // Fix nested conditional that causes Rollup build error
+  const talentsDataElement = document.getElementById('talents-data');
+  const talentsData = JSON.parse(talentsDataElement ? talentsDataElement.textContent : '[]');
 
   function openTalentModal(id, name, specialties, description, image) {
     // Show loading state
@@ -262,7 +264,18 @@ try {
 
     // Populate modal content
     modalTitle.textContent = `${name}`;
-    modalSpecialty.textContent = Array.isArray(talent.specialties) ? talent.specialties.join(' - ') : (talent.specialties || specialties || '');
+    
+    // Fix nested conditional that causes Rollup build error
+    let specialtyText = '';
+    if (Array.isArray(talent.specialties)) {
+      specialtyText = talent.specialties.join(' - ');
+    } else if (talent.specialties) {
+      specialtyText = talent.specialties;
+    } else if (specialties) {
+      specialtyText = specialties;
+    }
+    modalSpecialty.textContent = specialtyText;
+    
     modalDescription.textContent = description;
 
     // Handle multiple images from Firebase
@@ -282,7 +295,18 @@ try {
     if (photos.length > 0) {
       // Show main image
       modalMainImage.src = photos[0];
-      modalMainImage.alt = `${name} - ${Array.isArray(talent.specialties) ? talent.specialties.join(', ') : (talent.specialties || specialties || '')}`;
+      
+      // Fix nested conditional that causes Rollup build error
+      let altText = '';
+      if (Array.isArray(talent.specialties)) {
+        altText = talent.specialties.join(', ');
+      } else if (talent.specialties) {
+        altText = talent.specialties;
+      } else if (specialties) {
+        altText = specialties;
+      }
+      modalMainImage.alt = `${name} - ${altText}`;
+      
       modalMainImage.classList.remove('hidden');
       modalMainImagePlaceholder.classList.add('hidden');
       
