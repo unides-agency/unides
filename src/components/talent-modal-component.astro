@@ -25,9 +25,9 @@
             Modal dialog displaying talent profile information including photos, personal details, and portfolio download option. Use Tab to navigate between elements, Escape to close.
           </div>
           
-          <div class="flex flex-row gap-8 min-w-0">
+          <div class="flex flex-col lg:flex-row gap-8 min-w-0">
             <!-- Photo Gallery Section -->
-            <div class="w-1/2 min-w-0">
+            <div class="w-full lg:w-1/2 min-w-0">
               <h4 class="font-semibold mb-4 text-lg text-default">Photos</h4>
               <div id="talent-photo-gallery" class="space-y-4 min-w-0">
                 <!-- Main photo -->
@@ -49,8 +49,8 @@
               </div>
             </div>
 
-            <!-- Info Section - moved to right of photos -->
-            <div class="w-1/2 space-y-6 min-w-0">
+            <!-- Info Section - below gallery on mobile, right on desktop -->
+            <div class="w-full lg:w-1/2 space-y-6 min-w-0">
               <!-- Name and Specialty -->
               <div class="min-w-0">
                 <h3 id="talent-modal-name" class="text-2xl font-bold text-default min-w-0"></h3>
