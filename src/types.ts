@@ -13,7 +13,7 @@ export interface Talent {
   image?: string;
   imgs?: string[];
   location?: string;
-  born?: string;
+  birth?: string;
   eyeColor?: string;
   hairColor?: string;
   shoeSize?: string;
@@ -32,7 +32,7 @@ export interface Creative {
   image?: string;
   imgs?: string[];
   location?: string;
-  born?: string;
+  birth?: string;
   specialties?: string[];
   stats?: Record<string, any>;
   enabled?: boolean;

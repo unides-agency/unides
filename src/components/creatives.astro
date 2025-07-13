@@ -51,9 +51,9 @@ try {
                           <span class="mr-1">📍</span>{creative.location}
                         </div>
                       )}
-                      {creative.born && (
-                        <span class="text-xs text-white bg-black/30 px-1.5 py-0.5 rounded backdrop-blur-sm" title="Born">
-                          🎂 {creative.born}
+                      {creative.birth && (
+                        <span class="text-xs text-white bg-black/30 px-1.5 py-0.5 rounded backdrop-blur-sm" title="Birth">
+                          🎂 {creative.birth}
                         </span>
                       )}
                       {creative.specialties && creative.specialties.length > 0 && (
@@ -265,7 +265,7 @@ try {
     // Populate personal details
     modalPersonal.innerHTML = '';
     const personalFields = [
-      { key: 'born', label: 'Born' },
+      { key: 'birth', label: 'Birth' },
       { key: 'height', label: 'Height' },
       { key: 'eyeColor', label: 'Eye Color' },
       { key: 'hairColor', label: 'Hair Color' },

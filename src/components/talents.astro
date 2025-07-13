@@ -57,9 +57,9 @@ try {
                       <span class="mr-1">📍</span>{talent.location}
                     </div>
                   )}
-                  {talent.born && (
-                    <span class="text-xs text-white bg-black/30 px-1.5 py-0.5 rounded backdrop-blur-sm min-w-0" title="Born">
-                      🎂 {talent.born}
+                  {talent.birth && (
+                    <span class="text-xs text-white bg-black/30 px-1.5 py-0.5 rounded backdrop-blur-sm min-w-0" title="Birth">
+                      🎂 {talent.birth}
                     </span>
                   )}
                   {talent.specialties && talent.specialties.length > 0 && (
@@ -119,6 +119,16 @@ try {
               data-talent-specialties={talent.specialties ? talent.specialties.join(', ') : talent.specialty || ''}
               data-talent-description={talent.description}
               data-talent-image={talent.image || ""}
+              data-talent-location={talent.location || ""}
+              data-talent-birth={talent.birth || ""}
+              data-talent-age={talent.age || ""}
+              data-talent-height={talent.height || ""}
+              data-talent-eyecolor={talent.eyeColor || ""}
+              data-talent-haircolor={talent.hairColor || ""}
+              data-talent-shoesize={talent.shoeSize || ""}
+              data-talent-dresssize={talent.dressSize || ""}
+              data-talent-imgs={talent.imgs ? JSON.stringify(talent.imgs) : ""}
+              data-talent-portfoliourl={talent.portfolioUrl || talent.pdfUrl || ""}
             >
               <span class="relative z-10 group-hover:translate-x-1 transition-transform duration-300 inline-flex items-center min-w-0">
                 <span class="loading-text">View Profile</span>
@@ -159,15 +169,35 @@ try {
         var specialties = btn.getAttribute('data-talent-specialties');
         var description = btn.getAttribute('data-talent-description');
         var image = btn.getAttribute('data-talent-image');
+        var location = btn.getAttribute('data-talent-location');
+        var birth = btn.getAttribute('data-talent-birth');
+        var age = btn.getAttribute('data-talent-age');
+        var height = btn.getAttribute('data-talent-height');
+        var eyeColor = btn.getAttribute('data-talent-eyecolor');
+        var hairColor = btn.getAttribute('data-talent-haircolor');
+        var shoeSize = btn.getAttribute('data-talent-shoesize');
+        var dressSize = btn.getAttribute('data-talent-dresssize');
+        var imgs = btn.getAttribute('data-talent-imgs');
+        var portfolioUrl = btn.getAttribute('data-talent-portfoliourl');
         
-        console.log('Opening modal for talent:', { id, name, specialties, description, image });
+        // Parse imgs JSON string back to array
+        var imgsArray = [];
+        if (imgs && imgs !== "") {
+          try {
+            imgsArray = JSON.parse(imgs);
+          } catch (e) {
+            console.error('Error parsing imgs:', e);
+          }
+        }
+        
+        console.log('Opening modal for talent:', { id, name, specialties, description, image, location, birth, age, height, eyeColor, hairColor, shoeSize, dressSize, imgsArray, portfolioUrl });
         
         // Set global event for openTalentModal
         window.event = e;
         
         // Call the modal function
         if (typeof window.openTalentModal === 'function') {
-          window.openTalentModal(id, name, specialties, description, image);
+          window.openTalentModal(id, name, specialties, description, image, location, birth, age, height, eyeColor, hairColor, shoeSize, dressSize, imgsArray, portfolioUrl);
         } else {
           console.error('openTalentModal function not found');
         }

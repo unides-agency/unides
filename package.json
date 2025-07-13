@@ -17,13 +17,7 @@
     "preview": "astro preview",
     "astro": "astro",
     "format": "prettier --write **/*.astro .",
-    "clean": "rimraf dist .astro node_modules",
-    "lighthouse": "node lighthouse-monitor.js",
-    "lighthouse:dev": "node lighthouse-monitor.js http://localhost:4321",
-    "lighthouse:preview": "node lighthouse-monitor.js http://localhost:4322",
-    "lighthouse:prod": "node lighthouse-monitor.js https://unides.agency",
-    "lighthouse:ci": "npm run build && npm run preview & sleep 5 && node lighthouse-monitor.js http://localhost:4322 && pkill -f astro",
-    "perf:test": "npm run lighthouse:ci"
+    "clean": "rimraf dist .astro node_modules"
   },
   "devDependencies": {
     "@astrojs/tailwind": "^5.1.2",

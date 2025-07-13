@@ -5,11 +5,14 @@ export interface Talent {
   id: string;
   name: string;
   specialty: string;
+  specialties?: string[]; // Add plural version for modal compatibility
   description: string;
   image?: string;
   imgs?: string[];
   location?: string;
+  city?: string; // Add city field
   age?: string;
+  birth?: string; // Add birth field
   eyeColor?: string;
   hairColor?: string;
   shoeSize?: string;

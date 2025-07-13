@@ -9,7 +9,7 @@ export interface Creative {
   image?: string;
   imgs?: string[];
   location?: string;
-  born?: string;
+  birth?: string;
   eyeColor?: string;
   hairColor?: string;
   shoeSize?: string;

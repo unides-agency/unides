@@ -73,7 +73,7 @@
 
               <!-- Download Portfolio Button -->
               <div class="flex gap-4 pt-6 border-t border-default/20 min-w-0">
-                <button class="flex-1 border-2 border-primary text-primary px-8 py-4 rounded-lg hover:bg-primary/10 hover:border-purple-600 hover:text-purple-600 focus:ring-2 focus:ring-purple-400 focus:outline-none transition-all duration-300 font-semibold text-lg hover:shadow-lg hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none min-w-0">
+                <button id="download-portfolio-btn" class="flex-1 border-2 border-primary text-primary px-8 py-4 rounded-lg hover:bg-primary/10 hover:border-purple-600 hover:text-purple-600 focus:ring-2 focus:ring-purple-400 focus:outline-none transition-all duration-300 font-semibold text-lg hover:shadow-lg hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none min-w-0">
                   <span class="portfolio-text">Download Portfolio</span>
                   <span class="portfolio-spinner hidden animate-spin ml-2">⏳</span>
                 </button>
@@ -108,11 +108,7 @@
     }
 
     // Main modal open function - extracted from working talents.astro
-    function openTalentModal(id, name, specialties, description, image) {
-      console.log('openTalentModal called with:', { id, name, specialties, description, image });
-      
-      // Skip loading state for now - just focus on opening the modal
-      /*
+    function openTalentModal(id, name, specialties, description, image, location, birth, age, height, eyeColor, hairColor, shoeSize, dressSize, imgs, portfolioUrl) {    
       var button = null;
       if (window.event && window.event.target) {
         button = window.event.target.closest('button');
@@ -132,7 +128,7 @@
         if (loadingSpinner) loadingSpinner.classList.remove('hidden');
         if (arrowIcon) arrowIcon.classList.add('hidden');
       }
-      */
+    
 
       var modal = document.getElementById('talent-modal');
       var modalContent = document.getElementById('talent-modal-content');
@@ -180,9 +176,20 @@
           specialties: specialties ? specialties.split(', ') : [],
           specialty: specialties,
           description: description,
-          image: image
+          image: image,
+          location: location,
+          birth: birth,
+          height: height,
+          eyeColor: eyeColor,
+          hairColor: hairColor,
+          shoeSize: shoeSize,
+          dressSize: dressSize,
+          imgs: imgs,
+          portfolioUrl: portfolioUrl
         };
       }
+
+      console.log('Talent data being used:', talent);
 
       // Populate modal content
       modalName.textContent = talent.name || '';
@@ -195,24 +202,27 @@
       } else if (talent.specialty) {
         specialtyText = talent.specialty;
       }
+      console.log('Specialty text:', specialtyText);
       modalSpecialty.textContent = specialtyText;
       modalDescription.textContent = talent.description || '';
+      console.log('Description:', talent.description);
 
       // Populate personal details
       modalPersonal.innerHTML = '';
       const personalFields = [
         { key: 'location', label: 'Location', value: talent.location },
-        { key: 'city', label: 'City', value: talent.city },
-        { key: 'born', label: 'Born', value: talent.born },
-        { key: 'age', label: 'Age', value: talent.age },
+        { key: 'birth', label: 'Birth', value: talent.birth || talent.birth },
         { key: 'height', label: 'Height', value: talent.height ? talent.height + 'cm' : null },
-        { key: 'measurements', label: 'Measurements', value: talent.measurements },
         { key: 'eyeColor', label: 'Eye Color', value: talent.eyeColor },
         { key: 'hairColor', label: 'Hair Color', value: talent.hairColor },
         { key: 'shoeSize', label: 'Shoe Size', value: talent.shoeSize },
-        { key: 'dressSize', label: 'Dress Size', value: talent.dressSize },
-        { key: 'availability', label: 'Availability', value: talent.availability }
+        { key: 'dressSize', label: 'Dress Size', value: talent.dressSize }
       ];
+
+      console.log('Personal fields data check:');
+      personalFields.forEach(field => {
+        console.log(`${field.label}: "${field.value}" (type: ${typeof field.value})`);
+      });
 
       personalFields.forEach(field => {
         const fieldDiv = document.createElement('div');
@@ -302,6 +312,29 @@
         modalContent.classList.remove('scale-95', 'opacity-0');
         modalContent.classList.add('scale-100', 'opacity-100');
       }, 10);
+      
+      // Set up download portfolio button
+      var downloadBtn = document.getElementById('download-portfolio-btn');
+      if (downloadBtn) {
+        downloadBtn.onclick = function() {
+          if (talent.portfolioUrl || talent.pdfUrl) {
+            var url = talent.portfolioUrl || talent.pdfUrl;
+            window.open(url, '_blank');
+          } else {
+            console.log('No portfolio URL available for this talent');
+            alert('Portfolio not available for this talent');
+          }
+        };
+        
+        // Update button state based on portfolio availability
+        if (talent.portfolioUrl || talent.pdfUrl) {
+          downloadBtn.disabled = false;
+          downloadBtn.style.opacity = '1';
+        } else {
+          downloadBtn.disabled = true;
+          downloadBtn.style.opacity = '0.5';
+        }
+      }
       
       // Skip button reset for now
       /*
