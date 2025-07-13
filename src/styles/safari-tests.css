@@ -1,0 +1,140 @@
+/* 
+ * Safari Flex/Grid min-width: 0 Test
+ * 
+ * This file contains test cases to verify that Safari flex/grid fixes are working
+ * properly. You can copy these examples to test layouts.
+ */
+
+/* Test 1: Basic Flex Container */
+.test-flex-container {
+  display: flex;
+  flex-wrap: wrap;
+  min-width: 0; /* ✅ Safari fix */
+  min-height: 0; /* ✅ Safari fix */
+  gap: 1rem;
+}
+
+.test-flex-container > * {
+  flex: 1 1 300px;
+  min-width: 0; /* ✅ Safari fix */
+  min-height: 0; /* ✅ Safari fix */
+}
+
+/* Test 2: Grid Container */
+.test-grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  min-width: 0; /* ✅ Safari fix */
+  min-height: 0; /* ✅ Safari fix */
+  gap: 1rem;
+}
+
+.test-grid-container > * {
+  min-width: 0; /* ✅ Safari fix */
+  min-height: 0; /* ✅ Safari fix */
+}
+
+/* Test 3: Modal Layout */
+.test-modal-overlay {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0; /* ✅ Safari fix */
+  min-height: 0; /* ✅ Safari fix */
+}
+
+.test-modal-dialog {
+  display: flex;
+  flex-direction: column;
+  min-width: 0; /* ✅ Safari fix */
+  min-height: 0; /* ✅ Safari fix */
+  max-width: 90vw;
+  max-height: 90vh;
+}
+
+.test-modal-body {
+  flex: 1 1 auto;
+  min-width: 0; /* ✅ Safari fix */
+  min-height: 0; /* ✅ Safari fix */
+  overflow-y: auto;
+}
+
+/* Test 4: Form Layout */
+.test-form-container {
+  display: flex;
+  flex-direction: column;
+  min-width: 0; /* ✅ Safari fix */
+  min-height: 0; /* ✅ Safari fix */
+  gap: 1rem;
+}
+
+.test-form-row {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  min-width: 0; /* ✅ Safari fix */
+  min-height: 0; /* ✅ Safari fix */
+}
+
+.test-form-field {
+  flex: 1 1 auto;
+  min-width: 0; /* ✅ Safari fix */
+  min-height: 0; /* ✅ Safari fix */
+}
+
+/* Test 5: Card Layout */
+.test-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  min-width: 0; /* ✅ Safari fix */
+  min-height: 0; /* ✅ Safari fix */
+  gap: 1rem;
+}
+
+.test-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0; /* ✅ Safari fix */
+  min-height: 0; /* ✅ Safari fix */
+}
+
+.test-card-content {
+  flex: 1 1 auto;
+  min-width: 0; /* ✅ Safari fix */
+  min-height: 0; /* ✅ Safari fix */
+}
+
+/* Test 6: Button Group */
+.test-button-group {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  min-width: 0; /* ✅ Safari fix */
+  min-height: 0; /* ✅ Safari fix */
+}
+
+.test-button-group > * {
+  flex: 1 1 auto;
+  min-width: 0; /* ✅ Safari fix */
+  min-height: 0; /* ✅ Safari fix */
+}
+
+/* Test 7: Nested Flex */
+.test-nested-flex-parent {
+  display: flex;
+  min-width: 0; /* ✅ Safari fix */
+  min-height: 0; /* ✅ Safari fix */
+}
+
+.test-nested-flex-child {
+  display: flex;
+  flex: 1 1 auto;
+  min-width: 0; /* ✅ Safari fix */
+  min-height: 0; /* ✅ Safari fix */
+}
+
+.test-nested-flex-grandchild {
+  flex: 1 1 auto;
+  min-width: 0; /* ✅ Safari fix */
+  min-height: 0; /* ✅ Safari fix */
+}

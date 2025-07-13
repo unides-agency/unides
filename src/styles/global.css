@@ -253,3 +253,275 @@ p {
   transform: scale(1.1);
   background-color: rgba(169, 135, 255, 0.3);
 }
+
+/* 
+ * Safari Flex/Grid min-width: 0 Fix
+ * 
+ * Problem: Safari requires explicit min-width: 0 and min-height: 0 on flex/grid containers
+ * and their children to allow proper shrinking and wrapping behavior.
+ * 
+ * Without these properties:
+ * - Flex items won't shrink below their content size
+ * - Grid items may overflow their containers
+ * - Layout can break with blank spaces or overflow
+ * - Modal dialogs may not size properly
+ * 
+ * Solution: Add min-width: 0 and min-height: 0 to:
+ * - Flex containers and their children
+ * - Grid containers and their children
+ * - Modal containers and form elements
+ * - Card layouts and wrapper elements
+ */
+
+/* Safari Flex/Grid Layout Fixes */
+.flex-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  min-width: 0; /* Important for Safari */
+  min-height: 0; /* Important for Safari */
+}
+
+.flex-wrapper > * {
+  min-width: 0;
+  min-height: 0;
+}
+
+.grid-wrapper {
+  display: grid;
+  min-width: 0;
+  min-height: 0;
+}
+
+.grid-wrapper > * {
+  min-width: 0;
+  min-height: 0;
+}
+
+/* Modal specific fixes */
+.modal-overlay {
+  min-width: 0;
+  min-height: 0;
+}
+
+.modal-overlay:not(.hidden) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-overlay.hidden {
+  display: none;
+}
+
+.modal-dialog {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.modal-body {
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+/* Form layout fixes */
+.form-grid {
+  display: grid;
+  gap: 1rem;
+  min-width: 0;
+  min-height: 0;
+}
+
+.form-row {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  min-width: 0;
+  min-height: 0;
+}
+
+.form-field {
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 0;
+}
+
+/* Card layout fixes */
+.card-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  min-width: 0;
+  min-height: 0;
+}
+
+.card-flex {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  min-width: 0;
+  min-height: 0;
+}
+
+.card-flex > * {
+  flex: 1 1 300px;
+  min-width: 0;
+  min-height: 0;
+}
+
+/* Apply Modal Specific Fixes */
+#apply-modal {
+  /* Base modal styles */
+  min-width: 0;
+  min-height: 0;
+}
+
+/* When modal is hidden, ensure it stays hidden regardless of other classes */
+#apply-modal.hidden {
+  display: none !important;
+}
+
+/* When modal is visible (not hidden), apply flex layout */
+#apply-modal:not(.hidden) {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+}
+
+/* General modal visibility utilities */
+.modal-hidden {
+  display: none !important;
+}
+
+.modal-flex {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  min-height: 0;
+}
+
+/* 
+ * Modal Visibility Fix
+ * 
+ * Problem: Modal elements had both 'hidden' and 'flex' classes, creating CSS conflicts.
+ * The 'flex' class was overriding the 'hidden' class, making modals always visible.
+ * 
+ * Solution: Use !important to ensure 'hidden' class always wins, and conditional
+ * display rules that only apply flex when modal is not hidden.
+ * 
+ * This fixes:
+ * - Apply modal always showing
+ * - Talent modal always showing  
+ * - Creative modal always showing
+ * - Menu modal always showing
+ */
+
+/* Ensure Tailwind's hidden class always wins */
+.hidden {
+  display: none !important;
+}
+
+/* All Modal Visibility Fixes */
+#talent-modal.hidden,
+#creative-modal.hidden,
+#menu-modal.hidden {
+  display: none !important;
+}
+
+#talent-modal:not(.hidden),
+#creative-modal:not(.hidden),
+#menu-modal:not(.hidden) {
+  display: block !important;
+}
+
+/* General modal utility classes */
+.modal {
+  /* Default modal styles */
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+}
+
+.modal.hidden {
+  display: none !important;
+}
+
+.modal:not(.hidden) {
+  display: block !important;
+}
+
+.modal-overlay {
+  min-width: 0;
+  min-height: 0;
+}
+
+#apply-modal .bg-white {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+#apply-modal .p-6 {
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+#apply-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-width: 0;
+  min-height: 0;
+}
+
+#apply-form .space-y-4 > * {
+  min-width: 0;
+  min-height: 0;
+}
+
+#apply-form .flex {
+  display: flex;
+  gap: 1rem;
+  min-width: 0;
+  min-height: 0;
+}
+
+#apply-form .flex > * {
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 0;
+}
+
+/* Input field fixes */
+#apply-form input,
+#apply-form textarea {
+  min-width: 0;
+  min-height: 0;
+  box-sizing: border-box;
+}
+
+/* Button group fixes */
+#apply-form .flex.gap-4 {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  min-width: 0;
+  min-height: 0;
+}
+
+#apply-form .flex.gap-4 > button {
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 0;
+}

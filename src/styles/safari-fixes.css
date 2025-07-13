@@ -58,6 +58,16 @@ body {
 .flex {
   display: -webkit-flex;
   display: flex;
+  /* Fix Safari flex container sizing */
+  min-width: 0;
+  min-height: 0;
+}
+
+/* Fix Safari flex children sizing */
+.flex > * {
+  /* Allow flex items to shrink properly in Safari */
+  min-width: 0;
+  min-height: 0;
 }
 
 .flex-col {
@@ -73,6 +83,52 @@ body {
 .flex-wrap {
   -webkit-flex-wrap: wrap;
   flex-wrap: wrap;
+}
+
+/* Fix Safari flex-basis issues */
+.flex-1 {
+  -webkit-flex: 1 1 0%;
+  flex: 1 1 0%;
+  min-width: 0;
+  min-height: 0;
+}
+
+.flex-auto {
+  -webkit-flex: 1 1 auto;
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 0;
+}
+
+.flex-none {
+  -webkit-flex: none;
+  flex: none;
+}
+
+/* Fix Safari flex-shrink issues */
+.flex-shrink {
+  -webkit-flex-shrink: 1;
+  flex-shrink: 1;
+  min-width: 0;
+  min-height: 0;
+}
+
+.flex-shrink-0 {
+  -webkit-flex-shrink: 0;
+  flex-shrink: 0;
+}
+
+/* Fix Safari flex-grow issues */
+.flex-grow {
+  -webkit-flex-grow: 1;
+  flex-grow: 1;
+  min-width: 0;
+  min-height: 0;
+}
+
+.flex-grow-0 {
+  -webkit-flex-grow: 0;
+  flex-grow: 0;
 }
 
 .items-center {
@@ -121,6 +177,85 @@ body {
 
 .grid > * {
   /* Fix Safari grid item sizing */
+  min-width: 0;
+  min-height: 0;
+}
+
+/* Safari Modal and Layout Container Fixes */
+.modal-container {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+}
+
+.modal-content {
+  -webkit-flex: 1 1 auto;
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.form-container {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+}
+
+.form-row {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-align-items: center;
+  align-items: center;
+  min-width: 0;
+  min-height: 0;
+}
+
+.form-field {
+  -webkit-flex: 1 1 auto;
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 0;
+}
+
+.button-group {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  flex-wrap: wrap;
+  gap: 1rem;
+  min-width: 0;
+  min-height: 0;
+}
+
+.button-group > * {
+  -webkit-flex: 1 1 auto;
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 0;
+}
+
+/* Fix Safari card layouts */
+.card-container {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  flex-wrap: wrap;
+  min-width: 0;
+  min-height: 0;
+}
+
+.card {
+  -webkit-flex: 1 1 300px;
+  flex: 1 1 300px;
   min-width: 0;
   min-height: 0;
 }
