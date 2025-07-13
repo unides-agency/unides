@@ -63,9 +63,13 @@ try {
                     </span>
                   )}
                   {talent.specialties && talent.specialties.length > 0 && (
-                    <span class="bg-primary/80 text-white text-xs py-0.5 px-1.5 rounded-full min-w-0">
-                      {talent.specialties[0].trim()}
-                    </span>
+                    <div class="flex flex-wrap gap-1">
+                      {talent.specialties.map((s, i) => (
+                        <div key={i} class="bg-primary/80 text-white text-xs py-0.5 px-1.5 rounded-full min-w-0">
+                          {s.trim()}
+                        </div>
+                      ))}
+                    </div>
                   )}
                 </div>
                 
