@@ -74,13 +74,10 @@
           </div>
 
           <!-- Action Buttons -->
-          <div class="flex gap-4 pt-6 border-t border-default/20">
-            <button class="flex-1 bg-primary text-white px-6 py-3 rounded-md hover:bg-primary/80 transition-all duration-300 font-medium shadow-md hover:shadow-lg hover:-translate-y-0.5">
-              Contact Creative
-            </button>
+          <div class="flex pt-6 border-t border-default/20">
             <button 
               id="creative-download-portfolio-btn"
-              class="flex-1 border border-primary text-primary px-6 py-3 rounded-md hover:bg-primary/10 transition-all duration-300 font-medium hover:shadow-md hover:-translate-y-0.5"
+              class="w-full border border-primary text-primary px-6 py-3 rounded-md hover:bg-primary/10 transition-all duration-300 font-medium hover:shadow-md hover:-translate-y-0.5"
             >
               <span class="creative-portfolio-text">Download Portfolio</span>
               <span class="creative-portfolio-spinner hidden animate-spin ml-2">⏳</span>
@@ -96,25 +93,9 @@
   // Only initialize if this is the first load of the component
   if (!window.creativeModalInitialized) {
     window.creativeModalInitialized = true;
-    
-    // Get creatives data from the main page
-    function getCreativesData() {
-      const creativesDataElement = document.getElementById('creatives-data');
-      console.log('Creatives data element:', creativesDataElement);
-      const dataText = creativesDataElement ? creativesDataElement.textContent : '[]';
-      console.log('Creatives data text:', dataText);
-      try {
-        const parsedData = JSON.parse(dataText);
-        console.log('Parsed creatives data:', parsedData);
-        return parsedData;
-      } catch (error) {
-        console.error('Error parsing creatives data:', error);
-        return [];
-      }
-    }
 
     // Main modal open function
-    function openCreativeModal(id, name, specialty, description, image) {
+    function openCreativeModal(id, name, specialty, description, image, birth, height, eyeColor, hairColor, shoeSize, dressSize, stats, imgs, pdfUrl) {
       const modal = document.getElementById('creative-modal');
       const modalContent = document.getElementById('creative-modal-content');
       const modalTitle = document.getElementById('creative-modal-title');
@@ -126,28 +107,25 @@
       const modalPersonal = document.getElementById('creative-modal-personal');
       const modalStats = document.getElementById('creative-modal-stats');
 
-      console.log('Opening creative modal for:', { id, name, specialty, description, image });
+      console.log('Opening creative modal for:', { id, name, specialty, description, image, birth, height, eyeColor, hairColor, shoeSize, dressSize, stats, imgs, pdfUrl });
 
-      // Get creatives data
-      const creativesData = getCreativesData();
-      
-      // Find the creative data from the fetched data
-      const creative = creativesData.find(c => c.id === id);
-      
-      // If not found in data, create a basic object
-      let currentCreative;
-      if (!creative) {
-        currentCreative = {
-          id,
-          name,
-          specialty,
-          description,
-          image: image || "",
-          stats: {}
-        };
-      } else {
-        currentCreative = creative;
-      }
+      // Create creative object from passed parameters
+      const currentCreative = {
+        id,
+        name,
+        specialty,
+        description,
+        image: image || "",
+        birth,
+        height,
+        eyeColor,
+        hairColor,
+        shoeSize,
+        dressSize,
+        stats: stats || {},
+        imgs: imgs || [],
+        pdfUrl
+      };
 
       // Populate modal content
       modalTitle.textContent = `${currentCreative.name}'s Portfolio`;
@@ -155,9 +133,16 @@
       modalSpecialty.textContent = currentCreative.specialty;
       modalDescription.textContent = currentCreative.description;
 
-      // Handle image in modal
-      if (currentCreative.image && currentCreative.image.trim() !== "") {
-        modalImage.src = currentCreative.image;
+      // Handle image in modal - use imgs array if available, fallback to single image
+      let displayImage = '';
+      if (currentCreative.imgs && Array.isArray(currentCreative.imgs) && currentCreative.imgs.length > 0) {
+        displayImage = currentCreative.imgs[0]; // Use first image from imgs array
+      } else if (currentCreative.image && currentCreative.image.trim() !== "") {
+        displayImage = currentCreative.image; // Fallback to single image
+      }
+
+      if (displayImage) {
+        modalImage.src = displayImage;
         modalImage.alt = `${currentCreative.name} - ${currentCreative.specialty}`;
         modalImage.classList.remove('hidden');
         modalImagePlaceholder.classList.add('hidden');
@@ -169,21 +154,21 @@
       // Populate personal details
       modalPersonal.innerHTML = '';
       const personalFields = [
-        { key: 'birth', label: 'Birth' },
-        { key: 'height', label: 'Height' },
-        { key: 'eyeColor', label: 'Eye Color' },
-        { key: 'hairColor', label: 'Hair Color' },
-        { key: 'shoeSize', label: 'Shoe Size' },
-        { key: 'dressSize', label: 'Dress Size' }
+        { key: 'birth', label: 'Birth', value: birth },
+        { key: 'height', label: 'Height', value: height },
+        { key: 'eyeColor', label: 'Eye Color', value: eyeColor },
+        { key: 'hairColor', label: 'Hair Color', value: hairColor },
+        { key: 'shoeSize', label: 'Shoe Size', value: shoeSize },
+        { key: 'dressSize', label: 'Dress Size', value: dressSize }
       ];
 
-      personalFields.forEach(({ key, label }) => {
-        if (currentCreative[key]) {
+      personalFields.forEach(({ key, label, value }) => {
+        if (value) {
           const detailDiv = document.createElement('div');
           detailDiv.className = 'flex justify-between p-2 bg-default/10 rounded';
           detailDiv.innerHTML = `
             <span class="text-default/60 font-medium">${label}:</span>
-            <span class="text-default font-semibold">${currentCreative[key]}</span>
+            <span class="text-default font-semibold">${value}</span>
           `;
           modalPersonal.appendChild(detailDiv);
         }
@@ -191,8 +176,8 @@
 
       // Populate stats
       modalStats.innerHTML = '';
-      if (currentCreative.stats && Object.keys(currentCreative.stats).length > 0) {
-        Object.entries(currentCreative.stats).forEach(([key, value]) => {
+      if (stats && Object.keys(stats).length > 0) {
+        Object.entries(stats).forEach(([key, value]) => {
           const statDiv = document.createElement('div');
           statDiv.className = 'flex justify-between p-2 bg-default/10 rounded';
           statDiv.innerHTML = `
@@ -207,6 +192,7 @@
       modal.classList.remove('hidden');
       modal.setAttribute('aria-hidden', 'false');
       modal.dataset.currentCreativeId = id; // Store current creative ID
+      modal.dataset.pdfUrl = pdfUrl || ''; // Store PDF URL
       document.body.style.overflow = 'hidden';
       
       // Animate modal content
@@ -249,18 +235,27 @@
       portfolioSpinner.classList.remove('hidden');
       
       try {
-        // Get current creative ID
+        // Get current creative ID and PDF URL from stored data
         const modal = document.getElementById('creative-modal');
         const currentCreativeId = modal ? modal.dataset.currentCreativeId : null;
+        const storedPdfUrl = modal ? modal.dataset.pdfUrl : null;
         
         if (!currentCreativeId) {
           throw new Error('No creative ID found');
         }
 
-        // Get PDF URL from Firebase
-        const pdfUrl = await getCreativePdfUrl(currentCreativeId);
+        console.log('PDF URL check:', storedPdfUrl);
+
+        // Use stored PDF URL if available, otherwise try Firebase
+        let pdfUrl = storedPdfUrl;
         
-        if (pdfUrl) {
+        if (!pdfUrl || pdfUrl.trim() === '') {
+          console.log('No stored PDF URL, trying Firebase...');
+          pdfUrl = await getCreativePdfUrl(currentCreativeId);
+        }
+        
+        if (pdfUrl && pdfUrl.trim() !== '') {
+          console.log('Opening PDF URL:', pdfUrl);
           // Create a temporary link and trigger download
           const link = document.createElement('a');
           link.href = pdfUrl;
@@ -271,6 +266,7 @@
           document.body.removeChild(link);
         } else {
           // Show user-friendly message
+          console.log('No PDF URL found');
           alert('Portfolio PDF not available for this creative.');
         }
         

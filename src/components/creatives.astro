@@ -117,7 +117,7 @@ try {
 
                 <button
                     class="view-creative-btn w-full bg-primary text-white px-3 py-2 rounded-md hover:bg-primary/80 transition-all duration-300 text-xs font-medium relative overflow-hidden group"
-                    onclick={`openCreativeModal('${creative.id}', '${creative.name}', '${creative.specialty}', '${creative.description}', '${creative.image || ""}')`}
+                    onclick={`openCreativeModal('${creative.id}', '${creative.name}', '${creative.specialty}', '${creative.description}', '${creative.image || ""}', '${creative.birth || ""}', '${creative.height || ""}', '${creative.eyeColor || ""}', '${creative.hairColor || ""}', '${creative.shoeSize || ""}', '${creative.dressSize || ""}', ${JSON.stringify(creative.stats || {})}, ${JSON.stringify(creative.imgs || creative.images || [])}, '${creative.pdfUrl || ""}')`}
                 >
                   <span class="relative z-10 group-hover:translate-x-1 transition-transform duration-300 inline-flex items-center">
                     View Portfolio
@@ -139,3 +139,51 @@ try {
 
 <!-- Include the extracted modal component -->
 <CreativeModalComponent />
+
+<style>
+  /* Mobile-specific styles for view-creative-btn */
+  .view-creative-btn {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+  }
+  
+  @media (max-width: 768px) {
+    .view-creative-btn {
+      padding: 0.5rem 1rem;
+      font-size: 0.875rem;
+      min-height: 44px;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      -khtml-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+    
+    .view-creative-btn:active {
+      transform: scale(0.95);
+      background-color: rgba(139, 92, 246, 0.8);
+    }
+    
+    .view-creative-btn .inline-flex {
+      justify-content: center;
+      align-items: center;
+    }
+  }
+  
+  /* Touch device optimizations */
+  @media (hover: none) and (pointer: coarse) {
+    .view-creative-btn:hover {
+      transform: none;
+      box-shadow: none;
+    }
+    
+    .view-creative-btn:active {
+      transform: scale(0.95);
+      background-color: rgba(139, 92, 246, 0.8);
+    }
+  }
+</style>
