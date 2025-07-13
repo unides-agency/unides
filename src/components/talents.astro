@@ -33,7 +33,10 @@ try {
                 src={talent.image}
                 alt={`${talent.name} - ${talent.specialty}`}
                 class="w-full h-full object-cover"
-                loading="lazy"
+                loading={talent.id <= 4 ? "eager" : "lazy"}
+                fetchpriority={talent.id <= 2 ? "high" : "auto"}
+                width="200"
+                height="300"
               />
             ) : (
               <span class="text-default/60 text-xs">Photo Coming Soon</span>
@@ -667,6 +670,282 @@ try {
     firstFocusableElement = null;
     lastFocusableElement = null;
   }
+
+  // Performance monitoring for Core Web Vitals
+  const performanceObserver = {
+    lcpObserver: null,
+    clsObserver: null,
+    tbtObserver: null,
+    metrics: {
+      lcp: 0,
+      cls: 0,
+      tbt: 0
+    },
+
+    init() {
+      this.observeLCP();
+      this.observeCLS();
+      this.observeTBT();
+    },
+
+    observeLCP() {
+      if (typeof PerformanceObserver === 'undefined') return;
+      
+      try {
+        this.lcpObserver = new PerformanceObserver((list) => {
+          const entries = list.getEntries();
+          const lastEntry = entries[entries.length - 1];
+          
+          this.metrics.lcp = lastEntry.startTime;
+          
+          // Good: < 2.5s, Needs improvement: 2.5s - 4s, Poor: > 4s
+          if (this.metrics.lcp > 2500) {
+            console.warn(`LCP: ${this.metrics.lcp}ms - Consider optimizing image loading`);
+            this.optimizeForLCP();
+          }
+        });
+        
+        this.lcpObserver.observe({ entryTypes: ['largest-contentful-paint'] });
+      } catch (error) {
+        console.warn('LCP observer not supported:', error);
+      }
+    },
+
+    observeCLS() {
+      if (typeof PerformanceObserver === 'undefined') return;
+      
+      try {
+        this.clsObserver = new PerformanceObserver((list) => {
+          let clsValue = 0;
+          
+          list.getEntries().forEach((entry) => {
+            if (!entry.hadRecentInput) {
+              clsValue += entry.value;
+            }
+          });
+          
+          this.metrics.cls += clsValue;
+          
+          // Good: < 0.1, Needs improvement: 0.1 - 0.25, Poor: > 0.25
+          if (this.metrics.cls > 0.1) {
+            console.warn(`CLS: ${this.metrics.cls} - Consider reducing layout shifts`);
+            this.optimizeForCLS();
+          }
+        });
+        
+        this.clsObserver.observe({ entryTypes: ['layout-shift'] });
+      } catch (error) {
+        console.warn('CLS observer not supported:', error);
+      }
+    },
+
+    observeTBT() {
+      if (typeof PerformanceObserver === 'undefined') return;
+      
+      try {
+        // TBT is calculated from long tasks
+        this.tbtObserver = new PerformanceObserver((list) => {
+          list.getEntries().forEach((entry) => {
+            if (entry.duration > 50) {
+              this.metrics.tbt += entry.duration - 50;
+            }
+          });
+          
+          // Good: < 200ms, Needs improvement: 200ms - 600ms, Poor: > 600ms
+          if (this.metrics.tbt > 200) {
+            console.warn(`TBT: ${this.metrics.tbt}ms - Consider deferring animations`);
+            this.optimizeForTBT();
+          }
+        });
+        
+        this.tbtObserver.observe({ entryTypes: ['longtask'] });
+      } catch (error) {
+        console.warn('TBT observer not supported:', error);
+      }
+    },
+
+    optimizeForLCP() {
+      // Optimize images for better LCP
+      const images = document.querySelectorAll('img[loading="lazy"]');
+      images.forEach((img, index) => {
+        if (index < 2) { // Make first 2 images load eagerly
+          img.loading = 'eager';
+          img.fetchPriority = 'high';
+        }
+      });
+    },
+
+    optimizeForCLS() {
+      // Add explicit dimensions to prevent layout shifts
+      const images = document.querySelectorAll('img:not([width]):not([height])');
+      images.forEach((img) => {
+        if (img.naturalWidth && img.naturalHeight) {
+          img.setAttribute('width', img.naturalWidth);
+          img.setAttribute('height', img.naturalHeight);
+        }
+      });
+    },
+
+    optimizeForTBT() {
+      // Defer animations if TBT is high
+      this.deferAnimations();
+    },
+
+    deferAnimations() {
+      // Disable animations if performance is poor
+      const style = document.createElement('style');
+      style.textContent = `
+        .defer-animations * {
+          animation-duration: 0.01ms !important;
+          animation-delay: 0s !important;
+          transition-duration: 0.01ms !important;
+          transition-delay: 0s !important;
+        }
+      `;
+      document.head.appendChild(style);
+      document.body.classList.add('defer-animations');
+      
+      console.log('Animations deferred due to poor performance');
+    },
+
+    getMetrics() {
+      return {
+        lcp: this.metrics.lcp,
+        cls: this.metrics.cls,
+        tbt: this.metrics.tbt,
+        lcpRating: this.metrics.lcp < 2500 ? 'good' : this.metrics.lcp < 4000 ? 'needs-improvement' : 'poor',
+        clsRating: this.metrics.cls < 0.1 ? 'good' : this.metrics.cls < 0.25 ? 'needs-improvement' : 'poor',
+        tbtRating: this.metrics.tbt < 200 ? 'good' : this.metrics.tbt < 600 ? 'needs-improvement' : 'poor'
+      };
+    },
+
+    disconnect() {
+      if (this.lcpObserver) this.lcpObserver.disconnect();
+      if (this.clsObserver) this.clsObserver.disconnect();
+      if (this.tbtObserver) this.tbtObserver.disconnect();
+    }
+  };
+
+  // Animation optimization based on user preferences and performance
+  const animationManager = {
+    prefersReducedMotion: false,
+    performanceMode: 'auto', // 'auto', 'performance', 'quality'
+    
+    init() {
+      this.checkUserPreferences();
+      this.adaptToPerformance();
+      this.optimizeModalAnimations();
+    },
+
+    checkUserPreferences() {
+      this.prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      
+      if (this.prefersReducedMotion) {
+        this.disableAnimations();
+      }
+    },
+
+    adaptToPerformance() {
+      // Check device capabilities
+      const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+      const isSlowConnection = connection && (connection.effectiveType === 'slow-2g' || connection.effectiveType === '2g');
+      const isLowEndDevice = navigator.hardwareConcurrency && navigator.hardwareConcurrency < 4;
+      
+      if (isSlowConnection || isLowEndDevice) {
+        this.performanceMode = 'performance';
+        this.simplifyAnimations();
+      }
+    },
+
+    optimizeModalAnimations() {
+      const modal = document.getElementById('talent-modal');
+      if (!modal) return;
+
+      if (this.prefersReducedMotion || this.performanceMode === 'performance') {
+        // Use simpler animations for better performance
+        modal.style.setProperty('--animation-duration', '0.1s');
+        modal.style.setProperty('--animation-easing', 'ease');
+      } else {
+        // Use full animations for better experience
+        modal.style.setProperty('--animation-duration', '0.3s');
+        modal.style.setProperty('--animation-easing', 'cubic-bezier(0.4, 0, 0.2, 1)');
+      }
+    },
+
+    disableAnimations() {
+      const style = document.createElement('style');
+      style.textContent = `
+        .talent-card,
+        .view-profile-btn,
+        #talent-modal,
+        #talent-modal-content {
+          animation: none !important;
+          transition: none !important;
+        }
+        
+        .talent-card:hover {
+          transform: none !important;
+        }
+      `;
+      document.head.appendChild(style);
+    },
+
+    simplifyAnimations() {
+      const style = document.createElement('style');
+      style.textContent = `
+        .talent-card {
+          transition-duration: 0.1s !important;
+        }
+        
+        .talent-card:hover {
+          transform: scale(1.01) !important;
+        }
+        
+        #talent-modal-content {
+          transition-duration: 0.1s !important;
+        }
+      `;
+      document.head.appendChild(style);
+    }
+  };
+
+  // Initialize performance monitoring and animation optimization
+  if (typeof window !== 'undefined') {
+    // Wait for page load to avoid impacting initial render
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        performanceObserver.init();
+        animationManager.init();
+      }, 1000);
+    });
+
+    // Cleanup on page unload
+    window.addEventListener('beforeunload', () => {
+      performanceObserver.disconnect();
+    });
+
+    // Make performance metrics available globally for debugging
+    window.getPerformanceMetrics = () => performanceObserver.getMetrics();
+  }
+
+  // Enhanced modal opening with performance considerations
+  function openTalentModalOptimized(id, name, specialties, description, image) {
+    // Check if we should defer animations
+    const metrics = performanceObserver.getMetrics();
+    const shouldDeferAnimations = metrics.tbt > 300 || metrics.cls > 0.15;
+    
+    if (shouldDeferAnimations) {
+      // Open modal without complex animations
+      const modal = document.getElementById('talent-modal');
+      modal.style.setProperty('--animation-duration', '0.05s');
+    }
+    
+    // Call original function
+    openTalentModal(id, name, specialties, description, image);
+  }
+
+  // Replace the global function with optimized version
+  window.openTalentModal = openTalentModalOptimized;
 </script>
 
 <style>
@@ -773,5 +1052,78 @@ try {
   
   .modal[aria-hidden="true"] {
     display: none !important;
+  }
+
+  /* Performance-optimized animations */
+  .talent-card {
+    transition-duration: var(--animation-duration, 0.3s);
+    transition-timing-function: var(--animation-easing, cubic-bezier(0.4, 0, 0.2, 1));
+  }
+
+  .view-profile-btn {
+    transition-duration: var(--animation-duration, 0.3s);
+    transition-timing-function: var(--animation-easing, cubic-bezier(0.4, 0, 0.2, 1));
+  }
+
+  #talent-modal {
+    transition-duration: var(--animation-duration, 0.3s);
+    transition-timing-function: var(--animation-easing, cubic-bezier(0.4, 0, 0.2, 1));
+  }
+
+  #talent-modal-content {
+    transition-duration: var(--animation-duration, 0.3s);
+    transition-timing-function: var(--animation-easing, cubic-bezier(0.4, 0, 0.2, 1));
+  }
+
+  /* Optimizations for better LCP */
+  .talent-card img {
+    content-visibility: auto;
+    contain-intrinsic-size: 200px 300px;
+  }
+
+  /* Prevent layout shifts for better CLS */
+  .talent-card {
+    contain: layout style;
+  }
+
+  .talent-card .aspect-\[2\/3\] {
+    min-height: 300px; /* Explicit height to prevent CLS */
+  }
+
+  /* Reduce motion for users who prefer it */
+  @media (prefers-reduced-motion: reduce) {
+    .talent-card,
+    .view-profile-btn,
+    #talent-modal,
+    #talent-modal-content {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      transition-delay: 0s !important;
+    }
+    
+    .talent-card:hover {
+      transform: none !important;
+    }
+  }
+
+  /* Performance mode styles */
+  .performance-mode .talent-card {
+    transition-duration: 0.1s !important;
+    will-change: auto !important;
+  }
+
+  .performance-mode .talent-card:hover {
+    transform: scale(1.01) !important;
+  }
+
+  /* Critical CSS for above-the-fold content */
+  .talent-card:nth-child(-n+4) {
+    contain: none; /* Allow critical cards to render faster */
+  }
+
+  .talent-card:nth-child(-n+4) img {
+    loading: eager;
+    fetchpriority: high;
   }
 </style>
