@@ -154,12 +154,16 @@
       // Store current image index
       let currentImageIndex = 0;
       
-      // Collect all available images
-      const allImages = [];
+      // Collect all available media (images and YouTube videos)
+      const allMedia = [];
+      function isYouTubeUrl(url) {
+        // Accepts all YouTube URLs, including /live/, /watch, /shorts, etc.
+        return typeof url === 'string' && /(youtube\.com|youtu\.be)\//.test(url);
+      }
       if (currentCreative.imgs && Array.isArray(currentCreative.imgs) && currentCreative.imgs.length > 0) {
-        allImages.push(...currentCreative.imgs);
+        allMedia.push(...currentCreative.imgs);
       } else if (currentCreative.image && currentCreative.image.trim() !== "") {
-        allImages.push(currentCreative.image);
+        allMedia.push(currentCreative.image);
       }
 
       // Populate modal content
@@ -175,20 +179,79 @@
       
       modalAbout.textContent = currentCreative.description;
 
-      // Handle image gallery
-      function updateImageDisplay() {
-        if (allImages.length > 0) {
-          modalImage.src = allImages[currentImageIndex];
-          modalImage.alt = `${currentCreative.name} - Image ${currentImageIndex + 1}`;
-          modalImage.classList.remove('hidden');
-          modalImagePlaceholder.classList.add('hidden');
-          
+      // Handle media gallery (images and YouTube videos)
+      function updateMediaDisplay() {
+        // Hide all main display elements first
+        modalImage.classList.add('hidden');
+        modalImagePlaceholder.classList.add('hidden');
+        // Remove any existing video iframe
+        let videoIframe = document.getElementById('creative-modal-video');
+        if (videoIframe && videoIframe.parentNode) {
+          videoIframe.parentNode.removeChild(videoIframe);
+        }
+
+        if (allMedia.length > 0) {
+          const media = allMedia[currentImageIndex];
+          if (isYouTubeUrl(media)) {
+            // Show YouTube video
+            // Support /live/ and other YouTube URL formats
+            let videoId = null;
+            // Try to extract video ID from various YouTube URL formats
+            const patterns = [
+              /[?&]v=([\w-]{11})/, // watch?v=VIDEOID
+              /youtu\.be\/([\w-]{11})/, // youtu.be/VIDEOID
+              /youtube\.com\/embed\/([\w-]{11})/, // embed/VIDEOID
+              /youtube\.com\/shorts\/([\w-]{11})/, // shorts/VIDEOID
+              /youtube\.com\/live\/([\w-]{11})/, // live/VIDEOID
+              /youtube\.com\/v\/([\w-]{11})/ // v/VIDEOID
+            ];
+            for (const pattern of patterns) {
+              const match = media.match(pattern);
+              if (match) {
+                videoId = match[1];
+                break;
+              }
+            }
+            if (videoId) {
+              // Create a wrapper div to preserve aspect ratio
+              const wrapper = document.createElement('div');
+              wrapper.className = 'absolute inset-0 w-full h-full flex items-center justify-center aspect-[3/4]';
+              wrapper.style.position = 'absolute';
+              wrapper.style.inset = '0';
+              wrapper.style.width = '100%';
+              wrapper.style.height = '100%';
+              // Create the iframe
+              const iframe = document.createElement('iframe');
+              iframe.id = 'creative-modal-video';
+              iframe.width = '100%';
+              iframe.height = '100%';
+              iframe.className = 'w-full h-full aspect-[3/4] rounded-lg';
+              iframe.src = `https://www.youtube.com/embed/${videoId}?rel=0&showinfo=0`;
+              iframe.title = 'YouTube video player';
+              // Set allow and allowfullscreen as attributes for maximum compatibility
+              iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
+              iframe.setAttribute('allowfullscreen', '');
+              // Optionally add sandbox for extra compatibility (remove if issues)
+              // iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin allow-presentation allow-popups allow-forms');
+              wrapper.appendChild(iframe);
+              // Insert the wrapper before the modalImage
+              modalImage.parentNode.insertBefore(wrapper, modalImage);
+              // Hide the placeholder
+              modalImagePlaceholder.classList.add('hidden');
+            } else {
+              modalImagePlaceholder.classList.remove('hidden');
+            }
+          } else {
+            // Show image
+            modalImage.src = media;
+            modalImage.alt = `${currentCreative.name} - Image ${currentImageIndex + 1}`;
+            modalImage.classList.remove('hidden');
+          }
           // Update counter
           modalCurrentImage.textContent = currentImageIndex + 1;
-          modalTotalImages.textContent = allImages.length;
-          
-          // Show/hide navigation and counter based on image count
-          if (allImages.length > 1) {
+          modalTotalImages.textContent = allMedia.length;
+          // Show/hide navigation and counter based on media count
+          if (allMedia.length > 1) {
             modalImageNav.classList.remove('hidden');
             modalImageCounter.classList.remove('hidden');
           } else {
@@ -196,31 +259,54 @@
             modalImageCounter.classList.add('hidden');
           }
         } else {
-          modalImage.classList.add('hidden');
           modalImagePlaceholder.classList.remove('hidden');
           modalImageNav.classList.add('hidden');
           modalImageCounter.classList.add('hidden');
         }
       }
 
-      // Initialize image display
-      updateImageDisplay();
+      // Initialize media display
+      updateMediaDisplay();
 
-      // Create thumbnails if multiple images
-      if (allImages.length > 1) {
+      // Create thumbnails if multiple media (images or YouTube videos)
+      if (allMedia.length > 1) {
         modalThumbnails.innerHTML = '';
-        allImages.forEach((imgSrc, index) => {
+        allMedia.forEach((mediaSrc, index) => {
           const thumbnailDiv = document.createElement('div');
-          thumbnailDiv.className = 'aspect-square bg-default/20 rounded overflow-hidden cursor-pointer hover:opacity-80 hover:ring-2 hover:ring-primary transition-all duration-200 focus:ring-2 focus:ring-primary focus:outline-none';
+          thumbnailDiv.className = 'aspect-square bg-default/20 rounded overflow-hidden cursor-pointer hover:opacity-80 hover:ring-2 hover:ring-primary transition-all duration-200 focus:ring-2 focus:ring-primary focus:outline-none flex items-center justify-center';
           thumbnailDiv.tabIndex = 0;
           thumbnailDiv.setAttribute('role', 'button');
-          thumbnailDiv.setAttribute('aria-label', `View image ${index + 1} of ${allImages.length}`);
-          thumbnailDiv.innerHTML = `<img src="${imgSrc}" alt="${currentCreative.name} - Image ${index + 1}" class="w-full h-full object-cover" loading="lazy" />`;
-          
-          const handleImageClick = function() {
+          thumbnailDiv.setAttribute('aria-label', `View media ${index + 1} of ${allMedia.length}`);
+          if (isYouTubeUrl(mediaSrc)) {
+            // Show YouTube thumbnail
+            let videoId = null;
+            const patterns = [
+              /[?&]v=([\w-]{11})/, // watch?v=VIDEOID
+              /youtu\.be\/([\w-]{11})/, // youtu.be/VIDEOID
+              /youtube\.com\/embed\/([\w-]{11})/, // embed/VIDEOID
+              /youtube\.com\/shorts\/([\w-]{11})/, // shorts/VIDEOID
+              /youtube\.com\/live\/([\w-]{11})/, // live/VIDEOID
+              /youtube\.com\/v\/([\w-]{11})/ // v/VIDEOID
+            ];
+            for (const pattern of patterns) {
+              const match = mediaSrc.match(pattern);
+              if (match) {
+                videoId = match[1];
+                break;
+              }
+            }
+            if (videoId) {
+              thumbnailDiv.innerHTML = `<div class="relative w-full h-full flex items-center justify-center bg-black"><img src="https://img.youtube.com/vi/${videoId}/hqdefault.jpg" alt="YouTube Video Thumbnail" class="w-full h-full object-cover" /><span class="absolute inset-0 flex items-center justify-center"><svg class="w-8 h-8 text-white opacity-90" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span></div>`;
+            } else {
+              thumbnailDiv.innerHTML = `<span class="text-xs text-default/60">Video</span>`;
+            }
+          } else {
+            // Show image thumbnail
+            thumbnailDiv.innerHTML = `<img src="${mediaSrc}" alt="${currentCreative.name} - Image ${index + 1}" class="w-full h-full object-cover" loading="lazy" />`;
+          }
+          const handleMediaClick = function() {
             currentImageIndex = index;
-            updateImageDisplay();
-            
+            updateMediaDisplay();
             // Update active thumbnail styling
             const thumbs = modalThumbnails.querySelectorAll('div');
             thumbs.forEach(thumb => {
@@ -228,41 +314,37 @@
             });
             thumbnailDiv.classList.add('ring-2', 'ring-primary');
           };
-          
-          thumbnailDiv.addEventListener('click', handleImageClick);
+          thumbnailDiv.addEventListener('click', handleMediaClick);
           thumbnailDiv.addEventListener('keydown', function(e) {
             if (e.key === 'Enter' || e.key === ' ') {
               e.preventDefault();
-              handleImageClick();
+              handleMediaClick();
             }
           });
-          
           modalThumbnails.appendChild(thumbnailDiv);
         });
-        
         // Mark first thumbnail as active
         if (modalThumbnails.firstChild) {
           modalThumbnails.firstChild.classList.add('ring-2', 'ring-primary');
         }
-        
         modalThumbnails.classList.remove('hidden');
       } else {
         modalThumbnails.classList.add('hidden');
       }
 
       // Navigation functions
-      function showPreviousImage() {
-        if (allImages.length > 1) {
-          currentImageIndex = (currentImageIndex - 1 + allImages.length) % allImages.length;
-          updateImageDisplay();
+      function showPreviousMedia() {
+        if (allMedia.length > 1) {
+          currentImageIndex = (currentImageIndex - 1 + allMedia.length) % allMedia.length;
+          updateMediaDisplay();
           updateThumbnailHighlight();
         }
       }
 
-      function showNextImage() {
-        if (allImages.length > 1) {
-          currentImageIndex = (currentImageIndex + 1) % allImages.length;
-          updateImageDisplay();
+      function showNextMedia() {
+        if (allMedia.length > 1) {
+          currentImageIndex = (currentImageIndex + 1) % allMedia.length;
+          updateMediaDisplay();
           updateThumbnailHighlight();
         }
       }
@@ -284,13 +366,13 @@
       const nextBtn = document.getElementById('creative-modal-next-btn');
       
       if (prevBtn) {
-        prevBtn.removeEventListener('click', showPreviousImage);
-        prevBtn.addEventListener('click', showPreviousImage);
+        prevBtn.removeEventListener('click', showPreviousMedia);
+        prevBtn.addEventListener('click', showPreviousMedia);
       }
       
       if (nextBtn) {
-        nextBtn.removeEventListener('click', showNextImage);
-        nextBtn.addEventListener('click', showNextImage);
+        nextBtn.removeEventListener('click', showNextMedia);
+        nextBtn.addEventListener('click', showNextMedia);
       }
 
       // Keyboard navigation
@@ -298,10 +380,10 @@
         if (modal && !modal.classList.contains('hidden')) {
           if (e.key === 'ArrowLeft') {
             e.preventDefault();
-            showPreviousImage();
+            showPreviousMedia();
           } else if (e.key === 'ArrowRight') {
             e.preventDefault();
-            showNextImage();
+            showNextMedia();
           }
         }
       }
