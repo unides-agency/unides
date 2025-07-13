@@ -47,48 +47,48 @@ try {
                 </div>
                 
                 {/* Location and Top Specialty Only */}
-                <div class="flex flex-wrap gap-1 items-center">
+                <div class="flex flex-wrap gap-1 items-center min-w-0">
                   {talent.location && (
-                    <div class="bg-black/40 text-white text-xs py-0.5 px-1.5 rounded-full backdrop-blur-sm flex items-center">
+                    <div class="bg-black/40 text-white text-xs py-0.5 px-1.5 rounded-full backdrop-blur-sm flex items-center min-w-0">
                       <span class="mr-1">📍</span>{talent.location}
                     </div>
                   )}
                   {talent.born && (
-                    <span class="text-xs text-white bg-black/30 px-1.5 py-0.5 rounded backdrop-blur-sm" title="Born">
+                    <span class="text-xs text-white bg-black/30 px-1.5 py-0.5 rounded backdrop-blur-sm min-w-0" title="Born">
                       🎂 {talent.born}
                     </span>
                   )}
                   {talent.specialties && talent.specialties.length > 0 && (
-                    <span class="bg-primary/80 text-white text-xs py-0.5 px-1.5 rounded-full">
+                    <span class="bg-primary/80 text-white text-xs py-0.5 px-1.5 rounded-full min-w-0">
                       {talent.specialties[0].trim()}
                     </span>
                   )}
                 </div>
                 
                 {/* Personal Details - Compact */}
-                <div class="flex flex-wrap gap-1">
+                <div class="flex flex-wrap gap-1 min-w-0">
                   {talent.height && (
-                    <span class="text-xs text-white bg-black/30 px-1.5 py-0.5 rounded backdrop-blur-sm" title="Height">
+                    <span class="text-xs text-white bg-black/30 px-1.5 py-0.5 rounded backdrop-blur-sm min-w-0" title="Height">
                       📏 {talent.height}cm
                     </span>
                   )}
                   {talent.shoeSize && (
-                    <span class="text-xs text-white bg-black/30 px-1.5 py-0.5 rounded backdrop-blur-sm" title="Shoe Size">
+                    <span class="text-xs text-white bg-black/30 px-1.5 py-0.5 rounded backdrop-blur-sm min-w-0" title="Shoe Size">
                       👟 {talent.shoeSize}
                     </span>
                   )}
                   {talent.dressSize && (
-                    <span class="text-xs text-white bg-black/30 px-1.5 py-0.5 rounded backdrop-blur-sm" title="Dress Size">
+                    <span class="text-xs text-white bg-black/30 px-1.5 py-0.5 rounded backdrop-blur-sm min-w-0" title="Dress Size">
                       👗 {talent.dressSize}
                     </span>
                   )}
                   {talent.eyeColor && (
-                    <span class="text-xs text-white bg-black/30 px-1.5 py-0.5 rounded backdrop-blur-sm" title="Eye Color">
+                    <span class="text-xs text-white bg-black/30 px-1.5 py-0.5 rounded backdrop-blur-sm min-w-0" title="Eye Color">
                       👁️ {talent.eyeColor}
                     </span>
                   )}
                   {talent.hairColor && (
-                    <span class="text-xs text-white bg-black/30 px-1.5 py-0.5 rounded backdrop-blur-sm" title="Hair Color">
+                    <span class="text-xs text-white bg-black/30 px-1.5 py-0.5 rounded backdrop-blur-sm min-w-0" title="Hair Color">
                       💇 {talent.hairColor}
                     </span>
                   )}
@@ -99,9 +99,9 @@ try {
           <div class="p-3">
             <div class="mb-2">
               {/* Skills/Experience Tags */}
-              <div class="flex flex-wrap gap-1">
+              <div class="flex flex-wrap gap-1 min-w-0">
                 {talent.skills && talent.skills.split(',').map((skill) => (
-                  <span class="text-xs px-2 py-0.5 bg-primary/20 text-primary rounded-full hover:bg-primary/30 transition-colors">
+                  <span class="text-xs px-2 py-0.5 bg-primary/20 text-primary rounded-full hover:bg-primary/30 transition-colors min-w-0">
                     {skill.trim()}
                   </span>
                 ))}
@@ -116,7 +116,7 @@ try {
               data-talent-description={talent.description}
               data-talent-image={talent.image || ""}
             >
-              <span class="relative z-10 group-hover:translate-x-1 transition-transform duration-300 inline-flex items-center">
+              <span class="relative z-10 group-hover:translate-x-1 transition-transform duration-300 inline-flex items-center min-w-0">
                 <span class="loading-text">View Profile</span>
                 <span class="loading-spinner hidden animate-spin ml-2">⏳</span>
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 ml-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 arrow-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -134,11 +134,11 @@ try {
 
 <!-- Talent Modal -->
 <div id="talent-modal" class="modal hidden fixed inset-0 z-50 bg-black bg-opacity-60 backdrop-blur-sm" aria-hidden="true">
-  <div class="flex items-center justify-center min-h-screen p-4">
-    <div class="bg-default rounded-lg max-w-6xl w-full max-h-[95vh] overflow-y-auto shadow-2xl transform transition-transform duration-500 scale-95 opacity-0" id="talent-modal-content">
-      <div class="p-6">
-        <div class="flex justify-between items-start mb-6">
-          <h2 id="talent-modal-title" class="text-3xl font-bold text-default bg-gradient-to-r from-purple-400 to-primary bg-clip-text text-transparent">Talent Profile</h2>
+  <div class="flex items-center justify-center min-h-screen p-4 min-w-0">
+    <div class="bg-default rounded-lg max-w-6xl w-full max-h-[95vh] overflow-y-auto shadow-2xl transform transition-transform duration-500 scale-95 opacity-0 min-w-0" id="talent-modal-content">
+      <div class="p-6 min-w-0">
+        <div class="flex justify-between items-start mb-6 min-w-0">
+          <h2 id="talent-modal-title" class="text-3xl font-bold text-default bg-gradient-to-r from-purple-400 to-primary bg-clip-text text-transparent min-w-0">Talent Profile</h2>
           <button
             id="close-talent-modal"
             type="button"
@@ -149,12 +149,12 @@ try {
           </button>
         </div>
 
-        <div class="space-y-8">
-          <div class="flex flex-col lg:flex-row gap-8">
+        <div class="space-y-8 min-w-0">
+          <div class="flex flex-col lg:flex-row gap-8 min-w-0">
             <!-- Photo Gallery Section -->
-            <div class="lg:w-1/2">
+            <div class="lg:w-1/2 min-w-0">
               <h4 class="font-semibold mb-4 text-lg">Photos</h4>
-              <div id="talent-photo-gallery" class="space-y-4">
+              <div id="talent-photo-gallery" class="space-y-4 min-w-0">
                 <!-- Main photo -->
                 <div class="aspect-[3/4] bg-default/20 rounded-lg flex items-center justify-center overflow-hidden">
                   <img
@@ -175,26 +175,26 @@ try {
             </div>
 
             <!-- Info Section -->
-            <div class="lg:w-1/2 space-y-6">
-              <div>
-                <h3 id="talent-modal-name" class="text-2xl font-bold text-default"></h3>
-                <p id="talent-modal-specialty" class="text-primary font-medium text-lg"></p>
+            <div class="lg:w-1/2 space-y-6 min-w-0">
+              <div class="min-w-0">
+                <h3 id="talent-modal-name" class="text-2xl font-bold text-default min-w-0"></h3>
+                <p id="talent-modal-specialty" class="text-primary font-medium text-lg min-w-0"></p>
               </div>
 
-              <div>
+              <div class="min-w-0">
                 <h4 class="font-semibold mb-3 text-lg">About</h4>
-                <p id="talent-modal-description" class="text-default/80 leading-relaxed"></p>
+                <p id="talent-modal-description" class="text-default/80 leading-relaxed min-w-0"></p>
               </div>
 
-              <div>
+              <div class="min-w-0">
                 <h4 class="font-semibold mb-3 text-lg">Personal Details</h4>
-                <div id="talent-modal-personal" class="grid grid-cols-2 gap-3 text-sm">
+                <div id="talent-modal-personal" class="grid grid-cols-2 gap-3 text-sm min-w-0">
                   <!-- Personal details will be populated by JavaScript -->
                 </div>
               </div>
 
-              <div class="flex gap-4 pt-6 border-t border-default/20">
-                <button class="flex-1 border-2 border-primary text-primary px-8 py-4 rounded-lg hover:bg-primary/10 hover:border-purple-600 hover:text-purple-600 focus:ring-2 focus:ring-purple-400 focus:outline-none transition-all duration-300 font-semibold text-lg hover:shadow-lg hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none">
+              <div class="flex gap-4 pt-6 border-t border-default/20 min-w-0">
+                <button class="flex-1 border-2 border-primary text-primary px-8 py-4 rounded-lg hover:bg-primary/10 hover:border-purple-600 hover:text-purple-600 focus:ring-2 focus:ring-purple-400 focus:outline-none transition-all duration-300 font-semibold text-lg hover:shadow-lg hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none min-w-0">
                   <span class="portfolio-text">Download Portfolio</span>
                   <span class="portfolio-spinner hidden animate-spin ml-2">⏳</span>
                 </button>
@@ -561,3 +561,81 @@ try {
     }
   }
 </script>
+
+<style>
+  /* Fix flex wrapping issues by ensuring flex children have min-width: 0 */
+  .flex > * {
+    min-width: 0;
+  }
+  
+  .flex-wrap > * {
+    min-width: 0;
+  }
+  
+  .inline-flex > * {
+    min-width: 0;
+  }
+  
+  /* Specific fixes for talent card flex containers */
+  .talent-card .flex > * {
+    min-width: 0;
+    flex-shrink: 1;
+  }
+  
+  .talent-card .flex-wrap > * {
+    min-width: 0;
+    flex-shrink: 1;
+  }
+  
+  /* Modal flex container fixes */
+  .modal .flex > * {
+    min-width: 0;
+  }
+  
+  .modal .flex-col > * {
+    min-width: 0;
+  }
+  
+  .modal .flex-row > * {
+    min-width: 0;
+  }
+  
+  /* Responsive flex fixes */
+  @media (min-width: 768px) {
+    .md\:flex > * {
+      min-width: 0;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .lg\:flex > * {
+      min-width: 0;
+    }
+    
+    .lg\:flex-row > * {
+      min-width: 0;
+    }
+    
+    .lg\:flex-col > * {
+      min-width: 0;
+    }
+  }
+  
+  /* Grid fixes for similar issues */
+  .grid > * {
+    min-width: 0;
+  }
+  
+  /* Specific button flex fixes */
+  .view-profile-btn .inline-flex > * {
+    min-width: 0;
+    flex-shrink: 0; /* Prevent button content from shrinking */
+  }
+  
+  /* Tag and badge flex fixes */
+  .flex.gap-1 > span,
+  .flex.flex-wrap > span {
+    min-width: 0;
+    flex-shrink: 0; /* Prevent tags from shrinking too much */
+  }
+</style>
