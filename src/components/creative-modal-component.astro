@@ -26,9 +26,9 @@
           </div>
 
           <div class="flex flex-col md:flex-row gap-6">
-            <!-- Image Section -->
+            <!-- Image Gallery Section -->
             <div class="md:w-1/3">
-              <div id="creative-modal-image-container" class="aspect-[3/4] bg-default/20 rounded-lg flex items-center justify-center overflow-hidden">
+              <div id="creative-modal-image-container" class="aspect-[3/4] bg-default/20 rounded-lg flex items-center justify-center overflow-hidden relative">
                 <img
                   id="creative-modal-image"
                   src=""
@@ -37,6 +37,38 @@
                   loading="lazy"
                 />
                 <span id="creative-modal-image-placeholder" class="text-default/60 text-sm">Portfolio Preview</span>
+                
+                <!-- Image Navigation -->
+                <div id="creative-modal-image-nav" class="absolute inset-0 flex items-center justify-between p-2 opacity-0 hover:opacity-100 transition-opacity duration-300 hidden">
+                  <button
+                    id="creative-modal-prev-btn"
+                    class="bg-black/50 hover:bg-black/70 text-white p-2 rounded-full backdrop-blur-sm transition-all duration-300 hover:scale-110"
+                    aria-label="Previous image"
+                  >
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                    </svg>
+                  </button>
+                  <button
+                    id="creative-modal-next-btn"
+                    class="bg-black/50 hover:bg-black/70 text-white p-2 rounded-full backdrop-blur-sm transition-all duration-300 hover:scale-110"
+                    aria-label="Next image"
+                  >
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                    </svg>
+                  </button>
+                </div>
+                
+                <!-- Image Counter -->
+                <div id="creative-modal-image-counter" class="absolute bottom-2 left-2 bg-black/50 text-white text-xs px-2 py-1 rounded-full backdrop-blur-sm hidden">
+                  <span id="creative-modal-current-image">1</span>/<span id="creative-modal-total-images">1</span>
+                </div>
+              </div>
+              
+              <!-- Image Thumbnails -->
+              <div id="creative-modal-thumbnails" class="mt-3 flex gap-2 overflow-x-auto hidden">
+                <!-- Thumbnails will be populated by JavaScript -->
               </div>
             </div>
 
@@ -96,7 +128,11 @@
       const modalImage = document.getElementById('creative-modal-image');
       const modalImagePlaceholder = document.getElementById('creative-modal-image-placeholder');
       const modalPersonal = document.getElementById('creative-modal-personal');
-
+      const modalImageNav = document.getElementById('creative-modal-image-nav');
+      const modalImageCounter = document.getElementById('creative-modal-image-counter');
+      const modalCurrentImage = document.getElementById('creative-modal-current-image');
+      const modalTotalImages = document.getElementById('creative-modal-total-images');
+      const modalThumbnails = document.getElementById('creative-modal-thumbnails');
 
       // Create creative object from passed parameters
       const currentCreative = {
@@ -116,6 +152,17 @@
         pdfUrl
       };
 
+      // Store current image index
+      let currentImageIndex = 0;
+      
+      // Collect all available images
+      const allImages = [];
+      if (currentCreative.imgs && Array.isArray(currentCreative.imgs) && currentCreative.imgs.length > 0) {
+        allImages.push(...currentCreative.imgs);
+      } else if (currentCreative.image && currentCreative.image.trim() !== "") {
+        allImages.push(currentCreative.image);
+      }
+
       // Populate modal content
       modalTitle.textContent = `Creative's Portfolio`;
       modalName.textContent = currentCreative.name;
@@ -129,23 +176,126 @@
       
       modalAbout.textContent = currentCreative.description;
 
-      // Handle image in modal - use imgs array if available, fallback to single image
-      let displayImage = '';
-      if (currentCreative.imgs && Array.isArray(currentCreative.imgs) && currentCreative.imgs.length > 0) {
-        displayImage = currentCreative.imgs[0]; // Use first image from imgs array
-      } else if (currentCreative.image && currentCreative.image.trim() !== "") {
-        displayImage = currentCreative.image; // Fallback to single image
+      // Handle image gallery
+      function updateImageDisplay() {
+        if (allImages.length > 0) {
+          modalImage.src = allImages[currentImageIndex];
+          modalImage.alt = `${currentCreative.name} - Image ${currentImageIndex + 1}`;
+          modalImage.classList.remove('hidden');
+          modalImagePlaceholder.classList.add('hidden');
+          
+          // Update counter
+          modalCurrentImage.textContent = currentImageIndex + 1;
+          modalTotalImages.textContent = allImages.length;
+          
+          // Show/hide navigation and counter based on image count
+          if (allImages.length > 1) {
+            modalImageNav.classList.remove('hidden');
+            modalImageCounter.classList.remove('hidden');
+          } else {
+            modalImageNav.classList.add('hidden');
+            modalImageCounter.classList.add('hidden');
+          }
+        } else {
+          modalImage.classList.add('hidden');
+          modalImagePlaceholder.classList.remove('hidden');
+          modalImageNav.classList.add('hidden');
+          modalImageCounter.classList.add('hidden');
+        }
       }
 
-      if (displayImage) {
-        modalImage.src = displayImage;
-        modalImage.alt = `${currentCreative.name} - ${currentCreative.specialty}`;
-        modalImage.classList.remove('hidden');
-        modalImagePlaceholder.classList.add('hidden');
+      // Initialize image display
+      updateImageDisplay();
+
+      // Create thumbnails if multiple images
+      if (allImages.length > 1) {
+        modalThumbnails.innerHTML = '';
+        allImages.forEach((imgSrc, index) => {
+          const thumbnail = document.createElement('div');
+          thumbnail.className = `w-12 h-12 rounded cursor-pointer overflow-hidden border-2 transition-all duration-300 ${
+            index === currentImageIndex ? 'border-primary' : 'border-transparent hover:border-primary/50'
+          }`;
+          thumbnail.innerHTML = `
+            <img 
+              src="${imgSrc}" 
+              alt="Thumbnail ${index + 1}" 
+              class="w-full h-full object-cover"
+              loading="lazy"
+            />
+          `;
+          thumbnail.addEventListener('click', () => {
+            currentImageIndex = index;
+            updateImageDisplay();
+            updateThumbnailSelection();
+          });
+          modalThumbnails.appendChild(thumbnail);
+        });
+        modalThumbnails.classList.remove('hidden');
       } else {
-        modalImage.classList.add('hidden');
-        modalImagePlaceholder.classList.remove('hidden');
+        modalThumbnails.classList.add('hidden');
       }
+
+      // Update thumbnail selection
+      function updateThumbnailSelection() {
+        const thumbnails = modalThumbnails.querySelectorAll('div');
+        thumbnails.forEach((thumb, index) => {
+          if (index === currentImageIndex) {
+            thumb.classList.remove('border-transparent');
+            thumb.classList.add('border-primary');
+          } else {
+            thumb.classList.remove('border-primary');
+            thumb.classList.add('border-transparent');
+          }
+        });
+      }
+
+      // Navigation functions
+      function showPreviousImage() {
+        if (allImages.length > 1) {
+          currentImageIndex = (currentImageIndex - 1 + allImages.length) % allImages.length;
+          updateImageDisplay();
+          updateThumbnailSelection();
+        }
+      }
+
+      function showNextImage() {
+        if (allImages.length > 1) {
+          currentImageIndex = (currentImageIndex + 1) % allImages.length;
+          updateImageDisplay();
+          updateThumbnailSelection();
+        }
+      }
+
+      // Add navigation event listeners
+      const prevBtn = document.getElementById('creative-modal-prev-btn');
+      const nextBtn = document.getElementById('creative-modal-next-btn');
+      
+      if (prevBtn) {
+        prevBtn.removeEventListener('click', showPreviousImage);
+        prevBtn.addEventListener('click', showPreviousImage);
+      }
+      
+      if (nextBtn) {
+        nextBtn.removeEventListener('click', showNextImage);
+        nextBtn.addEventListener('click', showNextImage);
+      }
+
+      // Keyboard navigation
+      function handleKeydown(e) {
+        if (modal && !modal.classList.contains('hidden')) {
+          if (e.key === 'ArrowLeft') {
+            e.preventDefault();
+            showPreviousImage();
+          } else if (e.key === 'ArrowRight') {
+            e.preventDefault();
+            showNextImage();
+          }
+        }
+      }
+
+      // Remove existing keydown listener and add new one
+      document.removeEventListener('keydown', handleKeydown);
+      document.addEventListener('keydown', handleKeydown);
 
       // Populate personal details
       modalPersonal.innerHTML = '';

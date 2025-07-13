@@ -117,7 +117,7 @@ try {
 
                 <button
                     class="view-creative-btn w-full bg-primary text-white px-3 py-2 rounded-md hover:bg-primary/80 transition-all duration-300 text-xs font-medium relative overflow-hidden group"
-                    onclick={`openCreativeModal('${creative.id}', '${creative.name}', ${JSON.stringify(creative.specialties || [])}, '${creative.description}', '${creative.image || ""}', '${creative.birth || ""}', '${creative.height || ""}', '${creative.eyeColor || ""}', '${creative.hairColor || ""}', '${creative.shoeSize || ""}', '${creative.dressSize || ""}', ${JSON.stringify(creative.stats || {})}, ${JSON.stringify(creative.imgs || [])}, '${creative.pdfUrl || ""}')`}
+                    onclick={`openCreativeModal(${JSON.stringify(creative.id)}, ${JSON.stringify(creative.name)}, ${JSON.stringify(creative.specialties || [])}, ${JSON.stringify(creative.description || "")}, ${JSON.stringify(creative.image || "")}, ${JSON.stringify(creative.birth || "")}, ${JSON.stringify(creative.height || "")}, ${JSON.stringify(creative.eyeColor || "")}, ${JSON.stringify(creative.hairColor || "")}, ${JSON.stringify(creative.shoeSize || "")}, ${JSON.stringify(creative.dressSize || "")}, ${JSON.stringify(creative.stats || {})}, ${JSON.stringify(creative.imgs || [])}, ${JSON.stringify(creative.pdfUrl || "")})`}
                 >
                   <span class="relative z-10 group-hover:translate-x-1 transition-transform duration-300 inline-flex items-center">
                     View Portfolio
