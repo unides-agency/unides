@@ -1,0 +1,474 @@
+---
+// Talent Modal Component - Extracted from working talents.astro
+---
+
+<!-- Talent Modal HTML -->
+<div id="talent-modal" class="modal hidden fixed inset-0 z-50 bg-black bg-opacity-60 backdrop-blur-sm" aria-hidden="true" role="dialog" aria-labelledby="talent-modal-title" aria-describedby="talent-modal-description">
+  <div class="flex items-center justify-center min-h-screen p-4 min-w-0">
+    <div class="bg-default rounded-lg max-w-6xl w-full max-h-[95vh] overflow-y-auto shadow-2xl transform transition-transform duration-500 scale-95 opacity-0 min-w-0" id="talent-modal-content" role="document">
+      <div class="p-6 min-w-0">
+        <div class="flex justify-between items-start mb-6 min-w-0">
+          <h2 id="talent-modal-title" class="text-3xl font-bold text-default bg-gradient-to-r from-purple-400 to-primary bg-clip-text text-transparent min-w-0">Talent Profile</h2>
+          <button
+            id="close-talent-modal"
+            type="button"
+            class="text-default/60 hover:text-primary hover:rotate-90 transition-all duration-300 text-2xl font-bold focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-full p-2"
+            aria-label="Close talent profile modal"
+          >
+            ×
+          </button>
+        </div>
+
+        <div class="space-y-6 min-w-0">
+          <!-- Hidden description for screen readers -->
+          <div id="talent-modal-description" class="sr-only">
+            Modal dialog displaying talent profile information including photos, personal details, and portfolio download option. Use Tab to navigate between elements, Escape to close.
+          </div>
+          
+          <div class="flex flex-col lg:flex-row gap-8 min-w-0">
+            <!-- Photo Gallery Section -->
+            <div class="lg:w-1/2 min-w-0">
+              <h4 class="font-semibold mb-4 text-lg text-default">Photos</h4>
+              <div id="talent-photo-gallery" class="space-y-4 min-w-0">
+                <!-- Main photo -->
+                <div class="aspect-[3/4] bg-default/20 rounded-lg flex items-center justify-center overflow-hidden">
+                  <img
+                    id="talent-modal-main-image"
+                    src=""
+                    alt=""
+                    class="w-full h-full object-cover rounded-lg hidden"
+                    loading="lazy"
+                  />
+                  <span id="talent-modal-main-image-placeholder" class="text-default/60 text-sm">Photo Coming Soon</span>
+                </div>
+                
+                <!-- Thumbnail gallery -->
+                <div id="talent-thumbnail-gallery" class="grid grid-cols-4 gap-2 hidden">
+                  <!-- Thumbnails will be populated by JavaScript -->
+                </div>
+              </div>
+            </div>
+
+            <!-- Info Section -->
+            <div class="lg:w-1/2 space-y-6 min-w-0">
+              <!-- Name and Specialty -->
+              <div class="min-w-0">
+                <h3 id="talent-modal-name" class="text-2xl font-bold text-default min-w-0"></h3>
+                <p id="talent-modal-specialty" class="text-primary font-medium text-lg min-w-0"></p>
+              </div>
+
+              <!-- About Section -->
+              <div class="min-w-0">
+                <h4 class="font-semibold mb-3 text-lg text-default">About</h4>
+                <p id="talent-modal-description" class="text-default/80 leading-relaxed min-w-0"></p>
+              </div>
+
+              <!-- Personal Details Section -->
+              <div class="min-w-0">
+                <h4 class="font-semibold mb-3 text-lg text-default">Personal Details</h4>
+                <div id="talent-modal-personal" class="grid grid-cols-2 gap-4 text-sm min-w-0">
+                  <!-- Personal details will be populated by JavaScript -->
+                </div>
+              </div>
+
+              <!-- Contact & Social Links Section -->
+              <div class="min-w-0">
+                <h4 class="font-semibold mb-3 text-lg text-default">Contact & Social</h4>
+                <div id="talent-modal-social" class="space-y-2 text-sm min-w-0">
+                  <!-- Social links will be populated by JavaScript -->
+                </div>
+              </div>
+
+              <!-- Download Portfolio Button -->
+              <div class="flex gap-4 pt-6 border-t border-default/20 min-w-0">
+                <button class="flex-1 border-2 border-primary text-primary px-8 py-4 rounded-lg hover:bg-primary/10 hover:border-purple-600 hover:text-purple-600 focus:ring-2 focus:ring-purple-400 focus:outline-none transition-all duration-300 font-semibold text-lg hover:shadow-lg hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none min-w-0">
+                  <span class="portfolio-text">Download Portfolio</span>
+                  <span class="portfolio-spinner hidden animate-spin ml-2">⏳</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Only initialize if this is the first load of the component
+  if (!window.talentModalInitialized) {
+    window.talentModalInitialized = true;
+    
+    // Get talents data from the main page
+    function getTalentsData() {
+      const talentsDataElement = document.getElementById('talents-data');
+      console.log('Talents data element:', talentsDataElement);
+      const dataText = talentsDataElement ? talentsDataElement.textContent : '[]';
+      console.log('Talents data text:', dataText);
+      try {
+        const parsedData = JSON.parse(dataText);
+        console.log('Parsed talents data:', parsedData);
+        return parsedData;
+      } catch (error) {
+        console.error('Error parsing talents data:', error);
+        return [];
+      }
+    }
+
+    // Main modal open function - extracted from working talents.astro
+    function openTalentModal(id, name, specialties, description, image) {
+      console.log('openTalentModal called with:', { id, name, specialties, description, image });
+      
+      // Skip loading state for now - just focus on opening the modal
+      /*
+      var button = null;
+      if (window.event && window.event.target) {
+        button = window.event.target.closest('button');
+      }
+      
+      console.log('Button found:', button);
+      
+      if (button) {
+        button.disabled = true;
+        var loadingText = button.querySelector('.loading-text');
+        var loadingSpinner = button.querySelector('.loading-spinner');
+        var arrowIcon = button.querySelector('.arrow-icon');
+        
+        console.log('Button elements:', { loadingText, loadingSpinner, arrowIcon });
+        
+        if (loadingText) loadingText.textContent = 'Loading...';
+        if (loadingSpinner) loadingSpinner.classList.remove('hidden');
+        if (arrowIcon) arrowIcon.classList.add('hidden');
+      }
+      */
+
+      var modal = document.getElementById('talent-modal');
+      var modalContent = document.getElementById('talent-modal-content');
+      var modalTitle = document.getElementById('talent-modal-title');
+      var modalName = document.getElementById('talent-modal-name');
+      var modalSpecialty = document.getElementById('talent-modal-specialty');
+      var modalDescription = document.getElementById('talent-modal-description');
+      var modalMainImage = document.getElementById('talent-modal-main-image');
+      var modalMainImagePlaceholder = document.getElementById('talent-modal-main-image-placeholder');
+      var modalPersonal = document.getElementById('talent-modal-personal');
+      var thumbnailGallery = document.getElementById('talent-thumbnail-gallery');
+
+      console.log('Modal elements:', {
+        modal,
+        modalContent,
+        modalTitle,
+        modalName,
+        modalSpecialty,
+        modalDescription,
+        modalMainImage,
+        modalMainImagePlaceholder,
+        modalPersonal,
+        thumbnailGallery
+      });
+      
+      if (!modal || !modalContent || !modalName || !modalSpecialty || !modalDescription || !modalPersonal) {
+        console.error('Some modal elements are missing!');
+        return;
+      }
+
+      // Find the talent data from the talents array
+      const talentsData = getTalentsData();
+      var talent = null;
+      for (var i = 0; i < talentsData.length; i++) {
+        if (String(talentsData[i].id) === String(id)) {
+          talent = talentsData[i];
+          break;
+        }
+      }
+
+      if (!talent) {
+        talent = {
+          id: id,
+          name: name,
+          specialties: specialties ? specialties.split(', ') : [],
+          specialty: specialties,
+          description: description,
+          image: image
+        };
+      }
+
+      // Populate modal content
+      modalName.textContent = talent.name || '';
+      
+      let specialtyText = '';
+      if (Array.isArray(talent.specialties)) {
+        specialtyText = talent.specialties.join(' - ');
+      } else if (talent.specialties) {
+        specialtyText = talent.specialties;
+      } else if (talent.specialty) {
+        specialtyText = talent.specialty;
+      }
+      modalSpecialty.textContent = specialtyText;
+      modalDescription.textContent = talent.description || '';
+
+      // Populate personal details
+      modalPersonal.innerHTML = '';
+      const personalFields = [
+        { key: 'location', label: 'Location', value: talent.location },
+        { key: 'city', label: 'City', value: talent.city },
+        { key: 'born', label: 'Born', value: talent.born },
+        { key: 'age', label: 'Age', value: talent.age },
+        { key: 'height', label: 'Height', value: talent.height ? talent.height + 'cm' : null },
+        { key: 'measurements', label: 'Measurements', value: talent.measurements },
+        { key: 'eyeColor', label: 'Eye Color', value: talent.eyeColor },
+        { key: 'hairColor', label: 'Hair Color', value: talent.hairColor },
+        { key: 'shoeSize', label: 'Shoe Size', value: talent.shoeSize },
+        { key: 'dressSize', label: 'Dress Size', value: talent.dressSize },
+        { key: 'availability', label: 'Availability', value: talent.availability }
+      ];
+
+      personalFields.forEach(field => {
+        const fieldDiv = document.createElement('div');
+        fieldDiv.className = 'min-w-0';
+        fieldDiv.innerHTML = `
+          <span class="text-sm text-default/60 block">${field.label}</span>
+          <span class="text-default font-medium block">${field.value || 'Not provided'}</span>
+        `;
+        modalPersonal.appendChild(fieldDiv);
+      });
+
+      // Handle contact & social links
+      const socialContainer = document.getElementById('talent-modal-social');
+      socialContainer.innerHTML = '';
+      
+      const socialFields = [
+        { key: 'email', label: 'Email', value: talent.email, type: 'email' },
+        { key: 'phone', label: 'Phone', value: talent.phone, type: 'tel' },
+        { key: 'instagram', label: 'Instagram', value: talent.instagram, type: 'link' },
+        { key: 'twitter', label: 'Twitter', value: talent.twitter, type: 'link' },
+        { key: 'website', label: 'Website', value: talent.website, type: 'link' }
+      ];
+
+      socialFields.forEach(field => {
+        const fieldDiv = document.createElement('div');
+        fieldDiv.className = 'flex items-center gap-2 min-w-0';
+        
+        if (field.value) {
+          let linkHtml = '';
+          if (field.type === 'email') {
+            linkHtml = `<a href="mailto:${field.value}" class="text-default font-medium hover:text-primary transition-colors truncate">${field.value}</a>`;
+          } else if (field.type === 'tel') {
+            linkHtml = `<a href="tel:${field.value}" class="text-default font-medium hover:text-primary transition-colors">${field.value}</a>`;
+          } else if (field.type === 'link') {
+            linkHtml = `<a href="${field.value}" target="_blank" rel="noopener noreferrer" class="text-default font-medium hover:text-primary transition-colors truncate">${field.value}</a>`;
+          }
+          
+          fieldDiv.innerHTML = `
+            <span class="text-sm text-default/60 min-w-0">${field.label}:</span>
+            ${linkHtml}
+          `;
+        } else {
+          fieldDiv.innerHTML = `
+            <span class="text-sm text-default/60 min-w-0">${field.label}:</span>
+            <span class="text-default font-medium truncate">Not provided</span>
+          `;
+        }
+        
+        socialContainer.appendChild(fieldDiv);
+      });
+
+      // Handle images
+      var photos = [];
+      if (talent.images && Array.isArray(talent.images) && talent.images.length > 0) {
+        photos = talent.images.filter(function(img) { return img && img.trim() !== ""; });
+      } else if (talent.imgs && Array.isArray(talent.imgs) && talent.imgs.length > 0) {
+        photos = talent.imgs.filter(function(img) { return img && img.trim() !== ""; });
+      } else if (talent.image && talent.image.trim() !== "") {
+        photos = [talent.image];
+      }
+
+      if (photos.length > 0) {
+        modalMainImage.src = photos[0];
+        modalMainImage.alt = `${talent.name} - ${specialtyText}`;
+        modalMainImage.classList.remove('hidden');
+        modalMainImagePlaceholder.classList.add('hidden');
+        
+        // Show thumbnails if there are multiple photos
+        if (photos.length > 1) {
+          thumbnailGallery.classList.remove('hidden');
+          thumbnailGallery.innerHTML = '';
+          
+          photos.forEach(function(photo, index) {
+            var thumbnailDiv = document.createElement('div');
+            thumbnailDiv.className = 'aspect-square bg-default/20 rounded overflow-hidden cursor-pointer hover:opacity-80 hover:ring-2 hover:ring-primary transition-all duration-200 focus:ring-2 focus:ring-primary focus:outline-none';
+            thumbnailDiv.tabIndex = 0;
+            thumbnailDiv.setAttribute('role', 'button');
+            thumbnailDiv.setAttribute('aria-label', 'View photo ' + (index + 1) + ' of ' + photos.length);
+            thumbnailDiv.innerHTML = '<img src="' + photo + '" alt="' + talent.name + ' - Photo ' + (index + 1) + '" class="w-full h-full object-cover" loading="lazy" />';
+            
+            var handleImageClick = function() {
+              modalMainImage.src = photo;
+              modalMainImage.alt = talent.name + ' - Photo ' + (index + 1);
+              
+              // Update active thumbnail styling
+              var thumbs = thumbnailGallery.querySelectorAll('div');
+              for (var j = 0; j < thumbs.length; j++) {
+                thumbs[j].classList.remove('ring-2', 'ring-primary');
+              }
+              thumbnailDiv.classList.add('ring-2', 'ring-primary');
+            };
+            
+            thumbnailDiv.addEventListener('click', handleImageClick);
+            thumbnailDiv.addEventListener('keydown', function(e) {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                handleImageClick();
+              }
+            });
+            
+            thumbnailGallery.appendChild(thumbnailDiv);
+          });
+          
+          // Mark first thumbnail as active
+          if (thumbnailGallery.firstChild) {
+            thumbnailGallery.firstChild.classList.add('ring-2', 'ring-primary');
+          }
+        } else {
+          thumbnailGallery.classList.add('hidden');
+        }
+      } else {
+        modalMainImage.classList.add('hidden');
+        modalMainImagePlaceholder.classList.remove('hidden');
+        thumbnailGallery.classList.add('hidden');
+      }
+
+      // Show modal with animation
+      console.log('Opening modal:', modal);
+      modal.classList.remove('hidden');
+      modal.setAttribute('aria-hidden', 'false');
+      modal.dataset.currentTalentId = id;
+      document.body.style.overflow = 'hidden';
+      
+      // Animate modal content
+      setTimeout(function() {
+        console.log('Animating modal content');
+        modalContent.classList.remove('scale-95', 'opacity-0');
+        modalContent.classList.add('scale-100', 'opacity-100');
+      }, 10);
+      
+      // Skip button reset for now
+      /*
+      // Reset button state after modal is fully loaded
+      setTimeout(function() {
+        console.log('Resetting button state');
+        if (button) {
+          button.disabled = false;
+          var loadingText = button.querySelector('.loading-text');
+          var loadingSpinner = button.querySelector('.loading-spinner');
+          var arrowIcon = button.querySelector('.arrow-icon');
+          
+          if (loadingText) loadingText.textContent = 'View Profile';
+          if (loadingSpinner) loadingSpinner.classList.add('hidden');
+          if (arrowIcon) arrowIcon.classList.remove('hidden');
+        }
+      }, 500);
+      */
+    }
+
+    // Close modal function
+    function closeTalentModal() {
+      var modal = document.getElementById('talent-modal');
+      var modalContent = document.getElementById('talent-modal-content');
+      
+      // Animate modal content out
+      modalContent.classList.add('scale-95', 'opacity-0');
+      modalContent.classList.remove('scale-100', 'opacity-100');
+      
+      // Delay hiding the modal to allow animation to complete
+      setTimeout(function() {
+        modal.classList.add('hidden');
+        modal.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = 'auto';
+      }, 300);
+    }
+
+    // Make functions globally available
+    window.openTalentModal = openTalentModal;
+    window.closeTalentModal = closeTalentModal;
+
+    // Set up event listeners
+    document.addEventListener('DOMContentLoaded', function() {
+      // Close button
+      var closeBtn = document.getElementById('close-talent-modal');
+      if (closeBtn) {
+        closeBtn.addEventListener('click', closeTalentModal);
+      }
+
+      // Close modal when clicking outside
+      var talentModal = document.getElementById('talent-modal');
+      if (talentModal) {
+        talentModal.addEventListener('click', function(e) {
+          if (e.target.id === 'talent-modal') {
+            closeTalentModal();
+          }
+        });
+      }
+
+      // Keyboard navigation
+      document.addEventListener('keydown', function(e) {
+        const modal = document.getElementById('talent-modal');
+        if (!modal || modal.classList.contains('hidden')) {
+          return;
+        }
+
+        if (e.key === 'Escape') {
+          e.preventDefault();
+          closeTalentModal();
+        }
+      });
+    });
+  }
+</script>
+
+<style>
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+  
+  .modal button:focus,
+  .modal [tabindex]:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+  
+  .modal[aria-hidden="false"] {
+    display: block !important;
+  }
+  
+  .modal[aria-hidden="true"] {
+    display: none !important;
+  }
+
+  #talent-modal {
+    transition-duration: 0.3s;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  #talent-modal-content {
+    transition-duration: 0.3s;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #talent-modal,
+    #talent-modal-content {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      transition-delay: 0s !important;
+    }
+  }
+</style>
