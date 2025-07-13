@@ -1,0 +1,11 @@
+/* Test CSS file to verify Autoprefixer is working */
+.autoprefixer-test {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  transform: scale(1.1);
+  user-select: none;
+  backdrop-filter: blur(10px);
+  appearance: none;
+}

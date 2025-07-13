@@ -8,7 +8,17 @@ export default defineConfig({
   
   // Active integrations
   integrations: [
-    tailwind(), // Enables Tailwind CSS
+    tailwind({
+      // Apply Tailwind base styles
+      applyBaseStyles: true,
+    }),
     icon()      // Enables icon components
   ],
+  
+  // Vite configuration for PostCSS
+  vite: {
+    css: {
+      postcss: './postcss.config.js'
+    }
+  }
 });

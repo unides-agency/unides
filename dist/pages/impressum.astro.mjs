@@ -1,0 +1,53 @@
+/* empty css                                     */
+import { c as createComponent, r as renderHead, a as renderComponent, b as renderTemplate, F as Fragment } from '../chunks/astro/server_CWiqrlbZ.mjs';
+import 'kleur/colors';
+import { $ as $$ContentSection, a as $$Footer } from '../chunks/footer_CkGOFtEf.mjs';
+export { renderers } from '../renderers.mjs';
+
+const $$Impressum = createComponent(($$result, $$props, $$slots) => {
+  return renderTemplate`<html lang="de"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Impressum | Unides Agency</title><meta name="description" content="Legal notice and contact information for Unides Agency - Talent and Creative Agency based in Berlin, Germany."><link rel="canonical" href="https://unides.agency/impressum">${renderHead()}</head> <body class="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100"> <main class="min-h-screen"> ${renderComponent($$result, "ContentSection", $$ContentSection, { "title": "Impressum", "id": "impressum" }, { "default": ($$result2) => renderTemplate`  <div class="max-w-4xl mx-auto"> <div class="space-y-8"> <!-- German Legal Information --> <section> <h2 class="text-2xl font-bold text-purple-600 mb-4">Angaben gemäß § 5 TMG</h2> <div class="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg"> <div class="space-y-4 text-gray-700 dark:text-gray-300"> <div> <h3 class="text-lg font-semibold mb-2 text-gray-900 dark:text-gray-100">UNIDES Agency</h3> <p>
+Soldiner Straße 72<br>
+13359 Berlin<br>
+Germany
+</p> </div> <div> <h3 class="text-lg font-semibold mb-2 text-gray-900 dark:text-gray-100">Vertreten durch:</h3> <p>
+Grasi Pacheco<br>
+(Founder)
+</p> </div> </div> </div> </section> <!-- Contact Information --> <section> <h2 class="text-2xl font-bold text-purple-600 mb-4">Kontakt</h2> <div class="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg"> <div class="space-y-2 text-gray-700 dark:text-gray-300"> <p><strong>Telefon:</strong> +49 (172) 802 7395</p> <p><strong>E-Mail:</strong> info@unides-agency.com</p> <p><strong>Web:</strong> www.unides-agency.com</p> </div> </div> </section> <!-- VAT ID --> <section> <h2 class="text-2xl font-bold text-purple-600 mb-4">Umsatzsteuer-ID</h2> <div class="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg"> <div class="space-y-2 text-gray-700 dark:text-gray-300"> <p><strong>Umsatzsteuer-Identifikationsnummer gemäß §27 a Umsatzsteuergesetz:</strong></p> <p>DE123456789</p> </div> </div> </section> <!-- Content Responsibility --> <section> <h2 class="text-2xl font-bold text-purple-600 mb-4">Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV</h2> <div class="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg"> <div class="text-gray-700 dark:text-gray-300"> <p>
+Grasi Pacheco<br>
+Soldiner Straße 72<br>
+13359 Berlin
+</p> </div> </div> </section> <!-- Disclaimer --> <section> <h2 class="text-2xl font-bold text-purple-600 mb-4">Haftungsausschluss</h2> <div class="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg"> <div class="space-y-4 text-gray-700 dark:text-gray-300"> <div> <h3 class="text-lg font-semibold mb-2">Haftung für Inhalte</h3> <p>
+Als Diensteanbieter sind wir gemäß § 7 Abs.1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG sind wir als Diensteanbieter jedoch nicht unter der Verpflichtung, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen.
+</p> </div> <div> <h3 class="text-lg font-semibold mb-2">Haftung für Links</h3> <p>
+Unser Angebot enthält Links zu externen Websites Dritter, auf deren Inhalte wir keinen Einfluss haben. Deshalb können wir für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich.
+</p> </div> <div> <h3 class="text-lg font-semibold mb-2">Urheberrecht</h3> <p>
+Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der Grenzen des Urheberrechtes bedürfen der schriftlichen Zustimmung des jeweiligen Autors bzw. Erstellers.
+</p> </div> </div> </div> </section> <!-- Data Protection --> <section> <h2 class="text-2xl font-bold text-purple-600 mb-4">Datenschutz</h2> <div class="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg"> <div class="space-y-4 text-gray-700 dark:text-gray-300"> <p>
+Die Nutzung unserer Webseite ist in der Regel ohne Angabe personenbezogener Daten möglich. Soweit auf unseren Seiten personenbezogene Daten (beispielsweise Name, Anschrift oder eMail-Adressen) erhoben werden, erfolgt dies, soweit möglich, stets auf freiwilliger Basis.
+</p> <p>
+Für detaillierte Informationen über den Umgang mit Ihren personenbezogenen Daten beachten Sie bitte unsere
+<a href="/privacy" class="text-primary hover:underline font-medium">Datenschutzerklärung</a>.
+</p> </div> </div> </section> <!-- EU Dispute Resolution --> <section> <h2 class="text-2xl font-bold text-purple-600 mb-4">EU-Streitschlichtung</h2> <div class="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg"> <div class="space-y-2 text-gray-700 dark:text-gray-300"> <p>
+Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit:
+<a href="https://ec.europa.eu/consumers/odr" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">
+https://ec.europa.eu/consumers/odr
+</a> </p> <p>
+Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.
+</p> </div> </div> </section> </div> </div> `, "lead": ($$result2) => renderTemplate`${renderComponent($$result2, "Fragment", Fragment, { "slot": "lead" }, { "default": ($$result3) => renderTemplate`
+Legal notice and contact information in accordance with German law.
+` })}` })} </main> ${renderComponent($$result, "Footer", $$Footer, {})} </body></html>`;
+}, "/Users/leonardoguest/Documents/Github/unides/src/pages/impressum.astro", void 0);
+
+const $$file = "/Users/leonardoguest/Documents/Github/unides/src/pages/impressum.astro";
+const $$url = "/impressum";
+
+const _page = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
+  __proto__: null,
+  default: $$Impressum,
+  file: $$file,
+  url: $$url
+}, Symbol.toStringTag, { value: 'Module' }));
+
+const page = () => _page;
+
+export { page };

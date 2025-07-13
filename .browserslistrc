@@ -1,0 +1,20 @@
+# Browser support configuration for Autoprefixer
+# This ensures proper vendor prefixes are added for Safari compatibility
+
+# Main browsers
+> 1%
+last 2 versions
+Firefox ESR
+not ie < 11
+
+# Safari and iOS specific
+Safari >= 10
+iOS >= 10
+
+# Chrome and Edge
+Chrome >= 60
+Edge >= 16
+
+# Additional mobile browsers
+Android >= 5
+Samsung >= 4
