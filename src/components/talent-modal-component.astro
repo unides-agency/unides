@@ -71,14 +71,6 @@
                 </div>
               </div>
 
-              <!-- Contact & Social Links Section -->
-              <div class="min-w-0">
-                <h4 class="font-semibold mb-3 text-lg text-default">Contact & Social</h4>
-                <div id="talent-modal-social" class="space-y-2 text-sm min-w-0">
-                  <!-- Social links will be populated by JavaScript -->
-                </div>
-              </div>
-
               <!-- Download Portfolio Button -->
               <div class="flex gap-4 pt-6 border-t border-default/20 min-w-0">
                 <button class="flex-1 border-2 border-primary text-primary px-8 py-4 rounded-lg hover:bg-primary/10 hover:border-purple-600 hover:text-purple-600 focus:ring-2 focus:ring-purple-400 focus:outline-none transition-all duration-300 font-semibold text-lg hover:shadow-lg hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none min-w-0">
@@ -230,46 +222,6 @@
           <span class="text-default font-medium block">${field.value || 'Not provided'}</span>
         `;
         modalPersonal.appendChild(fieldDiv);
-      });
-
-      // Handle contact & social links
-      const socialContainer = document.getElementById('talent-modal-social');
-      socialContainer.innerHTML = '';
-      
-      const socialFields = [
-        { key: 'email', label: 'Email', value: talent.email, type: 'email' },
-        { key: 'phone', label: 'Phone', value: talent.phone, type: 'tel' },
-        { key: 'instagram', label: 'Instagram', value: talent.instagram, type: 'link' },
-        { key: 'twitter', label: 'Twitter', value: talent.twitter, type: 'link' },
-        { key: 'website', label: 'Website', value: talent.website, type: 'link' }
-      ];
-
-      socialFields.forEach(field => {
-        const fieldDiv = document.createElement('div');
-        fieldDiv.className = 'flex items-center gap-2 min-w-0';
-        
-        if (field.value) {
-          let linkHtml = '';
-          if (field.type === 'email') {
-            linkHtml = `<a href="mailto:${field.value}" class="text-default font-medium hover:text-primary transition-colors truncate">${field.value}</a>`;
-          } else if (field.type === 'tel') {
-            linkHtml = `<a href="tel:${field.value}" class="text-default font-medium hover:text-primary transition-colors">${field.value}</a>`;
-          } else if (field.type === 'link') {
-            linkHtml = `<a href="${field.value}" target="_blank" rel="noopener noreferrer" class="text-default font-medium hover:text-primary transition-colors truncate">${field.value}</a>`;
-          }
-          
-          fieldDiv.innerHTML = `
-            <span class="text-sm text-default/60 min-w-0">${field.label}:</span>
-            ${linkHtml}
-          `;
-        } else {
-          fieldDiv.innerHTML = `
-            <span class="text-sm text-default/60 min-w-0">${field.label}:</span>
-            <span class="text-default font-medium truncate">Not provided</span>
-          `;
-        }
-        
-        socialContainer.appendChild(fieldDiv);
       });
 
       // Handle images
