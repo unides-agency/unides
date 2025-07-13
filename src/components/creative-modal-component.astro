@@ -28,7 +28,6 @@
           <div class="flex flex-col md:flex-row gap-6">
             <!-- Image Section -->
             <div class="md:w-1/3">
-              <h4 class="font-semibold mb-4 text-lg text-default">Portfolio Preview</h4>
               <div id="creative-modal-image-container" class="aspect-[3/4] bg-default/20 rounded-lg flex items-center justify-center overflow-hidden">
                 <img
                   id="creative-modal-image"
@@ -52,7 +51,7 @@
               <!-- About Section -->
               <div>
                 <h4 class="font-semibold mb-2">About</h4>
-                <p id="creative-modal-description" class="text-default/80 leading-relaxed"></p>
+                <p id="creative-modal-about" class="text-default/80 leading-relaxed"></p>
               </div>
 
               <!-- Personal Details Section -->
@@ -60,14 +59,6 @@
                 <h4 class="font-semibold mb-3 text-lg">Personal Details</h4>
                 <div id="creative-modal-personal" class="grid grid-cols-2 gap-3 text-sm mb-4">
                   <!-- Personal details will be populated by JavaScript -->
-                </div>
-              </div>
-
-              <!-- Skills & Experience Section -->
-              <div>
-                <h4 class="font-semibold mb-3 text-lg">Skills & Experience</h4>
-                <div id="creative-modal-stats" class="grid grid-cols-2 gap-3 text-sm">
-                  <!-- Stats will be populated by JavaScript -->
                 </div>
               </div>
             </div>
@@ -95,25 +86,23 @@
     window.creativeModalInitialized = true;
 
     // Main modal open function
-    function openCreativeModal(id, name, specialty, description, image, birth, height, eyeColor, hairColor, shoeSize, dressSize, stats, imgs, pdfUrl) {
+    function openCreativeModal(id, name, specialties, description, image, birth, height, eyeColor, hairColor, shoeSize, dressSize, stats, imgs, pdfUrl) {
       const modal = document.getElementById('creative-modal');
       const modalContent = document.getElementById('creative-modal-content');
       const modalTitle = document.getElementById('creative-modal-title');
       const modalName = document.getElementById('creative-modal-name');
       const modalSpecialty = document.getElementById('creative-modal-specialty');
-      const modalDescription = document.getElementById('creative-modal-description');
+      const modalAbout = document.getElementById('creative-modal-about');
       const modalImage = document.getElementById('creative-modal-image');
       const modalImagePlaceholder = document.getElementById('creative-modal-image-placeholder');
       const modalPersonal = document.getElementById('creative-modal-personal');
-      const modalStats = document.getElementById('creative-modal-stats');
 
-      console.log('Opening creative modal for:', { id, name, specialty, description, image, birth, height, eyeColor, hairColor, shoeSize, dressSize, stats, imgs, pdfUrl });
 
       // Create creative object from passed parameters
       const currentCreative = {
         id,
         name,
-        specialty,
+        specialties: specialties || [],
         description,
         image: image || "",
         birth,
@@ -128,10 +117,17 @@
       };
 
       // Populate modal content
-      modalTitle.textContent = `${currentCreative.name}'s Portfolio`;
+      modalTitle.textContent = `Creative's Portfolio`;
       modalName.textContent = currentCreative.name;
-      modalSpecialty.textContent = currentCreative.specialty;
-      modalDescription.textContent = currentCreative.description;
+      
+      // Handle specialty/specialties - check for both singular and plural
+      let specialtyText = '';
+      if (Array.isArray(currentCreative.specialties)) {
+        specialtyText = currentCreative.specialties.join(' - ');
+      }
+      modalSpecialty.textContent = specialtyText;
+      
+      modalAbout.textContent = currentCreative.description;
 
       // Handle image in modal - use imgs array if available, fallback to single image
       let displayImage = '';
@@ -173,20 +169,6 @@
           modalPersonal.appendChild(detailDiv);
         }
       });
-
-      // Populate stats
-      modalStats.innerHTML = '';
-      if (stats && Object.keys(stats).length > 0) {
-        Object.entries(stats).forEach(([key, value]) => {
-          const statDiv = document.createElement('div');
-          statDiv.className = 'flex justify-between p-2 bg-default/10 rounded';
-          statDiv.innerHTML = `
-            <span class="text-default/60 font-medium capitalize">${key}:</span>
-            <span class="text-default font-semibold">${value}</span>
-          `;
-          modalStats.appendChild(statDiv);
-        });
-      }
 
       // Show modal with animation
       modal.classList.remove('hidden');
