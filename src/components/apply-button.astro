@@ -4,7 +4,7 @@ import ApplyModal from './apply-modal.astro';
 
 <button
   type="button"
-  class="absolute top-4 right-4 z-10 bg-bright-lime text-deep-teal px-4 py-2 rounded-md font-bold text-base hover:bg-lime-muted transition-all focus:ring-2 focus:ring-bright-lime focus:ring-offset-2 apply-button"
+  class="absolute top-4 right-4 z-10 bg-bright-lime text-deep-teal px-6 py-3 rounded-md font-bold text-base hover:bg-lime-muted transition-all focus:ring-2 focus:ring-bright-lime focus:ring-offset-2 apply-button"
   onclick="openApplyModal()"
 >
   Apply Now
@@ -13,8 +13,9 @@ import ApplyModal from './apply-modal.astro';
 <ApplyModal />
 <style>
   button {
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(10, 53, 58, 0.1);
     letter-spacing: 0.02em;
+    border: 1px solid rgba(10, 53, 58, 0.15);
   }
   
   .apply-button {
@@ -37,7 +38,8 @@ import ApplyModal from './apply-modal.astro';
   
   .apply-button:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(10, 53, 58, 0.2);
+    border-color: rgba(10, 53, 58, 0.25);
   }
   
   .apply-button:hover::after {

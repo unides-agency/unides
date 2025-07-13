@@ -1,7 +1,7 @@
 [data-theme="light"] {
   --color-primary: #a987ff;
   --color-secondary: #fd5d13;
-  --color-accent: #d9fd12;
+  --color-accent: #e4f50f;
   --color-success: #c1e600;
   --color-warning: #ff8142;
   --color-error: #ff8142;
@@ -15,7 +15,7 @@
 [data-theme="dark"] {
   --color-primary: #a987ff;
   --color-secondary: #fd5d13;
-  --color-accent: #d9fd12;
+  --color-accent: #e4f50f;
   --color-success: #c1e600;
   --color-warning: #ff8142;
   --color-error: #ff8142;

@@ -9,7 +9,7 @@
 |------|-----|----------------|----------|
 | Purple Base | `#a987ff` | `purple-base` | Brand primary, buttons, accents |
 | Deep Teal | `#0a353a` | `deep-teal` | Primary background, dark mode base |
-| Bright Lime | `#d9fd12` | `bright-lime` | Call-to-actions, tags, hover states |
+| Bright Lime | `#e4f50f` | `bright-lime` | Call-to-actions, tags, hover states |
 | Orange Red | `#fd5d13` | `orange-red` | Alerts, active states, badges |
 | Soft Pink | `#ff8f9d` | `soft-pink` | Highlights, modals, playful accents |
 
@@ -27,7 +27,7 @@
 |----------|------------|-----------|---------|
 | `--color-primary` | `#a987ff` | `#a987ff` | Primary brand color |
 | `--color-secondary` | `#fd5d13` | `#fd5d13` | Secondary actions |
-| `--color-accent` | `#d9fd12` | `#d9fd12` | CTAs and highlights |
+| `--color-accent` | `#e4f50f` | `#e4f50f` | CTAs and highlights |
 | `--color-success` | `#c1e600` | `#c1e600` | Success states |
 | `--color-warning` | `#ff8142` | `#ff8142` | Warning states |
 | `--color-error` | `#ff8142` | `#ff8142` | Error states |
@@ -44,7 +44,7 @@
 - **Background (dark)**: `#0a353a`
 - **Primary button**: `#a987ff`
 - **Secondary button**: `#fd5d13`
-- **Accent / CTA**: `#d9fd12`
+- **Accent / CTA**: `#e4f50f`
 - **Success**: `#c1e600`
 - **Error / Warning**: `#ff8142`
 
