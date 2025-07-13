@@ -122,7 +122,7 @@
     window.creativeModalInitialized = true;
 
     // Main modal open function
-    function openCreativeModal(id, name, specialties, description, image, birth, height, eyeColor, hairColor, shoeSize, dressSize, stats, imgs, pdfUrl) {
+    function openCreativeModal(id, name, specialties, description, image, personalInfo, stats, imgs, pdfUrl) {
       const modal = document.getElementById('creative-modal');
       const modalContent = document.getElementById('creative-modal-content');
       const modalTitle = document.getElementById('creative-modal-title');
@@ -145,12 +145,7 @@
         specialties: specialties || [],
         description,
         image: image || "",
-        birth,
-        height,
-        eyeColor,
-        hairColor,
-        shoeSize,
-        dressSize,
+        personalInfo: personalInfo || {},
         stats: stats || {},
         imgs: imgs || [],
         pdfUrl
@@ -315,28 +310,32 @@
       document.removeEventListener('keydown', handleKeydown);
       document.addEventListener('keydown', handleKeydown);
 
-      // Populate personal details
+      // Populate personal details from personalInfo map in a structured way
       modalPersonal.innerHTML = '';
-      const personalFields = [
-        { key: 'birth', label: 'Birth', value: birth },
-        { key: 'height', label: 'Height', value: height },
-        { key: 'eyeColor', label: 'Eye Color', value: eyeColor },
-        { key: 'hairColor', label: 'Hair Color', value: hairColor },
-        { key: 'shoeSize', label: 'Shoe Size', value: shoeSize },
-        { key: 'dressSize', label: 'Dress Size', value: dressSize }
-      ];
-
-      personalFields.forEach(({ key, label, value }) => {
-        if (value) {
-          const detailDiv = document.createElement('div');
-          detailDiv.className = 'flex justify-between p-2 bg-default/10 rounded';
-          detailDiv.innerHTML = `
-            <span class="text-default/60 font-medium">${label}:</span>
-            <span class="text-default font-semibold">${value}</span>
-          `;
-          modalPersonal.appendChild(detailDiv);
-        }
-      });
+      if (currentCreative.personalInfo && Object.keys(currentCreative.personalInfo).length > 0) {
+        Object.entries(currentCreative.personalInfo).forEach(([key, value]) => {
+          if (value !== null && value !== undefined && value !== '') {
+            const fieldDiv = document.createElement('div');
+            fieldDiv.className = 'flex justify-between items-center border-b border-default/10 py-1 px-0.5';
+            // Format the key to be more readable (camelCase to Title Case)
+            const formattedLabel = key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase());
+            fieldDiv.innerHTML = `
+              <span class="font-medium text-default/70">${formattedLabel}:</span>
+              <span class="text-default text-right">${value}</span>
+            `;
+            modalPersonal.appendChild(fieldDiv);
+          }
+        });
+      }
+      // If no personalInfo data, show a message
+      if (modalPersonal.children.length === 0) {
+        const noDataDiv = document.createElement('div');
+        noDataDiv.className = 'min-w-0 text-center col-span-2';
+        noDataDiv.innerHTML = `
+          <span class="text-sm text-default/60 block">No personal information available</span>
+        `;
+        modalPersonal.appendChild(noDataDiv);
+      }
 
       // Show modal with animation
       modal.classList.remove('hidden');

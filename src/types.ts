@@ -34,6 +34,7 @@ export interface Creative {
   location?: string;
   birth?: string;
   specialties?: string[];
+  personalInfo?: Record<string, any>;
   stats?: Record<string, any>;
   enabled?: boolean;
   pdfUrl?: string;
