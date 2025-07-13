@@ -27,7 +27,7 @@ try {
     <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
       {talents.map((talent) => (
         <div class="talent-card bg-offset rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
-          <div class="aspect-[3/4] bg-default/20 flex items-center justify-center relative">
+          <div class="aspect-[2/3] bg-default/20 flex items-center justify-center relative">
             {talent.image && talent.image.trim() !== "" ? (
               <img
                 src={talent.image}
@@ -39,17 +39,17 @@ try {
               <span class="text-default/60 text-xs">Photo Coming Soon</span>
             )}
             
-            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-3 text-white">
-              <div class="space-y-2">
+            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-2 text-white">
+              <div class="space-y-1">
                 {/* Name - Featured prominently */}
                 <div class="text-white">
-                  <h3 class="font-bold text-lg leading-tight">{talent.name}</h3>
+                  <h3 class="font-bold text-sm leading-tight">{talent.name}</h3>
                 </div>
                 
-                {/* Location and Specialty */}
-                <div class="flex flex-wrap gap-2 items-center">
+                {/* Location and Top Specialty Only */}
+                <div class="flex flex-wrap gap-1 items-center">
                   {talent.location && (
-                    <div class="bg-black/40 text-white text-xs py-1 px-2 rounded-full backdrop-blur-sm flex items-center">
+                    <div class="bg-black/40 text-white text-xs py-0.5 px-1.5 rounded-full backdrop-blur-sm flex items-center">
                       <span class="mr-1">📍</span>{talent.location}
                     </div>
                   )}
@@ -59,15 +59,13 @@ try {
                     </span>
                   )}
                   {talent.specialties && talent.specialties.length > 0 && (
-                    talent.specialties.map((specialty) => (
-                      <span class="bg-primary/80 text-white text-xs py-1 px-2 rounded-full">
-                        {specialty.trim()}
-                      </span>
-                    ))
+                    <span class="bg-primary/80 text-white text-xs py-0.5 px-1.5 rounded-full">
+                      {talent.specialties[0].trim()}
+                    </span>
                   )}
                 </div>
                 
-                {/* Personal Details */}
+                {/* Personal Details - Compact */}
                 <div class="flex flex-wrap gap-1">
                   {talent.height && (
                     <span class="text-xs text-white bg-black/30 px-1.5 py-0.5 rounded backdrop-blur-sm" title="Height">
@@ -98,8 +96,8 @@ try {
               </div>
             </div>
           </div>
-          <div class="p-4">
-            <div class="mb-3">
+          <div class="p-3">
+            <div class="mb-2">
               {/* Skills/Experience Tags */}
               <div class="flex flex-wrap gap-1">
                 {talent.skills && talent.skills.split(',').map((skill) => (
@@ -111,8 +109,12 @@ try {
             </div>
             
             <button
-              class="view-profile-btn w-full bg-primary text-white px-3 py-2 rounded-md hover:bg-primary/80 hover:bg-purple-600 focus:ring-2 focus:ring-purple-400 focus:outline-none transition-all duration-300 text-xs font-medium relative overflow-hidden group disabled:opacity-50 disabled:cursor-not-allowed"
-              onclick={`openTalentModal('${talent.id}', '${talent.name}', '${talent.specialties ? talent.specialties.join(', ') : talent.specialty || ''}', '${talent.description}', '${talent.image || ""}')`}
+              class="view-profile-btn w-full bg-primary text-white px-3 py-1.5 rounded-md hover:bg-primary/80 hover:bg-purple-600 focus:ring-2 focus:ring-purple-400 focus:outline-none transition-all duration-300 text-xs font-medium relative overflow-hidden group disabled:opacity-50 disabled:cursor-not-allowed"
+              data-talent-id={talent.id}
+              data-talent-name={talent.name}
+              data-talent-specialties={talent.specialties ? talent.specialties.join(', ') : talent.specialty || ''}
+              data-talent-description={talent.description}
+              data-talent-image={talent.image || ""}
             >
               <span class="relative z-10 group-hover:translate-x-1 transition-transform duration-300 inline-flex items-center">
                 <span class="loading-text">View Profile</span>
@@ -206,43 +208,57 @@ try {
 </div>
 
 <script>
-  const talentsData = JSON.parse(document.getElementById('talents-data')?.textContent || '[]');
+  const talentsData = JSON.parse(document.getElementById('talents-data') ? document.getElementById('talents-data').textContent : '[]');
 
   function openTalentModal(id, name, specialties, description, image) {
     // Show loading state
-    const button = event?.target?.closest('button');
+    var button = null;
+    if (window.event && window.event.target) {
+      button = window.event.target.closest('button');
+    }
+    
     if (button) {
       button.disabled = true;
-      const loadingText = button.querySelector('.loading-text');
-      const loadingSpinner = button.querySelector('.loading-spinner');
-      const arrowIcon = button.querySelector('.arrow-icon');
+      var loadingText = button.querySelector('.loading-text');
+      var loadingSpinner = button.querySelector('.loading-spinner');
+      var arrowIcon = button.querySelector('.arrow-icon');
       
       if (loadingText) loadingText.textContent = 'Loading...';
       if (loadingSpinner) loadingSpinner.classList.remove('hidden');
       if (arrowIcon) arrowIcon.classList.add('hidden');
     }
 
-    const modal = document.getElementById('talent-modal');
-    const modalContent = document.getElementById('talent-modal-content');
-    const modalTitle = document.getElementById('talent-modal-title');
-    const modalName = document.getElementById('talent-modal-name');
-    const modalSpecialty = document.getElementById('talent-modal-specialty');
-    const modalDescription = document.getElementById('talent-modal-description');
-    const modalMainImage = document.getElementById('talent-modal-main-image');
-    const modalMainImagePlaceholder = document.getElementById('talent-modal-main-image-placeholder');
-    const modalPersonal = document.getElementById('talent-modal-personal');
-    const thumbnailGallery = document.getElementById('talent-thumbnail-gallery');
+    var modal = document.getElementById('talent-modal');
+    var modalContent = document.getElementById('talent-modal-content');
+    var modalTitle = document.getElementById('talent-modal-title');
+    var modalName = document.getElementById('talent-modal-name');
+    var modalSpecialty = document.getElementById('talent-modal-specialty');
+    var modalDescription = document.getElementById('talent-modal-description');
+    var modalMainImage = document.getElementById('talent-modal-main-image');
+    var modalMainImagePlaceholder = document.getElementById('talent-modal-main-image-placeholder');
+    var modalPersonal = document.getElementById('talent-modal-personal');
+    var thumbnailGallery = document.getElementById('talent-thumbnail-gallery');
 
     // Find the talent data
-    const talent = talentsData.find(t => t.id === id) || {
-      id,
-      name,
-      specialties: specialties ? specialties.split(', ') : [],
-      description,
-      image,
-      imgs: image ? [image] : [],
-      images: image ? [image] : [] // Support both 'photos' and 'images' fields
-    };
+    var talent = null;
+    for (var i = 0; i < talentsData.length; i++) {
+      if (talentsData[i].id === id) {
+        talent = talentsData[i];
+        break;
+      }
+    }
+    
+    if (!talent) {
+      talent = {
+        id: id,
+        name: name,
+        specialties: specialties ? specialties.split(', ') : [],
+        description: description,
+        image: image,
+        imgs: image ? [image] : [],
+        images: image ? [image] : []
+      };
+    }
 
     // Populate modal content
     modalTitle.textContent = `${name}`;
@@ -250,15 +266,15 @@ try {
     modalDescription.textContent = description;
 
     // Handle multiple images from Firebase
-    let photos = [];
+    var photos = [];
     
     // Check for multiple image sources
     if (talent.images && Array.isArray(talent.images) && talent.images.length > 0) {
-      photos = talent.images.filter(img => img && img.trim() !== "");
+      photos = talent.images.filter(function(img) { return img && img.trim() !== ""; });
     } else if (talent.imgs && Array.isArray(talent.imgs) && talent.imgs.length > 0) {
-      photos = talent.imgs.filter(img => img && img.trim() !== "");
+      photos = talent.imgs.filter(function(img) { return img && img.trim() !== ""; });
     } else if (talent.gallery && Array.isArray(talent.gallery) && talent.gallery.length > 0) {
-      photos = talent.gallery.filter(img => img && img.trim() !== "");
+      photos = talent.gallery.filter(function(img) { return img && img.trim() !== ""; });
     } else if (talent.image && talent.image.trim() !== "") {
       photos = [talent.image];
     }
@@ -275,34 +291,28 @@ try {
         thumbnailGallery.classList.remove('hidden');
         thumbnailGallery.innerHTML = '';
         
-        photos.forEach((photo, index) => {
-          const thumbnailDiv = document.createElement('div');
+        photos.forEach(function(photo, index) {
+          var thumbnailDiv = document.createElement('div');
           thumbnailDiv.className = 'aspect-square bg-default/20 rounded overflow-hidden cursor-pointer hover:opacity-80 hover:ring-2 hover:ring-primary transition-all duration-200 focus:ring-2 focus:ring-primary focus:outline-none';
           thumbnailDiv.tabIndex = 0;
           thumbnailDiv.setAttribute('role', 'button');
-          thumbnailDiv.setAttribute('aria-label', `View photo ${index + 1}`);
-          thumbnailDiv.innerHTML = `
-            <img
-              src="${photo}"
-              alt="${name} - Photo ${index + 1}"
-              class="w-full h-full object-cover"
-              loading="lazy"
-            />
-          `;
+          thumbnailDiv.setAttribute('aria-label', 'View photo ' + (index + 1));
+          thumbnailDiv.innerHTML = '<img src="' + photo + '" alt="' + name + ' - Photo ' + (index + 1) + '" class="w-full h-full object-cover" loading="lazy" />';
           
-          const handleImageClick = () => {
+          var handleImageClick = function() {
             modalMainImage.src = photo;
-            modalMainImage.alt = `${name} - Photo ${index + 1}`;
+            modalMainImage.alt = name + ' - Photo ' + (index + 1);
             
             // Update active thumbnail styling
-            thumbnailGallery.querySelectorAll('div').forEach(thumb => {
-              thumb.classList.remove('ring-2', 'ring-primary');
-            });
+            var thumbs = thumbnailGallery.querySelectorAll('div');
+            for (var j = 0; j < thumbs.length; j++) {
+              thumbs[j].classList.remove('ring-2', 'ring-primary');
+            }
             thumbnailDiv.classList.add('ring-2', 'ring-primary');
           };
           
           thumbnailDiv.addEventListener('click', handleImageClick);
-          thumbnailDiv.addEventListener('keydown', (e) => {
+          thumbnailDiv.addEventListener('keydown', function(e) {
             if (e.key === 'Enter' || e.key === ' ') {
               e.preventDefault();
               handleImageClick();
@@ -327,7 +337,7 @@ try {
 
     // Populate personal details
     modalPersonal.innerHTML = '';
-    const personalFields = [
+    var personalFields = [
       { key: 'location', label: 'Location' },
       { key: 'born', label: 'Born' },
       { key: 'height', label: 'Height' },
@@ -337,14 +347,11 @@ try {
       { key: 'dressSize', label: 'Dress Size' }
     ];
 
-    personalFields.forEach(({ key, label }) => {
-      if (talent[key]) {
-        const detailDiv = document.createElement('div');
+    personalFields.forEach(function(field) {
+      if (talent[field.key]) {
+        var detailDiv = document.createElement('div');
         detailDiv.className = 'flex justify-between p-2 bg-default/10 rounded';
-        detailDiv.innerHTML = `
-          <span class="text-default/60 font-medium">${label}:</span>
-          <span class="text-default font-semibold">${talent[key]}</span>
-        `;
+        detailDiv.innerHTML = '<span class="text-default/60 font-medium">' + field.label + ':</span><span class="text-default font-semibold">' + talent[field.key] + '</span>';
         modalPersonal.appendChild(detailDiv);
       }
     });
@@ -380,8 +387,8 @@ try {
   }
 
   function closeTalentModal() {
-    const modal = document.getElementById('talent-modal');
-    const modalContent = document.getElementById('talent-modal-content');
+    var modal = document.getElementById('talent-modal');
+    var modalContent = document.getElementById('talent-modal-content');
     
     // Animate modal content out
     if (modalContent) {
@@ -398,7 +405,10 @@ try {
   }
 
   // Event listeners
-  document.getElementById('close-talent-modal')?.addEventListener('click', closeTalentModal);
+  var closeBtn = document.getElementById('close-talent-modal');
+  if (closeBtn) {
+    closeBtn.addEventListener('click', closeTalentModal);
+  }
 
   // Function to set up modal button listeners (called when modal opens)
   function setupModalButtonListeners() {
@@ -463,19 +473,39 @@ try {
   }
 
   // Add loading states for modal buttons
-  document.addEventListener('DOMContentLoaded', () => {
+  document.addEventListener('DOMContentLoaded', function() {
     console.log('DOM loaded, page ready');
-  });
-
-  // Close modal when clicking outside
-  document.getElementById('talent-modal')?.addEventListener('click', (e) => {
-    if (e.target.id === 'talent-modal') {
-      closeTalentModal();
+    
+    // Set up view profile button event listeners
+    var viewProfileBtns = document.querySelectorAll('.view-profile-btn');
+    for (var i = 0; i < viewProfileBtns.length; i++) {
+      viewProfileBtns[i].addEventListener('click', function(e) {
+        e.preventDefault();
+        var btn = e.currentTarget;
+        var id = btn.getAttribute('data-talent-id');
+        var name = btn.getAttribute('data-talent-name');
+        var specialties = btn.getAttribute('data-talent-specialties');
+        var description = btn.getAttribute('data-talent-description');
+        var image = btn.getAttribute('data-talent-image');
+        
+        window.event = e; // Set global event for openTalentModal
+        openTalentModal(id, name, specialties, description, image);
+      });
     }
   });
 
+  // Close modal when clicking outside
+  var talentModal = document.getElementById('talent-modal');
+  if (talentModal) {
+    talentModal.addEventListener('click', function(e) {
+      if (e.target.id === 'talent-modal') {
+        closeTalentModal();
+      }
+    });
+  }
+
   // Close modal with Escape key
-  document.addEventListener('keydown', (e) => {
+  document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') {
       closeTalentModal();
     }

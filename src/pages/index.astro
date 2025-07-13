@@ -49,19 +49,16 @@ const description =
       if (themeSaved) {
         document.documentElement.dataset.theme = themeSaved;
       } else {
-        const prefersDark = window.matchMedia(
-          "(prefers-color-scheme: dark)",
-        ).matches;
-        document.documentElement.dataset.theme = prefersDark ? "dark" : "light";
+        // Default to dark theme
+        document.documentElement.dataset.theme = "dark";
       }
 
       window
         .matchMedia("(prefers-color-scheme: dark)")
         .addEventListener("change", (event) => {
           if (!localStorage.getItem("theme")) {
-            document.documentElement.dataset.theme = event.matches
-              ? "dark"
-              : "light";
+            // Default to dark theme regardless of system preference
+            document.documentElement.dataset.theme = "dark";
           }
         });
     </script>
