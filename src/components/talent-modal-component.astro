@@ -21,13 +21,13 @@
 
         <div class="space-y-6 min-w-0">
           <!-- Hidden description for screen readers -->
-          <div id="talent-modal-description" class="sr-only">
+          <div id="talent-modal-sr-description" class="sr-only">
             Modal dialog displaying talent profile information including photos, personal details, and portfolio download option. Use Tab to navigate between elements, Escape to close.
           </div>
           
-          <div class="flex flex-col lg:flex-row gap-8 min-w-0">
+          <div class="flex flex-row gap-8 min-w-0">
             <!-- Photo Gallery Section -->
-            <div class="lg:w-1/2 min-w-0">
+            <div class="w-1/2 min-w-0">
               <h4 class="font-semibold mb-4 text-lg text-default">Photos</h4>
               <div id="talent-photo-gallery" class="space-y-4 min-w-0">
                 <!-- Main photo -->
@@ -49,8 +49,8 @@
               </div>
             </div>
 
-            <!-- Info Section -->
-            <div class="lg:w-1/2 space-y-6 min-w-0">
+            <!-- Info Section - moved to right of photos -->
+            <div class="w-1/2 space-y-6 min-w-0">
               <!-- Name and Specialty -->
               <div class="min-w-0">
                 <h3 id="talent-modal-name" class="text-2xl font-bold text-default min-w-0"></h3>
@@ -60,7 +60,7 @@
               <!-- About Section -->
               <div class="min-w-0">
                 <h4 class="font-semibold mb-3 text-lg text-default">About</h4>
-                <p id="talent-modal-description" class="text-default/80 leading-relaxed min-w-0"></p>
+                <p id="talent-modal-about" class="text-default/80 leading-relaxed min-w-0"></p>
               </div>
 
               <!-- Personal Details Section -->
@@ -135,7 +135,7 @@
       var modalTitle = document.getElementById('talent-modal-title');
       var modalName = document.getElementById('talent-modal-name');
       var modalSpecialty = document.getElementById('talent-modal-specialty');
-      var modalDescription = document.getElementById('talent-modal-description');
+      var modalDescription = document.getElementById('talent-modal-about');
       var modalMainImage = document.getElementById('talent-modal-main-image');
       var modalMainImagePlaceholder = document.getElementById('talent-modal-main-image-placeholder');
       var modalPersonal = document.getElementById('talent-modal-personal');
@@ -211,7 +211,7 @@
       modalPersonal.innerHTML = '';
       const personalFields = [
         { key: 'location', label: 'Location', value: talent.location },
-        { key: 'birth', label: 'Birth', value: talent.birth || talent.birth },
+        { key: 'birth', label: 'Birth', value: talent.birth || talent.born },
         { key: 'height', label: 'Height', value: talent.height ? talent.height + 'cm' : null },
         { key: 'eyeColor', label: 'Eye Color', value: talent.eyeColor },
         { key: 'hairColor', label: 'Hair Color', value: talent.hairColor },
