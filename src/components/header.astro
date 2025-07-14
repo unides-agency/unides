@@ -56,7 +56,7 @@ const navItems: Array<NavItem> = [
   <!-- Mobile Menu Modal -->
   <div id="menu-modal" class="modal hidden fixed inset-0 z-50 md:hidden" aria-hidden="true">
     <div class="fixed inset-0 bg-black/50 backdrop-blur-sm" id="menu-backdrop"></div>
-    <div class="fixed inset-0 bg-default text-default">
+    <div class="fixed inset-0 bg-default">
       <div class="flex flex-col h-full">
         <!-- Mobile Menu Header -->
         <div class="flex items-center justify-between p-4 border-b border-default/20">
@@ -73,12 +73,12 @@ const navItems: Array<NavItem> = [
         
         <!-- Mobile Navigation -->
         <nav class="flex-1 px-4 py-8">
-          <ul class="space-y-2">
+          <ul class="space-y-2" style="background: var(--color-background) !important;">
             {
               navItems.map(({ title, url }) => (
                 <li>
                   <a 
-                    class="block py-4 px-4 text-lg font-semibold mobile-nav-link rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                    class="block py-4 px-4 text-lg font-medium mobile-nav-link rounded-lg hover:bg-default/10 transition-colors"
                     href={url}
                   >
                     {title}
@@ -290,20 +290,15 @@ const navItems: Array<NavItem> = [
   .mobile-nav-link {
     position: relative;
     transition: all 0.3s ease;
-    font-weight: 600;
+    font-weight: 500;
     display: block;
     text-decoration: none;
-    color: inherit;
   }
   
   .mobile-nav-link:hover {
     color: var(--color-accent, #fd5d13);
     transform: translateX(0.5rem);
-    background: #f3f4f6;
-  }
-  
-  .dark .mobile-nav-link:hover {
-    background: #1f2937;
+    background: rgba(253, 93, 19, 0.1);
   }
   
   .mobile-nav-link:focus {
