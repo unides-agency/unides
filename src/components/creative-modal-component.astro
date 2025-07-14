@@ -397,12 +397,22 @@
         Object.entries(currentCreative.personalInfo).forEach(([key, value]) => {
           if (value !== null && value !== undefined && value !== '') {
             const fieldDiv = document.createElement('div');
-            fieldDiv.className = 'flex justify-between items-center border-b border-default/10 py-1 px-0.5';
+            fieldDiv.className = 'flex gap-2 border-b border-default/10 py-1 px-0.5 items-start';
             // Format the key to be more readable (camelCase to Title Case)
             const formattedLabel = key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase());
+            // Detect if value is a URL
+            const urlPattern = /^(https?:\/\/|www\.)[\w\-]+(\.[\w\-]+)+([\w.,@?^=%&:/~+#\-]*[\w@?^=%&/~+#\-])?$/;
+            let valueHtml = '';
+            if (typeof value === 'string' && urlPattern.test(value.trim())) {
+              let url = value.trim();
+              if (!/^https?:\/\//.test(url)) url = 'https://' + url;
+              valueHtml = `<a href="${url}" target="_blank" rel="noopener noreferrer" class="text-primary underline break-all max-w-[12rem] text-right block">${value}</a>`;
+            } else {
+              valueHtml = `<span class="text-default text-right break-words break-all whitespace-pre-line max-w-[12rem] block">${value}</span>`;
+            }
             fieldDiv.innerHTML = `
-              <span class="font-medium text-default/70">${formattedLabel}:</span>
-              <span class="text-default text-right">${value}</span>
+              <span class="font-medium text-default/70 flex-shrink-0">${formattedLabel}:</span>
+              ${valueHtml}
             `;
             modalPersonal.appendChild(fieldDiv);
           }
