@@ -99,16 +99,7 @@
             </div>
           </div>
 
-          <!-- Action Buttons -->
-          <div class="flex gap-4 pt-6 border-t border-default/20 min-w-0">
-            <button 
-              id="creative-download-portfolio-btn"
-              class="flex-1 border-2 border-primary text-primary px-8 py-4 rounded-lg hover:bg-primary/10 hover:border-purple-600 hover:text-purple-600 focus:ring-2 focus:ring-purple-400 focus:outline-none transition-all duration-300 font-semibold text-lg hover:shadow-lg hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none min-w-0"
-            >
-              <span class="creative-portfolio-text">Download Portfolio</span>
-              <span class="creative-portfolio-spinner hidden animate-spin ml-2">⏳</span>
-            </button>
-          </div>
+
         </div>
       </div>
     </div>
@@ -121,7 +112,7 @@
     window.creativeModalInitialized = true;
 
     // Main modal open function
-    function openCreativeModal(id, name, specialties, description, image, personalInfo, stats, imgs, pdfUrl) {
+    function openCreativeModal(id, name, specialties, description, image, personalInfo, stats, imgs) {
       const modal = document.getElementById('creative-modal');
       const modalContent = document.getElementById('creative-modal-content');
       const modalTitle = document.getElementById('creative-modal-title');
@@ -146,8 +137,7 @@
         image: image || "",
         personalInfo: personalInfo || {},
         stats: stats || {},
-        imgs: imgs || [],
-        pdfUrl
+        imgs: imgs || []
       };
 
       // Store current image index
@@ -432,7 +422,6 @@
       modal.classList.remove('hidden');
       modal.setAttribute('aria-hidden', 'false');
       modal.dataset.currentCreativeId = id; // Store current creative ID
-      modal.dataset.pdfUrl = pdfUrl || ''; // Store PDF URL
       document.body.style.overflow = 'hidden';
       
       // Animate modal content
@@ -462,63 +451,6 @@
       }, 300);
     }
 
-    async function downloadCreativePortfolio() {
-      const downloadBtn = document.getElementById('creative-download-portfolio-btn');
-      const portfolioText = downloadBtn.querySelector('.creative-portfolio-text');
-      const portfolioSpinner = downloadBtn.querySelector('.creative-portfolio-spinner');
-      
-      if (!downloadBtn) return;
-      
-      const originalText = portfolioText.textContent;
-      downloadBtn.disabled = true;
-      portfolioText.textContent = 'Loading Portfolio...';
-      portfolioSpinner.classList.remove('hidden');
-      
-      try {
-        // Get current creative ID and PDF URL from stored data
-        const modal = document.getElementById('creative-modal');
-        const currentCreativeId = modal ? modal.dataset.currentCreativeId : null;
-        const storedPdfUrl = modal ? modal.dataset.pdfUrl : null;
-        
-        if (!currentCreativeId) {
-          throw new Error('No creative ID found');
-        }
-
-        console.log('PDF URL check:', storedPdfUrl);
-
-        // Use stored PDF URL if available, otherwise try Firebase
-        let pdfUrl = storedPdfUrl;
-        
-        if (!pdfUrl || pdfUrl.trim() === '') {
-          console.log('No stored PDF URL, trying Firebase...');
-          pdfUrl = await getCreativePdfUrl(currentCreativeId);
-        }
-        
-        if (pdfUrl && pdfUrl.trim() !== '') {
-          console.log('Opening PDF URL:', pdfUrl);
-          // Create a temporary link and trigger download
-          const link = document.createElement('a');
-          link.href = pdfUrl;
-          link.download = ''; // Let the browser determine the filename from the URL
-          link.target = '_blank'; // Open in new tab as fallback
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
-        } else {
-          // Show user-friendly message
-          console.log('No PDF URL found');
-          alert('Portfolio PDF not available for this creative.');
-        }
-        
-      } catch (error) {
-        console.error('Error downloading portfolio:', error);
-        alert('Unable to download portfolio. Please try again later.');
-      } finally {
-        downloadBtn.disabled = false;
-        portfolioText.textContent = originalText;
-        portfolioSpinner.classList.add('hidden');
-      }
-    }
 
     // Function to get creative PDF URL from Firebase
     async function getCreativePdfUrl(creativeId) {
@@ -544,7 +476,7 @@
 
     // Event listeners
     document.getElementById('close-creative-modal')?.addEventListener('click', closeCreativeModal);
-    document.getElementById('creative-download-portfolio-btn')?.addEventListener('click', downloadCreativePortfolio);
+
 
     // Close modal when clicking outside
     document.getElementById('creative-modal')?.addEventListener('click', (e) => {
@@ -566,7 +498,7 @@
     // Make functions globally available
     window.openCreativeModal = openCreativeModal;
     window.closeCreativeModal = closeCreativeModal;
-    window.downloadCreativePortfolio = downloadCreativePortfolio;
+
   }
 </script>
 

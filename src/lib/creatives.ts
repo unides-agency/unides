@@ -17,7 +17,7 @@ export interface Creative {
   height?: string;
   stats?: Record<string, any>;
   enabled?: boolean;
-  pdfUrl?: string; // Add PDF URL field
+
 }
 
 export async function getCreatives(): Promise<Creative[]> {
@@ -35,19 +35,3 @@ export async function getCreatives(): Promise<Creative[]> {
   }
 }
 
-export async function getCreativePdfUrl(creativeId: string): Promise<string | null> {
-  try {
-    const creativeRef = doc(db, 'creatives', creativeId);
-    const creativeDoc = await getDoc(creativeRef);
-    
-    if (creativeDoc.exists()) {
-      const data = creativeDoc.data();
-      return data.pdfUrl || null;
-    }
-    
-    return null;
-  } catch (error) {
-    console.error('Error fetching creative PDF URL:', error);
-    throw error;
-  }
-}
