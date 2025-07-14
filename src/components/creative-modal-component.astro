@@ -92,7 +92,7 @@
               <!-- Personal Details Section -->
               <div class="min-w-0">
                 <h4 class="font-semibold mb-3 text-lg text-default">Personal Details</h4>
-                <div id="creative-modal-personal" class="grid grid-cols-2 gap-4 text-sm min-w-0">
+                <div id="creative-modal-personal" class="flex flex-col gap-4 text-sm min-w-0 w-full">
                   <!-- Personal details will be populated by JavaScript -->
                 </div>
               </div>
@@ -396,9 +396,9 @@
             if (typeof value === 'string' && urlPattern.test(value.trim())) {
               let url = value.trim();
               if (!/^https?:\/\//.test(url)) url = 'https://' + url;
-              valueHtml = `<a href="${url}" target="_blank" rel="noopener noreferrer" class="text-primary underline break-all max-w-[12rem] text-right block">${value}</a>`;
+              valueHtml = `<a href="${url}" target="_blank" rel="noopener noreferrer" class="text-primary underline break-all max-w-full lg:max-w text-right block overflow-ellipsis">${value}</a>`;
             } else {
-              valueHtml = `<span class="text-default text-right break-words break-all whitespace-pre-line max-w-[12rem] block">${value}</span>`;
+              valueHtml = `<span class="text-default text-right break-words break-all whitespace-pre-line max-w-full lg:max-w-[18rem] block">${value}</span>`;
             }
             fieldDiv.innerHTML = `
               <span class="font-medium text-default/70 flex-shrink-0">${formattedLabel}:</span>
