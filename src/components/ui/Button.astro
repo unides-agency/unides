@@ -1,0 +1,35 @@
+---
+import { cn } from "~/lib/utils";
+
+interface ButtonProps {
+  type?: "button" | "submit";
+  variant?: "primary" | "secondary" | "ghost";
+  className?: string;
+  onclick?: string;
+  disabled?: boolean;
+}
+
+const { 
+  type = "button", 
+  variant = "primary", 
+  className = "", 
+  onclick,
+  disabled = false
+} = Astro.props as ButtonProps;
+---
+
+<button 
+  type={type} 
+  class={cn(
+    "px-4 py-2 rounded transition-colors duration-200 font-medium",
+    variant === "primary" && "bg-blue-500 text-white hover:bg-blue-600 disabled:bg-blue-300",
+    variant === "secondary" && "bg-gray-500 text-white hover:bg-gray-600 disabled:bg-gray-300",
+    variant === "ghost" && "bg-transparent text-gray-700 hover:bg-gray-200 disabled:text-gray-400",
+    disabled && "cursor-not-allowed opacity-50",
+    className
+  )}
+  onclick={onclick}
+  disabled={disabled}
+>
+  <slot />
+</button>
