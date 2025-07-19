@@ -3,17 +3,17 @@ import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
 
-  apiKey: "AIzaSyAWyelN3YFsFIG2hgcpp-VpWTXNijVhrEY",
+  apiKey: process.env.PUBLIC_FIREBASE_API_KEY,
 
-  authDomain: "unidesagency-97d68.firebaseapp.com",
+  authDomain: process.env.PUBLIC_FIREBASE_AUTH_DOMAIN,
 
-  projectId: "unidesagency-97d68",
+  projectId: process.env.PUBLIC_FIREBASE_PROJECT_ID,
 
-  storageBucket: "unidesagency-97d68.firebasestorage.app",
+  storageBucket: process.env.PUBLIC_FIREBASE_STORAGE_BUCKET,
 
-  messagingSenderId: "819819628358",
+  messagingSenderId: process.env.PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
 
-  appId: "1:819819628358:web:bed6e4a9de210dd6590747"
+  appId: process.env.PUBLIC_FIREBASE_APP_ID
 
 };
 

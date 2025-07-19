@@ -1,0 +1,69 @@
+---
+import ButtonGroup from "~/components/ui/ButtonGroup";
+import Button from "~/components/ui/Button.astro";
+import Creatives from "~/components/ui/Creatives.tsx";
+import Helix from "~/components/ui/Helix.tsx";
+---
+
+<main>
+  <h1>Test Page - Client-side Interactions</h1>
+  <div class="space-y-8">
+    <section>
+      <h2 class="text-xl font-bold mb-4">Option 1: React Island (Most React-like)</h2>
+      <ButtonGroup client:load />
+    </section>
+
+    <section>
+      <h2 class="text-xl font-bold mb-4">Option 2: Astro Component</h2>
+      <Button variant="primary" className="enhanced-button" data-button-type="Primary"
+        >Primary</Button
+      >
+      <Button variant="secondary" className="enhanced-button ml-2" data-button-type="Secondary"
+        >Secondary</Button
+      >
+      <Button variant="ghost" className="enhanced-button ml-2" data-button-type="Ghost"
+        >Ghost</Button
+      >
+    </section>
+
+    <section>
+      <Creatives client:load />
+    </section>
+
+    <div class="relative h-screen overflow-hidden bg-slate-800">
+      <div class="absolute top-1/3 w-full z-10 text-blue-500">
+        <Helix
+          client:load
+          marqueeText="Unides Movement"
+          speed={0.5}
+          curveAmount={400}
+          direction="left"
+          className="interactive={false}"
+        />
+      </div>
+      <div class="absolute top-2/3 w-full z-10 text-red-500">
+        <Helix
+          client:load
+          marqueeText="Unides Movement"
+          speed={0.5}
+          curveAmount={-400}
+          direction="left"
+          interactive={false}
+        />
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+  // Enhanced event handling for Astro components
+  document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll(".enhanced-button").forEach((button) => {
+      button.addEventListener("click", (e) => {
+        const target = e.target as HTMLElement;
+        const buttonType = target.dataset.buttonType;
+        window.alert(buttonType + " Button clicked!");
+      });
+    });
+  });
+</script>

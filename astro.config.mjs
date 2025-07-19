@@ -1,4 +1,5 @@
 import tailwind from "@astrojs/tailwind";
+import react from "@astrojs/react";
 import icon from "astro-icon";
 import { defineConfig } from "astro/config";
 
@@ -12,7 +13,8 @@ export default defineConfig({
       // Apply Tailwind base styles
       applyBaseStyles: true,
     }),
-    icon()      // Enables icon components
+    react(),        // Enable React components
+    icon()          // Enables icon components
   ],
   
   // Vite configuration for PostCSS and Rollup
