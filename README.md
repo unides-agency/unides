@@ -67,9 +67,9 @@ FIREBASE_APP_ID=your_app_id
 
 - **Agency**: Unides Agency
 - **Address**: Soldiner Straße 72, 13359 Berlin, Germany
-- **Email**: info@unides-agency.com
-- **Phone**: +49 (172) 802 7395
+- **Email**: unides.agency@gmail.com
+- **Phone**: +49 (151) 5 6146198
 
 ## License
 
-Copyright © 2024 Unides Agency. All rights reserved.
+Copyright © 2025 Unides Agency. All rights reserved.
