@@ -1,5 +1,6 @@
 ---
 import { Icon } from "astro-icon/components";
+import Image from "astro/components/Image.astro";
 import ThemeSwitcher from "~/components/theme-switcher.astro";
 import type { NavItem } from "~/types";
 
@@ -17,7 +18,7 @@ const navItems: Array<NavItem> = [
 >
   <a class="flex items-center gap-3 hover:!text-default flex-shrink-0" href="#">
     <h1 class="sr-only">Unides</h1>
-    <img src="/unides_yellow.png" alt="Unides Logo" class="h-6 sm:h-8 w-auto" />
+    <Image src="/unides_yellow.png" alt="Unides Logo" class="h-6 sm:h-8 w-auto" width={200} height={50}/>
   </a>
   
   <!-- Desktop Navigation -->
@@ -60,7 +61,7 @@ const navItems: Array<NavItem> = [
       <div class="flex flex-col h-full">
         <!-- Mobile Menu Header -->
         <div class="flex items-center justify-between p-4 border-b border-default/20">
-          <img src="/unides_yellow.png" alt="Unides Logo" class="h-6 w-auto" />
+          <Image src="/unides_yellow.png" alt="Unides Logo" class="h-6 w-auto" width={200} height={50}/>
           <button
             id="close-nav-button"
             type="button"

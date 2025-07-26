@@ -1,4 +1,5 @@
 ---
+import Image from "astro/components/Image.astro";
 import ContentSection from "~/components/content-section.astro";
 import TalentModalComponent from "~/components/talent-modal-component.astro";
 import { getTalents } from "~/lib/talents";
@@ -30,14 +31,12 @@ try {
         <div class="talent-card bg-offset rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
           <div class="aspect-[2/3] bg-default/20 flex items-center justify-center relative">
             {talent.image && talent.image.trim() !== "" ? (
-              <img
+              <Image
                 src={talent.image}
                 alt={`${talent.name} - ${talent.specialty}`}
                 class="w-full h-full object-cover"
-                loading={talent.id <= 4 ? "eager" : "lazy"}
-                fetchpriority={talent.id <= 2 ? "high" : "auto"}
-                width="200"
-                height="300"
+                width={200}
+                height={300}
               />
             ) : (
               <span class="text-default/60 text-xs">Photo Coming Soon</span>
