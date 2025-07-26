@@ -1,5 +1,6 @@
 ---
 import { Icon } from "astro-icon/components";
+import Image from "astro/components/Image.astro";
 import ApplyButton from "~/components/apply-button.astro";
 import Starfield from "~/components/starfield.astro";
 ---
@@ -25,8 +26,8 @@ import Starfield from "~/components/starfield.astro";
     <h2
       class="flex flex-col items-center gap-2 sm:gap-4"
     >
-      <img src="/unides_writing_green.png" alt="Unides" class="h-24 md:h-32 lg:h-40 w-auto logo-glow" />
-      <img src="/unides_green.png" alt="Unides Logo" class="h-12 md:h-16 w-auto logo-glow" />
+      <Image src="/unides_writing_green.png" alt="Unides" class="h-24 md:h-32 lg:h-40 w-auto logo-glow" width={1920} height={1080}/>
+      <Image src="/unides_green.png" alt="Unides Logo" class="h-12 md:h-16 w-auto logo-glow" width={1920} height={1080}/>
       <p class="tagline mt-8 md:mt-12">
         We represent <span class="tagline-highlight">talents</span> that inspire
       </p>

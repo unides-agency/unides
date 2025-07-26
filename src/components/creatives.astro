@@ -1,4 +1,5 @@
 ---
+import Image from "astro/components/Image.astro";
 import ContentSection from "~/components/content-section.astro";
 import CreativeModalComponent from "~/components/creative-modal-component.astro";
 import { getCreatives } from "~/lib/creatives";
@@ -29,11 +30,13 @@ try {
             <div class="talent-card bg-offset rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
               <div class="aspect-[3/4] bg-default/20 flex items-center justify-center relative">
                 {creative.image && creative.image.trim() !== "" ? (
-                    <img
+                    <Image
                       src={creative.image}
                       alt={`${creative.name} - ${creative.specialty}`}
                       class="w-full h-full object-cover"
                       loading="lazy"
+                      width={300}
+                      height={400}
                     />
                 ) : (
                     <span class="text-default/60 text-xs">Portfolio Preview</span>

@@ -24,9 +24,12 @@ const description =
     <meta name="generator" content={generator} />
 
     <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display+SC:wght@700;900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display+SC:wght@700;900&display=swap"
+      rel="stylesheet"
+    />
 
     <title>Unides - Talent Platform</title>
     <meta name="description" content={description} />
@@ -53,14 +56,12 @@ const description =
         document.documentElement.dataset.theme = "dark";
       }
 
-      window
-        .matchMedia("(prefers-color-scheme: dark)")
-        .addEventListener("change", (event) => {
-          if (!localStorage.getItem("theme")) {
-            // Default to dark theme regardless of system preference
-            document.documentElement.dataset.theme = "dark";
-          }
-        });
+      window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (event) => {
+        if (!localStorage.getItem("theme")) {
+          // Default to dark theme regardless of system preference
+          document.documentElement.dataset.theme = "dark";
+        }
+      });
     </script>
   </head>
   <body
@@ -68,19 +69,13 @@ const description =
   >
     <Header />
     <Splash />
-    <div class="py-16">
+    <section class="container mx-auto px-4 py-32 mb-32 flex flex-col gap-64">
       <Talents />
-    </div>
-    <div class="py-16">
       <Creatives />
-    </div>
-    <div class="py-16">
       <AboutUs />
-    </div>
-    <div class="py-16">
       <ContactUs />
-    </div>
-    <div class="py-16"></div>
+    </section>
+
     <Footer />
   </body>
 </html>

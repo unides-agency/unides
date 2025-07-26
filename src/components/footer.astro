@@ -1,5 +1,7 @@
 ---
 import { Icon } from "astro-icon/components";
+import Image from "astro/components/Image.astro";
+
 import type { FooterLink } from "~/types";
 
 const links: Array<FooterLink> = [
@@ -21,14 +23,14 @@ const links: Array<FooterLink> = [
 ];
 ---
 
-<footer class="footer relative flex min-h-64 items-center justify-center overflow-hidden">
+<footer class="footer relative flex min-h-64 py-8 items-center justify-center overflow-hidden">
   <div class="absolute inset-0 opacity-40">
     <div class="absolute inset-0 bg-gradient-to-br from-blue-900 via-purple-900 to-slate-900"></div>
   </div>
   
   <!-- Mobile: Logo at top, Desktop: Logo at bottom right -->
   <div class="absolute top-4 left-4 sm:top-auto sm:left-auto sm:bottom-8 sm:right-8">
-    <img src="/unides_agency_orange.png" alt="Unides" class="h-12 sm:h-16 w-auto" />
+    <Image src="/unides_agency_orange.png" alt="Unides" class="h-12 sm:h-16 w-auto" width={200} height={50} />
   </div>
   
   <!-- Main content container -->
