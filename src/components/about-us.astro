@@ -9,7 +9,7 @@ import Image from "astro/components/Image.astro";
   <Fragment slot="lead">
     At Unides, we connect artists, filmmakers, models and creators of all kinds with brands, stages and screens.
 <br>
-    We also bring culture to life through unforgettable events - where music, art, and community meet.
+    We also bring culture to life through unforgettable events - where music, art and community meet.
 
   </Fragment>
   <div class="w-full space-y-8">
@@ -26,7 +26,7 @@ import Image from "astro/components/Image.astro";
         <h3 class="font-bold text-xl mb-4 text-purple-600">Our Vision</h3>
         <p class="text-default/80 leading-relaxed">
           Uniting Latinx talent and culture to transform the creative landscape - boldly,
-          purposefully, together.
+          purposefully - together.
         </p>
       </div>
     </div>
@@ -50,7 +50,7 @@ import Image from "astro/components/Image.astro";
         <div class="values-card bg-offset p-6 rounded-lg">
           <h4 class="font-semibold text-primary mb-2">Support & Elevation</h4>
           <p class="text-sm text-default/80">
-            We understand how hard this path can be. That's why we're not just agents — we're allies.
+            We understand how hard this path can be. That's why we're not just agents - we are allies.
           </p>
         </div>
       </div>
@@ -69,35 +69,89 @@ import Image from "astro/components/Image.astro";
     <div class="about-section-divider"></div>
 
     <div class="text-center py-12">
-      <h3 class="font-bold text-xl mb-8 text-purple-600">Meet the queens</h3>
-      <div class="grid md:grid-cols-1 gap-6">
-        <div class="bg-offset p-8 rounded-lg shadow-md">
-          <div class="grid md:grid-cols-2 gap-8 items-center">
-            <div class="flex justify-center">
-              <div class="w-full max-w-xs h-110 overflow-hidden rounded-lg shadow-lg">
-                <Image
-                  src="https://unides.s3.eu-central-1.amazonaws.com/images/about/_DSC4263.JPG"
-                  alt="Grasi"
-                  width={400}
-                  height={300}
-                  class="w-full h-full object-cover object-center"
-                />
-              </div>
+      <h3 class="font-bold text-xl mb-8 text-purple-600">Meet the Queens</h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
+        <!-- Grasi -->
+        <div class="team-card bg-offset rounded-lg shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden">
+          <div class="image-container relative">
+            <Image
+              src="https://unides.s3.eu-central-1.amazonaws.com/images/about/_DSC4263.JPG"
+              alt="Grasi - Founder"
+              width={300}
+              height={350}
+              class="primary-image w-full h-80 object-cover transition-opacity duration-500"
+            />
+            <Image
+              src="https://unides.s3.eu-central-1.amazonaws.com/images/about/_DSC4263.JPG"
+              alt="Grasi - Founder (alternate)"
+              width={300}
+              height={350}
+              class="hover-image absolute inset-0 w-full h-80 object-cover opacity-0 transition-opacity duration-500"
+            />
+          </div>
+          <div class="text-container p-4 text-center">
+            <h4 class="font-bold text-base mb-1">
+              Grasi <span class="font-normal text-xs text-default/70">she/her</span>
+            </h4>
+            <p class="text-purple-600 font-medium text-xs">Founder</p>
+            <p class="text-default/70 text-xs">Operations & Talent Management</p>
+          </div>
+        </div>
+
+        <!-- Oguz Kabaksil -->
+        <div class="team-card bg-offset rounded-lg shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden">
+          <div class="image-container relative">
+            <div class="primary-image w-full h-80 bg-gradient-to-br from-purple-200 to-purple-300 flex items-center justify-center transition-opacity duration-500">
+              <span class="text-6xl text-purple-700 font-bold">OK</span>
             </div>
-            <div class="text-center md:text-left">
-              <h4 class="font-semibold text-xl mb-1">Grasi</h4>
-              <p class="text-primary text-sm mb-4">Founder</p>
-              <p class="text-sm text-default/80 leading-relaxed">
-                With over 7 years of experience in operations and logistics, I bring structure,
-                strategy, and creative problem-solving to the heart of talent management. I'm
-                passionate about building systems that work efficiently, intuitively, and with room
-                to grow. My background in streamlining complex processes is complemented by a
-                lifelong love of art, which inspires fresh, human-centered solutions. At our agency,
-                I focus on making things run smoothly behind the scenes so talent and creativity can
-                take center stage. I'm excited to shape a space where artists thrive and ideas move
-                with intention.
-              </p>
+            <div class="hover-image absolute inset-0 w-full h-80 bg-gradient-to-br from-purple-300 to-purple-400 flex items-center justify-center opacity-0 transition-opacity duration-500">
+              <span class="text-6xl">🚀</span>
             </div>
+          </div>
+          <div class="text-container p-4 text-center">
+            <h4 class="font-bold text-base mb-1">
+              Oguz Kabaksil <span class="font-normal text-xs text-default/70">he/him</span>
+            </h4>
+            <p class="text-purple-600 font-medium text-xs">Front End Developer</p>
+            <p class="text-default/70 text-xs">Web Technologies & User Experience</p>
+          </div>
+        </div>
+
+        <!-- Eve Queiroz -->
+        <div class="team-card bg-offset rounded-lg shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden">
+          <div class="image-container relative">
+            <div class="primary-image w-full h-80 bg-gradient-to-br from-pink-200 to-pink-300 flex items-center justify-center transition-opacity duration-500">
+              <span class="text-6xl text-pink-700 font-bold">EQ</span>
+            </div>
+            <div class="hover-image absolute inset-0 w-full h-80 bg-gradient-to-br from-pink-300 to-pink-400 flex items-center justify-center opacity-0 transition-opacity duration-500">
+              <span class="text-6xl">🎨</span>
+            </div>
+          </div>
+          <div class="text-container p-4 text-center">
+            <h4 class="font-bold text-base mb-1">
+              Eve Queiroz <span class="font-normal text-xs text-default/70">she/her</span>
+            </h4>
+            <p class="text-pink-600 font-medium text-xs">Visual Identity</p>
+            <p class="text-default/70 text-xs">Brand Design & Cultural Narratives</p>
+          </div>
+        </div>
+
+        <!-- Cavi Loos -->
+        <div class="team-card bg-offset rounded-lg shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden">
+          <div class="image-container relative">
+            <div class="primary-image w-full h-80 bg-gradient-to-br from-orange-200 to-orange-300 flex items-center justify-center transition-opacity duration-500">
+              <span class="text-6xl text-orange-700 font-bold">CL</span>
+            </div>
+            <div class="hover-image absolute inset-0 w-full h-80 bg-gradient-to-br from-orange-300 to-orange-400 flex items-center justify-center opacity-0 transition-opacity duration-500">
+              <span class="text-6xl">✨</span>
+            </div>
+          </div>
+          <div class="text-container p-4 text-center">
+            <h4 class="font-bold text-base mb-1">
+              Cavi Loos <span class="font-normal text-xs text-default/70">they/them</span>
+            </h4>
+            <p class="text-orange-600 font-medium text-xs">Web Designer</p>
+            <p class="text-default/70 text-xs">Digital Spaces & Creative Interfaces</p>
           </div>
         </div>
       </div>
@@ -122,3 +176,56 @@ import Image from "astro/components/Image.astro";
     </div>
   </div>
 </ContentSection>
+
+<style>
+  .team-card {
+    transition: all 0.3s ease;
+  }
+
+  .team-card:hover {
+    transform: translateY(-2px);
+  }
+
+  .team-card:hover .hover-image {
+    opacity: 1;
+  }
+
+  .team-card:hover .primary-image {
+    opacity: 0;
+  }
+
+  .team-card:focus-within {
+    outline: 2px solid var(--color-primary, #fd5d13);
+    outline-offset: 2px;
+  }
+
+  .image-container {
+    transition: transform 0.3s ease;
+  }
+
+  .team-card:hover .image-container {
+    transform: scale(1.05);
+  }
+
+  /* Accessibility improvements */
+  .team-card {
+    cursor: pointer;
+  }
+
+  .team-card h4 {
+    color: inherit;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .team-card {
+      margin-bottom: 1rem;
+    }
+  }
+
+  /* Ensure smooth transitions on all interactive elements */
+  .primary-image,
+  .hover-image {
+    transition: opacity 0.5s ease;
+  }
+</style>
