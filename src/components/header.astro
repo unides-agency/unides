@@ -2,11 +2,11 @@
 import { Icon } from "astro-icon/components";
 import Image from "astro/components/Image.astro";
 import ThemeSwitcher from "~/components/theme-switcher.astro";
+import ApplyModal from "~/components/apply-modal.astro";
 import type { NavItem } from "~/types";
 
 const navItems: Array<NavItem> = [
-  { title: "Talents", url: "#talents" },
-  { title: "Creatives", url: "#creatives" },
+  { title: "Talent", url: "#talents" },
   { title: "About Us", url: "#aboutus" },
   { title: "Contact Us", url: "#contact" },
 ];
@@ -14,7 +14,7 @@ const navItems: Array<NavItem> = [
 
 <header
   id="page-header"
-  class="absolute bottom-0 z-20 flex w-full items-center justify-between border-b border-transparent px-4 sm:px-8 py-4 bg-default/10 backdrop-blur-sm"
+  class="fixed top-0 left-0 right-0 z-20 flex w-full items-center justify-between border-b border-transparent px-4 sm:px-8 py-4 bg-default/10 backdrop-blur-sm"
 >
   <a class="flex items-center gap-3 hover:!text-default flex-shrink-0" href="#">
     <h1 class="sr-only">Unides</h1>
@@ -40,6 +40,18 @@ const navItems: Array<NavItem> = [
   
   <!-- Mobile & Desktop Right Section -->
   <div class="flex items-center gap-4 sm:gap-6 flex-shrink-0">
+    <!-- Apply Now Button -->
+    <button
+      type="button"
+      class="hidden sm:block bg-primary text-white px-4 py-2 rounded-lg font-medium text-sm hover:bg-primary/90 transition-all shadow-md"
+      onclick="openApplyModal()"
+    >
+      Apply Now
+    </button>
+
+    <!-- Theme Switcher -->
+    <ThemeSwitcher />
+
     <!-- Mobile Menu Button -->
     <button
       id="open-nav-button"
@@ -49,9 +61,6 @@ const navItems: Array<NavItem> = [
     >
       <Icon name="mdi:menu" class="w-6 h-6" />
     </button>
-    
-    <!-- Theme Switcher -->
-    <ThemeSwitcher />
   </div>
   
   <!-- Mobile Menu Modal -->
@@ -87,12 +96,25 @@ const navItems: Array<NavItem> = [
                 </li>
               ))
             }
+            <!-- Mobile Apply Button -->
+            <li>
+              <button
+                type="button"
+                class="w-full block py-4 px-4 text-lg font-medium bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors mt-4"
+                onclick="openApplyModal(); closeMenu();"
+              >
+                Apply Now
+              </button>
+            </li>
           </ul>
         </nav>
       </div>
     </div>
   </div>
 </header>
+
+<!-- Apply Modal -->
+<ApplyModal />
 
 <script>
   const menuModal = document.getElementById('menu-modal');

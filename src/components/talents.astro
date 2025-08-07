@@ -3,37 +3,95 @@ import Image from "astro/components/Image.astro";
 import ContentSection from "~/components/content-section.astro";
 import TalentModalComponent from "~/components/talent-modal-component.astro";
 import { getTalents } from "~/lib/talents";
+import { getCreatives } from "~/lib/creatives";
 
-// Fetch talents from Firebase
+// Fetch talents and creatives from Firebase
 let talents = [];
+let creatives = [];
+let allPeople = [];
 try {
   const allTalents = await getTalents();
-  // Filter to only show enabled talents
-  talents = allTalents.filter(talent => talent.enabled == true);
-  console.log(`Loaded ${talents.length} enabled talents from Firebase`);
+  const allCreatives = await getCreatives();
+  console.log('Fetched talents:', allTalents);
+  console.log('Fetched creatives:', allCreatives);
+  talents = allTalents.filter(talent => talent.enabled == true).map(t => ({ ...t, type: 'Talent' }));
+  creatives = allCreatives.filter(creative => creative.enabled == true).map(c => ({ ...c, type: 'Creative' }));
+  allPeople = [...talents, ...creatives];
+  console.log('Combined and filtered people:', allPeople);
 } catch (error) {
-  console.error('Failed to load talents:', error);
+  console.error('Failed to load talents or creatives:', error);
+}
+
+// Filtering logic
+const FILTERS = [
+  { label: 'ALL', value: 'ALL' },
+  { label: 'Talent', value: 'Talent' },
+  { label: 'Creative', value: 'Creative' },
+  // Add more filters as needed, e.g., Actress, Model, etc.
+];
+let selectedFilter = 'ALL';
+
+function getFilteredPeople() {
+  if (selectedFilter === 'ALL') return allPeople;
+  return allPeople.filter(person => person.type === selectedFilter);
+}
+
+function getCount(type) {
+  if (type === 'ALL') return allPeople.length;
+  return allPeople.filter(person => person.type === type).length;
 }
 ---
 
-<ContentSection title="Talents" id="talents">
+<ContentSection title="Talent" id="talents">
   <Fragment slot="lead">
-    Discover our <span class="text-primary">exceptional talents</span> ready to bring your vision to life.
+    Discover our <span class="text-primary">exceptional talent & creative pool</span> ready to bring your vision to life.
   </Fragment>
 
-  {talents.length === 0 ? (
+  {/* Filter Buttons */}
+  <div class="flex flex-wrap gap-2 mb-6 justify-center" id="filter-buttons">
+    {FILTERS.map(filter => (
+      <button
+        class="filter-btn px-4 py-1 rounded-full border border-default/30 bg-white/80 hover:bg-primary/10 transition text-sm font-medium flex items-center gap-2"
+        type="button"
+        data-filter={filter.value}
+      >
+        {filter.label}
+        <span class="ml-1 bg-default/10 rounded-full px-2 py-0.5 text-xs font-semibold">{getCount(filter.value)}</span>
+      </button>
+    ))}
+  </div>
+
+  {allPeople.length === 0 ? (
     <div class="text-center py-8">
-      <p class="text-default/60">No talents available at the moment. Please check back later.</p>
+      <p class="text-default/60">No profiles available at the moment. Please check back later.</p>
     </div>
   ) : (
-    <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-      {talents.map((talent) => (
-        <div class="talent-card bg-offset rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+    <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-4" id="people-grid">
+      {allPeople.map((person) => (
+        <div
+          class="talent-card bg-offset rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 cursor-pointer"
+          data-type={person.type}
+          data-talent-id={person.id}
+          data-talent-name={person.name}
+          data-talent-specialties={person.specialties ? JSON.stringify(person.specialties) : person.specialty}
+          data-talent-description={person.description}
+          data-talent-image={person.image}
+          data-talent-location={person.location}
+          data-talent-birth={person.birth}
+          data-talent-age={person.age}
+          data-talent-height={person.height}
+          data-talent-eyecolor={person.eyeColor}
+          data-talent-haircolor={person.hairColor}
+          data-talent-shoesize={person.shoeSize}
+          data-talent-dresssize={person.dressSize}
+          data-talent-imgs={person.imgs ? JSON.stringify(person.imgs) : ''}
+          data-talent-portfoliourl={person.portfolioUrl || ''}
+        >
           <div class="aspect-[2/3] bg-default/20 flex items-center justify-center relative">
-            {talent.image && talent.image.trim() !== "" ? (
+            {person.image && person.image.trim() !== "" ? (
               <Image
-                src={talent.image}
-                alt={`${talent.name} - ${talent.specialty}`}
+                src={person.image}
+                alt={`${person.name} - ${person.specialty}`}
                 class="w-full h-full object-cover"
                 width={200}
                 height={300}
@@ -41,107 +99,27 @@ try {
             ) : (
               <span class="text-default/60 text-xs">Photo Coming Soon</span>
             )}
-            
             <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-2 text-white">
               <div class="space-y-1">
-                {/* Name - Featured prominently */}
                 <div class="text-white">
-                  <h3 class="font-bold text-sm leading-tight">{talent.name}</h3>
+                  <h3 class="font-bold text-sm leading-tight">{person.name}</h3>
                 </div>
-                
-                {/* Location and Top Specialty Only */}
                 <div class="flex flex-wrap gap-1 items-center min-w-0">
-                  {talent.location && (
+                  {person.location && (
                     <div class="bg-black/40 text-white text-xs py-0.5 px-1.5 rounded-full backdrop-blur-sm flex items-center min-w-0">
-                      <span class="mr-1">📍</span>{talent.location}
+                      <span class="mr-1">📍</span>{person.location}
                     </div>
                   )}
-                  {talent.birth && (
+                  {person.birth && (
                     <span class="text-xs text-white bg-black/30 px-1.5 py-0.5 rounded backdrop-blur-sm min-w-0" title="Birth">
-                      🎂 {talent.birth}
-                    </span>
-                  )}
-                  {talent.specialties && talent.specialties.length > 0 && (
-                    <div class="flex flex-wrap gap-1">
-                      {talent.specialties.map((s, i) => (
-                        <span key={i} class="text-xs text-white bg-black/30 border border-white/20 px-1.5 py-0.5 rounded-full backdrop-blur-sm min-w-0">
-                          {s.trim()}
-                        </span>
-                      ))}
-                    </div>
-                  )}
-                </div>
-
-                {/* Personal Details - Compact */}
-                <div class="flex flex-wrap gap-1 min-w-0">
-                  {talent.height && (
-                    <span class="text-xs text-white bg-black/30 px-1.5 py-0.5 rounded backdrop-blur-sm min-w-0" title="Height">
-                      📏 {talent.height}cm
-                    </span>
-                  )}
-                  {talent.shoeSize && (
-                    <span class="text-xs text-white bg-black/30 px-1.5 py-0.5 rounded backdrop-blur-sm min-w-0" title="Shoe Size">
-                      👟 {talent.shoeSize}
-                    </span>
-                  )}
-                  {talent.dressSize && (
-                    <span class="text-xs text-white bg-black/30 px-1.5 py-0.5 rounded backdrop-blur-sm min-w-0" title="Dress Size">
-                      👗 {talent.dressSize}
-                    </span>
-                  )}
-                  {talent.eyeColor && (
-                    <span class="text-xs text-white bg-black/30 px-1.5 py-0.5 rounded backdrop-blur-sm min-w-0" title="Eye Color">
-                      👁️ {talent.eyeColor}
-                    </span>
-                  )}
-                  {talent.hairColor && (
-                    <span class="text-xs text-white bg-black/30 px-1.5 py-0.5 rounded backdrop-blur-sm min-w-0" title="Hair Color">
-                      💇 {talent.hairColor}
+                      {person.birth}
                     </span>
                   )}
                 </div>
+                <div class="text-xs text-default/80 truncate" title={person.specialty}>{person.specialty}</div>
+                <div class="text-xs text-default/60 truncate" title={person.type}>{person.type}</div>
               </div>
             </div>
-          </div>
-          <div class="p-3">
-            <div class="mb-2">
-              {/* Skills/Experience Tags */}
-              <div class="flex flex-wrap gap-1 min-w-0">
-                {talent.skills && talent.skills.split(',').map((skill) => (
-                  <span class="text-xs px-2 py-0.5 bg-primary/20 text-primary rounded-full hover:bg-primary/30 transition-colors min-w-0">
-                    {skill.trim()}
-                  </span>
-                ))}
-              </div>
-            </div>
-            
-            <button
-              class="view-profile-btn w-full bg-primary text-white px-3 py-1.5 rounded-md hover:bg-primary/80 hover:bg-purple-600 focus:ring-2 focus:ring-purple-400 focus:outline-none transition-all duration-300 text-xs font-medium relative overflow-hidden group disabled:opacity-50 disabled:cursor-not-allowed"
-              data-talent-id={talent.id}
-              data-talent-name={talent.name}
-              data-talent-specialties={talent.specialties ? talent.specialties.join(', ') : talent.specialty || ''}
-              data-talent-description={talent.description}
-              data-talent-image={talent.image || ""}
-              data-talent-location={talent.location || ""}
-              data-talent-birth={talent.birth || ""}
-              data-talent-age={talent.age || ""}
-              data-talent-height={talent.height || ""}
-              data-talent-eyecolor={talent.eyeColor || ""}
-              data-talent-haircolor={talent.hairColor || ""}
-              data-talent-shoesize={talent.shoeSize || ""}
-              data-talent-dresssize={talent.dressSize || ""}
-              data-talent-imgs={talent.imgs ? JSON.stringify(talent.imgs) : ""}
-              data-talent-portfoliourl={talent.portfolioUrl || talent.pdfUrl || ""}
-            >
-              <span class="relative z-10 group-hover:translate-x-1 transition-transform duration-300 inline-flex items-center min-w-0">
-                <span class="loading-text">View Profile</span>
-                <span class="loading-spinner hidden animate-spin ml-2">⏳</span>
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 ml-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 arrow-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                </svg>
-              </span>
-              <span class="absolute inset-0 bg-gradient-to-r from-purple-600 to-primary transform scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300"></span>
-            </button>
           </div>
         </div>
       ))}
@@ -149,17 +127,110 @@ try {
   )}
 </ContentSection>
 
-<!-- Inject talents data for modal JS -->
-<script type="application/json" id="talents-data">{JSON.stringify(talents)}</script>
+<!-- Inject data for client-side filtering -->
+<script type="application/json" id="people-data">{JSON.stringify(allPeople)}</script>
 
 <!-- Include the extracted modal component -->
 <TalentModalComponent />
 
 <script>
-  // Set up view profile button event listeners
+  // Client-side filtering functionality
   document.addEventListener('DOMContentLoaded', function() {
-    console.log('DOM loaded, setting up talent modal listeners');
-    
+    console.log('Setting up filter functionality');
+
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const talentCards = document.querySelectorAll('.talent-card');
+    let currentFilter = 'ALL';
+
+    // Set initial active state
+    updateActiveButton('ALL');
+
+    filterButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        const filter = this.getAttribute('data-filter');
+        currentFilter = filter;
+
+        // Update active button state
+        updateActiveButton(filter);
+
+        // Filter cards
+        filterCards(filter);
+      });
+    });
+
+    function updateActiveButton(activeFilter) {
+      filterButtons.forEach(btn => {
+        const btnFilter = btn.getAttribute('data-filter');
+        if (btnFilter === activeFilter) {
+          btn.classList.add('bg-primary', 'text-white');
+          btn.classList.remove('bg-white/80');
+        } else {
+          btn.classList.remove('bg-primary', 'text-white');
+          btn.classList.add('bg-white/80');
+        }
+      });
+    }
+
+    function filterCards(filter) {
+      talentCards.forEach(card => {
+        const cardType = card.getAttribute('data-type');
+
+        if (filter === 'ALL' || cardType === filter) {
+          card.style.display = 'block';
+          card.classList.add('fade-in');
+        } else {
+          card.style.display = 'none';
+          card.classList.remove('fade-in');
+        }
+      });
+    }
+
+    // Set up talent card click event listeners
+    talentCards.forEach(card => {
+      card.addEventListener('click', function(e) {
+        e.preventDefault();
+
+        var id = this.getAttribute('data-talent-id');
+        var name = this.getAttribute('data-talent-name');
+        var specialties = this.getAttribute('data-talent-specialties');
+        var description = this.getAttribute('data-talent-description');
+        var image = this.getAttribute('data-talent-image');
+        var location = this.getAttribute('data-talent-location');
+        var birth = this.getAttribute('data-talent-birth');
+        var age = this.getAttribute('data-talent-age');
+        var height = this.getAttribute('data-talent-height');
+        var eyeColor = this.getAttribute('data-talent-eyecolor');
+        var hairColor = this.getAttribute('data-talent-haircolor');
+        var shoeSize = this.getAttribute('data-talent-shoesize');
+        var dressSize = this.getAttribute('data-talent-dresssize');
+        var imgs = this.getAttribute('data-talent-imgs');
+        var portfolioUrl = this.getAttribute('data-talent-portfoliourl');
+
+        // Parse imgs JSON string back to array
+        var imgsArray = [];
+        if (imgs && imgs !== "") {
+          try {
+            imgsArray = JSON.parse(imgs);
+          } catch (e) {
+            console.error('Error parsing imgs:', e);
+          }
+        }
+
+        console.log('Opening modal for talent:', { id, name, specialties, description, image, location, birth, age, height, eyeColor, hairColor, shoeSize, dressSize, imgsArray, portfolioUrl });
+
+        // Set global event for openTalentModal
+        window.event = e;
+
+        // Call the modal function
+        if (typeof window.openTalentModal === 'function') {
+          window.openTalentModal(id, name, specialties, description, image, location, birth, age, height, eyeColor, hairColor, shoeSize, dressSize, imgsArray, portfolioUrl);
+        } else {
+          console.error('openTalentModal function not found');
+        }
+      });
+    });
+
+    // Set up view profile button event listeners (keeping for backward compatibility)
     var viewProfileBtns = document.querySelectorAll('.view-profile-btn');
     console.log('Found', viewProfileBtns.length, 'view profile buttons');
     
@@ -332,5 +403,34 @@ try {
   .talent-card:nth-child(-n+4) img {
     loading: eager;
     fetchpriority: high;
+  }
+
+  /* Filter button animations */
+  .filter-btn {
+    transition: all 0.3s ease;
+  }
+
+  .filter-btn:hover {
+    transform: translateY(-1px);
+  }
+
+  /* Card fade animation */
+  .talent-card {
+    transition: all 0.3s ease;
+  }
+
+  .fade-in {
+    animation: fadeIn 0.3s ease-in;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 </style>
