@@ -3,6 +3,7 @@ import { Icon } from "astro-icon/components";
 import Image from "astro/components/Image.astro";
 import ThemeSwitcher from "~/components/theme-switcher.astro";
 import ApplyModal from "~/components/apply-modal.astro";
+import BottomNav from "~/components/bottom-nav.astro";
 import type { NavItem } from "~/types";
 
 const navItems: Array<NavItem> = [
@@ -38,7 +39,7 @@ const navItems: Array<NavItem> = [
     </nav>
   </div>
   
-  <!-- Mobile & Desktop Right Section -->
+  <!-- Desktop Right Section -->
   <div class="flex items-center gap-4 sm:gap-6 flex-shrink-0">
     <!-- Apply Now Button -->
     <button
@@ -51,119 +52,19 @@ const navItems: Array<NavItem> = [
 
     <!-- Theme Switcher -->
     <ThemeSwitcher />
+  </div>
 
-    <!-- Mobile Menu Button -->
-    <button
-      id="open-nav-button"
-      type="button"
-      class="md:hidden p-2 rounded-md hover:bg-white/10 transition-colors"
-      aria-label="Open navigation menu"
-    >
-      <Icon name="mdi:menu" class="w-6 h-6" />
-    </button>
-  </div>
-  
-  <!-- Mobile Menu Modal -->
-  <div id="menu-modal" class="modal hidden fixed inset-0 z-50 md:hidden" aria-hidden="true">
-    <div class="fixed inset-0 bg-black/50 backdrop-blur-sm" id="menu-backdrop"></div>
-    <div class="fixed inset-0 bg-default">
-      <div class="flex flex-col h-full">
-        <!-- Mobile Menu Header -->
-        <div class="flex items-center justify-between p-4 border-b border-default/20">
-          <Image src="/unides_yellow.png" alt="Unides Logo" class="h-6 w-auto" width={200} height={50}/>
-          <button
-            id="close-nav-button"
-            type="button"
-            class="p-2 rounded-md hover:bg-default/10 transition-colors"
-            aria-label="Close navigation menu"
-          >
-            <Icon name="mdi:close" class="w-6 h-6" />
-          </button>
-        </div>
-        
-        <!-- Mobile Navigation -->
-        <nav class="flex-1 px-4 py-8">
-          <ul class="space-y-2" style="background: var(--color-background) !important;">
-            {
-              navItems.map(({ title, url }) => (
-                <li>
-                  <a 
-                    class="block py-4 px-4 text-lg font-medium mobile-nav-link rounded-lg hover:bg-default/10 transition-colors"
-                    href={url}
-                  >
-                    {title}
-                  </a>
-                </li>
-              ))
-            }
-            <!-- Mobile Apply Button -->
-            <li>
-              <button
-                type="button"
-                class="w-full block py-4 px-4 text-lg font-medium bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors mt-4"
-                onclick="openApplyModal(); closeMenu();"
-              >
-                Apply Now
-              </button>
-            </li>
-          </ul>
-        </nav>
-      </div>
-    </div>
-  </div>
 </header>
 
 <!-- Apply Modal -->
 <ApplyModal />
 
+<!-- Bottom Navigation for Mobile -->
+<BottomNav />
+
 <script>
-  const menuModal = document.getElementById('menu-modal');
-  const menuBackdrop = document.getElementById('menu-backdrop');
-  const openNavButton = document.getElementById('open-nav-button');
-  const closeNavButton = document.getElementById('close-nav-button');
   const header = document.getElementById('page-header');
   const page = document.documentElement;
-
-  // Open mobile menu
-  const openMenu = () => {
-    if (menuModal) {
-      menuModal.classList.remove('hidden');
-      menuModal.setAttribute('aria-hidden', 'false');
-      document.body.style.overflow = 'hidden';
-    }
-  };
-
-  // Close mobile menu
-  const closeMenu = () => {
-    if (menuModal) {
-      menuModal.classList.add('hidden');
-      menuModal.setAttribute('aria-hidden', 'true');
-      document.body.style.overflow = 'auto';
-    }
-  };
-
-  // Event listeners
-  if (openNavButton) {
-    openNavButton.addEventListener('click', openMenu);
-  }
-
-  if (closeNavButton) {
-    closeNavButton.addEventListener('click', closeMenu);
-  }
-
-  // Close menu when clicking backdrop
-  if (menuBackdrop) {
-    menuBackdrop.addEventListener('click', closeMenu);
-  }
-
-  // Close menu when clicking a nav link
-  if (menuModal) {
-    menuModal.addEventListener('click', (event) => {
-      if (event.target.matches('.mobile-nav-link')) {
-        closeMenu();
-      }
-    });
-  }
 
   // Handle scroll for fixed header
   if (header) {
@@ -172,22 +73,9 @@ const navItems: Array<NavItem> = [
       header.classList.toggle('fixed-header', d < 0);
     });
   }
-
-  // Close menu on escape key
-  document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape' && menuModal && !menuModal.classList.contains('hidden')) {
-      closeMenu();
-    }
-  });
 </script>
 
-<noscript>
-  <style>
-    #open-nav-button {
-      display: none;
-    }
-  </style>
-</noscript>
+
 
 <style>
   .fixed-header {
@@ -233,18 +121,7 @@ const navItems: Array<NavItem> = [
     }
   }
   
-  /* Mobile menu styles */
-  .modal {
-    transition: all 0.3s ease;
-  }
-  
-  .modal.hidden {
-    display: none !important;
-  }
-  
-  .modal:not(.hidden) {
-    display: block !important;
-  }
+
   
   /* Desktop navigation styles */
   .nav-link {
@@ -309,25 +186,7 @@ const navItems: Array<NavItem> = [
     }
   }
   
-  /* Mobile navigation styles */
-  .mobile-nav-link {
-    position: relative;
-    transition: all 0.3s ease;
-    font-weight: 500;
-    display: block;
-    text-decoration: none;
-  }
-  
-  .mobile-nav-link:hover {
-    color: var(--color-accent, #fd5d13);
-    transform: translateX(0.5rem);
-    background: rgba(253, 93, 19, 0.1);
-  }
-  
-  .mobile-nav-link:focus {
-    outline: 2px solid var(--color-accent, #fd5d13);
-    outline-offset: 2px;
-  }
+
   
   /* Responsive adjustments */
   @media (max-width: 768px) {
@@ -341,8 +200,5 @@ const navItems: Array<NavItem> = [
     }
   }
   
-  /* Prevent content jump on mobile menu open */
-  body.menu-open {
-    overflow: hidden;
-  }
+
 </style>

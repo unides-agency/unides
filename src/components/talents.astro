@@ -12,19 +12,61 @@ let allPeople = [];
 try {
   const allTalents = await getTalents();
   const allCreatives = await getCreatives();
-  console.log('Fetched talents:', allTalents);
-  console.log('Fetched creatives:', allCreatives);
-  talents = allTalents.filter(talent => talent.enabled == true).map(t => ({ ...t, type: 'Talent' }));
-  creatives = allCreatives.filter(creative => creative.enabled == true).map(c => ({ ...c, type: 'Creative' }));
+  console.log('🔍 DEBUG - Raw fetched talents:', allTalents);
+  console.log('🔍 DEBUG - Raw fetched creatives:', allCreatives);
+  
+  // Check for missing required fields
+  allTalents.forEach((talent, index) => {
+    console.log(`🔍 Talent ${index + 1} (${talent.name}):`, {
+      id: talent.id,
+      name: talent.name,
+      specialty: talent.specialty || 'MISSING',
+      enabled: talent.enabled,
+      hasImage: !!talent.image,
+      hasDescription: !!talent.description
+    });
+  });
+  
+  allCreatives.forEach((creative, index) => {
+    console.log(`🔍 Creative ${index + 1} (${creative.name}):`, {
+      id: creative.id,
+      name: creative.name,
+      specialty: creative.specialty || 'MISSING',
+      enabled: creative.enabled,
+      hasImage: !!creative.image,
+      hasDescription: !!creative.description
+    });
+  });
+  
+  // Filter for enabled items only
+  const enabledTalents = allTalents.filter(talent => talent.enabled == true);
+  const enabledCreatives = allCreatives.filter(creative => creative.enabled == true);
+  console.log(`🔍 DEBUG - Enabled talents: ${enabledTalents.length}/${allTalents.length}`);
+  console.log(`🔍 DEBUG - Enabled creatives: ${enabledCreatives.length}/${allCreatives.length}`);
+  
+  // Add fallback specialty if missing
+  talents = enabledTalents.map(t => ({ 
+    ...t, 
+    type: 'Talent',
+    specialty: t.specialty || 'Model' // Fallback if missing
+  }));
+  creatives = enabledCreatives.map(c => ({ 
+    ...c, 
+    type: 'Creative',
+    specialty: c.specialty || 'Creative' // Fallback if missing
+  }));
+  
   allPeople = [...talents, ...creatives];
-  console.log('Combined and filtered people:', allPeople);
+  console.log('🔍 DEBUG - Final combined people:', allPeople);
+  console.log(`🔍 DEBUG - Total people to display: ${allPeople.length}`);
+  
 } catch (error) {
-  console.error('Failed to load talents or creatives:', error);
+  console.error('❌ Failed to load talents or creatives:', error);
 }
 
 // Filtering logic
 const FILTERS = [
-  { label: 'ALL', value: 'ALL' },
+  { label: 'All', value: 'ALL' },
   { label: 'Talent', value: 'Talent' },
   { label: 'Creative', value: 'Creative' },
   // Add more filters as needed, e.g., Actress, Model, etc.
@@ -51,12 +93,12 @@ function getCount(type) {
   <div class="flex flex-wrap gap-2 mb-6 justify-center" id="filter-buttons">
     {FILTERS.map(filter => (
       <button
-        class="filter-btn px-4 py-1 rounded-full border border-default/30 bg-white/80 hover:bg-primary/10 transition text-sm font-medium flex items-center gap-2"
+        class="filter-btn px-4 py-1 rounded-full border border-default/30 bg-white/20 hover:bg-primary/10 transition text-sm font-medium flex items-center gap-2"
         type="button"
         data-filter={filter.value}
       >
         {filter.label}
-        <span class="ml-1 bg-default/10 rounded-full px-2 py-0.5 text-xs font-semibold">{getCount(filter.value)}</span>
+        <span class="filter-count-badge">{getCount(filter.value)}</span>
       </button>
     ))}
   </div>
@@ -66,64 +108,123 @@ function getCount(type) {
       <p class="text-default/60">No profiles available at the moment. Please check back later.</p>
     </div>
   ) : (
-    <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-4" id="people-grid">
-      {allPeople.map((person) => (
-        <div
-          class="talent-card bg-offset rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 cursor-pointer"
-          data-type={person.type}
-          data-talent-id={person.id}
-          data-talent-name={person.name}
-          data-talent-specialties={person.specialties ? JSON.stringify(person.specialties) : person.specialty}
-          data-talent-description={person.description}
-          data-talent-image={person.image}
-          data-talent-location={person.location}
-          data-talent-birth={person.birth}
-          data-talent-age={person.age}
-          data-talent-height={person.height}
-          data-talent-eyecolor={person.eyeColor}
-          data-talent-haircolor={person.hairColor}
-          data-talent-shoesize={person.shoeSize}
-          data-talent-dresssize={person.dressSize}
-          data-talent-imgs={person.imgs ? JSON.stringify(person.imgs) : ''}
-          data-talent-portfoliourl={person.portfolioUrl || ''}
-        >
-          <div class="aspect-[2/3] bg-default/20 flex items-center justify-center relative">
-            {person.image && person.image.trim() !== "" ? (
-              <Image
-                src={person.image}
-                alt={`${person.name} - ${person.specialty}`}
-                class="w-full h-full object-cover"
-                width={200}
-                height={300}
-              />
-            ) : (
-              <span class="text-default/60 text-xs">Photo Coming Soon</span>
-            )}
-            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-2 text-white">
-              <div class="space-y-1">
-                <div class="text-white">
-                  <h3 class="font-bold text-sm leading-tight">{person.name}</h3>
+    <>
+      {/* Desktop Grid Layout */}
+      <div class="hidden md:grid gap-4 md:grid-cols-2 lg:grid-cols-4" id="people-grid-desktop">
+        {allPeople.map((person) => (
+          <div
+            class="talent-card bg-offset rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 cursor-pointer"
+            data-type={person.type}
+            data-talent-id={person.id}
+            data-talent-name={person.name}
+            data-talent-specialties={person.specialties ? JSON.stringify(person.specialties) : person.specialty}
+            data-talent-description={person.description}
+            data-talent-image={person.image}
+            data-talent-location={person.location}
+            data-talent-birth={person.birth}
+            data-talent-age={person.age}
+            data-talent-height={person.height}
+            data-talent-eyecolor={person.eyeColor}
+            data-talent-haircolor={person.hairColor}
+            data-talent-shoesize={person.shoeSize}
+            data-talent-dresssize={person.dressSize}
+            data-talent-imgs={person.imgs ? JSON.stringify(person.imgs) : ''}
+            data-talent-portfoliourl={person.portfolioUrl || ''}
+          >
+            <div class="aspect-[2/3] bg-default/20 flex items-center justify-center relative">
+              {person.image && person.image.trim() !== "" ? (
+                <Image
+                  src={person.image}
+                  alt={`${person.name} - ${person.specialty}`}
+                  class="w-full h-full object-cover"
+                  width={200}
+                  height={300}
+                />
+              ) : (
+                <span class="text-default/60 text-xs">Photo Coming Soon</span>
+              )}
+              <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-2 text-white">
+                <div class="space-y-1">
+                  <div class="text-white">
+                    <h3 class="font-bold text-sm leading-tight">{person.name}</h3>
+                  </div>
+                  <div class="flex flex-wrap gap-1 items-center min-w-0">
+                    {person.location && (
+                      <div class="bg-black/40 text-white text-xs py-0.5 px-1.5 rounded-full backdrop-blur-sm flex items-center min-w-0">
+                        <span class="mr-1">📍</span>{person.location}
+                      </div>
+                    )}
+                    {person.birth && (
+                      <span class="text-xs text-white bg-black/30 px-1.5 py-0.5 rounded backdrop-blur-sm min-w-0" title="Birth">
+                        {person.birth}
+                      </span>
+                    )}
+                  </div>
+                  <div class="text-xs text-default/80 truncate" title={person.specialty}>{person.specialty}</div>
+                  <div class="text-xs text-default/60 truncate" title={person.type}>{person.type}</div>
                 </div>
-                <div class="flex flex-wrap gap-1 items-center min-w-0">
-                  {person.location && (
-                    <div class="bg-black/40 text-white text-xs py-0.5 px-1.5 rounded-full backdrop-blur-sm flex items-center min-w-0">
-                      <span class="mr-1">📍</span>{person.location}
-                    </div>
-                  )}
-                  {person.birth && (
-                    <span class="text-xs text-white bg-black/30 px-1.5 py-0.5 rounded backdrop-blur-sm min-w-0" title="Birth">
-                      {person.birth}
-                    </span>
-                  )}
-                </div>
-                <div class="text-xs text-default/80 truncate" title={person.specialty}>{person.specialty}</div>
-                <div class="text-xs text-default/60 truncate" title={person.type}>{person.type}</div>
               </div>
             </div>
           </div>
+        ))}
+      </div>
+
+      {/* Mobile Grid Layout */}
+      <div class="md:hidden">
+        <div class="grid grid-cols-2 gap-4" id="people-grid-mobile">
+          {allPeople.map((person, index) => (
+            <div
+              class="talent-card bg-offset rounded-lg overflow-hidden shadow-lg cursor-pointer"
+              data-type={person.type}
+              data-talent-id={person.id}
+              data-talent-name={person.name}
+              data-talent-specialties={person.specialties ? JSON.stringify(person.specialties) : person.specialty}
+              data-talent-description={person.description}
+              data-talent-image={person.image}
+              data-talent-location={person.location}
+              data-talent-birth={person.birth}
+              data-talent-age={person.age}
+              data-talent-height={person.height}
+              data-talent-eyecolor={person.eyeColor}
+              data-talent-haircolor={person.hairColor}
+              data-talent-shoesize={person.shoeSize}
+              data-talent-dresssize={person.dressSize}
+              data-talent-imgs={person.imgs ? JSON.stringify(person.imgs) : ''}
+              data-talent-portfoliourl={person.portfolioUrl || ''}
+            >
+              <div class="aspect-[3/4] bg-default/20 flex items-center justify-center relative">
+                {person.image && person.image.trim() !== "" ? (
+                  <Image
+                    src={person.image}
+                    alt={`${person.name} - ${person.specialty}`}
+                    class="w-full h-full object-cover"
+                    width={160}
+                    height={200}
+                  />
+                ) : (
+                  <span class="text-default/60 text-xs">Photo Coming Soon</span>
+                )}
+                <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-2 text-white">
+                  <div class="space-y-1">
+                    <div class="text-white">
+                      <h3 class="font-bold text-xs leading-tight">{person.name}</h3>
+                    </div>
+                    <div class="flex flex-wrap gap-1 items-center min-w-0">
+                      {person.location && (
+                        <div class="bg-black/40 text-white text-xs py-0.5 px-1 rounded-full backdrop-blur-sm flex items-center min-w-0">
+                          <span class="mr-0.5 text-xs">📍</span><span class="text-xs">{person.location}</span>
+                        </div>
+                      )}
+                    </div>
+                    <div class="text-xs text-default/80 truncate" title={person.specialty}>{person.specialty}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
-      ))}
-    </div>
+      </div>
+    </>
   )}
 </ContentSection>
 
@@ -137,13 +238,64 @@ function getCount(type) {
   // Client-side filtering functionality
   document.addEventListener('DOMContentLoaded', function() {
     console.log('Setting up filter functionality');
+    
+    // Debug: Check if modal component is properly loaded
+    console.log('🔍 Checking modal availability immediately...');
+    console.log('Available window functions:', Object.keys(window).filter(key => 
+      key.toLowerCase().includes('modal') || key.toLowerCase().includes('talent')
+    ));
+    console.log('openTalentModal type:', typeof window.openTalentModal);
+    
+    // Check if modal DOM element exists
+    const modalElement = document.getElementById('talent-modal');
+    console.log('Modal DOM element found:', !!modalElement);
+    
+    // Add a delay to check again after components load
+    setTimeout(() => {
+      console.log('🔍 Checking modal availability after 1000ms...');
+      console.log('Available window functions:', Object.keys(window).filter(key => 
+        key.toLowerCase().includes('modal') || key.toLowerCase().includes('talent')
+      ));
+      console.log('openTalentModal type:', typeof window.openTalentModal);
+      const modalElementLater = document.getElementById('talent-modal');
+      console.log('Modal DOM element found after delay:', !!modalElementLater);
+    }, 1000);
 
     const filterButtons = document.querySelectorAll('.filter-btn');
-    const talentCards = document.querySelectorAll('.talent-card');
+    const desktopCards = document.querySelectorAll('#people-grid-desktop .talent-card');
+    const mobileCards = document.querySelectorAll('#carousel-wrapper .talent-card');
+    const allTalentCards = document.querySelectorAll('.talent-card'); // Keep this for backward compatibility
     let currentFilter = 'ALL';
 
     // Set initial active state
     updateActiveButton('ALL');
+
+    // Debug logging
+    console.log('Desktop cards found:', desktopCards.length);
+    console.log('Mobile cards found:', mobileCards.length);
+    console.log('All talent cards found:', allTalentCards.length);
+    console.log('Screen width:', window.innerWidth);
+    console.log('Desktop grid element:', document.getElementById('people-grid-desktop'));
+    console.log('Desktop grid computed style:', getComputedStyle(document.getElementById('people-grid-desktop')).display);
+
+    // Mobile grid functionality (no carousel needed)
+    // Variables removed as carousel is no longer used
+
+    // Ensure initial visibility of cards
+    filterCards('ALL');
+
+    // Set up click handlers immediately
+    setupClickHandlers();
+    
+    // Also try setting up after we confirm modal is available
+    setTimeout(() => {
+      if (typeof window.openTalentModal === 'function') {
+        console.log('🔧 Modal function found after delay, setting up handlers again');
+        setupClickHandlers();
+      } else {
+        console.error('❌ Modal function still not found after 1000ms delay');
+      }
+    }, 1000);
 
     filterButtons.forEach(button => {
       button.addEventListener('click', function() {
@@ -153,8 +305,13 @@ function getCount(type) {
         // Update active button state
         updateActiveButton(filter);
 
-        // Filter cards
+        // Filter cards for both desktop and mobile
         filterCards(filter);
+        
+        // Reset carousel position after filtering
+        if (window.innerWidth < 768) {
+          resetCarousel();
+        }
       });
     });
 
@@ -172,63 +329,103 @@ function getCount(type) {
     }
 
     function filterCards(filter) {
-      talentCards.forEach(card => {
+      console.log('Filtering cards for:', filter);
+      
+      // Filter desktop cards
+      desktopCards.forEach(card => {
         const cardType = card.getAttribute('data-type');
-
         if (filter === 'ALL' || cardType === filter) {
-          card.style.display = 'block';
+          card.style.display = '';  // Reset to default display instead of 'block'
           card.classList.add('fade-in');
         } else {
           card.style.display = 'none';
           card.classList.remove('fade-in');
         }
       });
-    }
 
-    // Set up talent card click event listeners
-    talentCards.forEach(card => {
-      card.addEventListener('click', function(e) {
-        e.preventDefault();
-
-        var id = this.getAttribute('data-talent-id');
-        var name = this.getAttribute('data-talent-name');
-        var specialties = this.getAttribute('data-talent-specialties');
-        var description = this.getAttribute('data-talent-description');
-        var image = this.getAttribute('data-talent-image');
-        var location = this.getAttribute('data-talent-location');
-        var birth = this.getAttribute('data-talent-birth');
-        var age = this.getAttribute('data-talent-age');
-        var height = this.getAttribute('data-talent-height');
-        var eyeColor = this.getAttribute('data-talent-eyecolor');
-        var hairColor = this.getAttribute('data-talent-haircolor');
-        var shoeSize = this.getAttribute('data-talent-shoesize');
-        var dressSize = this.getAttribute('data-talent-dresssize');
-        var imgs = this.getAttribute('data-talent-imgs');
-        var portfolioUrl = this.getAttribute('data-talent-portfoliourl');
-
-        // Parse imgs JSON string back to array
-        var imgsArray = [];
-        if (imgs && imgs !== "") {
-          try {
-            imgsArray = JSON.parse(imgs);
-          } catch (e) {
-            console.error('Error parsing imgs:', e);
-          }
-        }
-
-        console.log('Opening modal for talent:', { id, name, specialties, description, image, location, birth, age, height, eyeColor, hairColor, shoeSize, dressSize, imgsArray, portfolioUrl });
-
-        // Set global event for openTalentModal
-        window.event = e;
-
-        // Call the modal function
-        if (typeof window.openTalentModal === 'function') {
-          window.openTalentModal(id, name, specialties, description, image, location, birth, age, height, eyeColor, hairColor, shoeSize, dressSize, imgsArray, portfolioUrl);
+      // Filter mobile cards
+      mobileCards.forEach(card => {
+        const cardType = card.getAttribute('data-type');
+        if (filter === 'ALL' || cardType === filter) {
+          card.style.display = '';  // Reset to default display instead of 'block'
+          card.classList.add('fade-in');
         } else {
-          console.error('openTalentModal function not found');
+          card.style.display = 'none';
+          card.classList.remove('fade-in');
         }
       });
-    });
+      
+      console.log('Visible desktop cards:', Array.from(desktopCards).filter(card => card.style.display !== 'none').length);
+      console.log('Visible mobile cards:', Array.from(mobileCards).filter(card => card.style.display !== 'none').length);
+    }
+
+    // Mobile grid functionality (no carousel functions needed)
+
+    // Function to set up click handlers
+    function setupClickHandlers() {
+      const currentAllTalentCards = document.querySelectorAll('.talent-card');
+      console.log('Setting up click handlers for', currentAllTalentCards.length, 'cards');
+      console.log('openTalentModal available:', typeof window.openTalentModal === 'function');
+      
+      if (currentAllTalentCards.length === 0) {
+        console.warn('No talent cards found!');
+        return;
+      }
+      
+      currentAllTalentCards.forEach((card, index) => {
+        console.log(`Setting up click handler for card ${index + 1}:`, card.getAttribute('data-talent-name'));
+        
+        // Remove any existing click handler to avoid duplicates
+        card.removeEventListener('click', handleCardClick);
+        
+        card.addEventListener('click', handleCardClick);
+      });
+    }
+
+    // Card click handler function
+    function handleCardClick(e) {
+      e.preventDefault();
+      console.log('Card clicked:', this.getAttribute('data-talent-name'));
+
+      var id = this.getAttribute('data-talent-id');
+      var name = this.getAttribute('data-talent-name');
+      var specialties = this.getAttribute('data-talent-specialties');
+      var description = this.getAttribute('data-talent-description');
+      var image = this.getAttribute('data-talent-image');
+      var location = this.getAttribute('data-talent-location');
+      var birth = this.getAttribute('data-talent-birth');
+      var age = this.getAttribute('data-talent-age');
+      var height = this.getAttribute('data-talent-height');
+      var eyeColor = this.getAttribute('data-talent-eyecolor');
+      var hairColor = this.getAttribute('data-talent-haircolor');
+      var shoeSize = this.getAttribute('data-talent-shoesize');
+      var dressSize = this.getAttribute('data-talent-dresssize');
+      var imgs = this.getAttribute('data-talent-imgs');
+      var portfolioUrl = this.getAttribute('data-talent-portfoliourl');
+
+      // Parse imgs JSON string back to array
+      var imgsArray = [];
+      if (imgs && imgs !== "") {
+        try {
+          imgsArray = JSON.parse(imgs);
+        } catch (e) {
+          console.error('Error parsing imgs:', e);
+        }
+      }
+
+      console.log('Opening modal for talent:', { id, name, specialties, description, image, location, birth, age, height, eyeColor, hairColor, shoeSize, dressSize, imgsArray, portfolioUrl });
+
+      // Set global event for openTalentModal
+      window.event = e;
+
+      // Call the modal function
+      if (typeof window.openTalentModal === 'function') {
+        console.log('Calling openTalentModal function');
+        window.openTalentModal(id, name, specialties, description, image, location, birth, age, height, eyeColor, hairColor, shoeSize, dressSize, imgsArray, portfolioUrl);
+      } else {
+        console.error('openTalentModal function not found');
+      }
+    }
 
     // Set up view profile button event listeners (keeping for backward compatibility)
     var viewProfileBtns = document.querySelectorAll('.view-profile-btn');
@@ -408,10 +605,38 @@ function getCount(type) {
   /* Filter button animations */
   .filter-btn {
     transition: all 0.3s ease;
+    border-width: 1px; /* Default border width */
   }
 
   .filter-btn:hover {
     transform: translateY(-1px);
+  }
+
+  /* Active/selected filter button styling */
+  .filter-btn.active,
+  .filter-btn.bg-primary {
+    border-width: 2px; /* Thicker border for selected state */
+    border-color: white; /* White stroke for selected state */
+    font-weight: 800 !important; /* Extra bold text for selected state */
+    background-color: var(--color-primary) !important; /* Purple fill for selected state */
+    color: white !important; /* White text for contrast */
+  }
+
+  /* Yellow oval count badge */
+  .filter-count-badge {
+    background-color: #fbbf24; /* Yellow color */
+    color: #1f2937; /* Dark text for contrast */
+    padding: 0.25rem 0.625rem;
+    border-radius: 9999px; /* Full rounded/oval shape */
+    font-size: 0.75rem;
+    font-weight: 700; /* Bold font weight */
+    min-width: 1.5rem;
+    text-align: center;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 0.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   }
 
   /* Card fade animation */
@@ -431,6 +656,39 @@ function getCount(type) {
     to {
       opacity: 1;
       transform: translateY(0);
+    }
+  }
+
+  /* Mobile Grid Styles */
+  @media (max-width: 767px) {
+    #people-grid-mobile {
+      padding: 0 16px;
+    }
+    
+    #people-grid-mobile .talent-card {
+      transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+    }
+    
+    #people-grid-mobile .talent-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+    
+    #people-grid-mobile .aspect-\[3\/4\] {
+      min-height: 240px; /* Increased from 200px by 20% (200 * 1.2 = 240px) */
+    }
+  }
+
+  /* Desktop grid visibility fix */
+  @media (min-width: 768px) {
+    #people-grid-desktop {
+      display: grid !important;
+    }
+  }
+
+  @media (max-width: 767px) {
+    #people-grid-desktop {
+      display: none !important;
     }
   }
 </style>

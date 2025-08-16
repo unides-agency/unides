@@ -1,16 +1,85 @@
 ---
-// Talent Modal Component - Extracted from working talents.astro
+// Talent Modal Component - Responsive Drawer Design
 ---
 
-<!-- Talent Modal HTML -->
+<!-- Talent Modal HTML - Responsive Drawer Design -->
 <div id="talent-modal" class="modal hidden fixed inset-0 z-50 bg-black bg-opacity-60 backdrop-blur-sm" aria-hidden="true" role="dialog" aria-labelledby="talent-modal-title" aria-describedby="talent-modal-description">
-  <div class="flex items-center justify-center min-h-screen p-4 min-w-0">
-    <div class="bg-default rounded-lg max-w-6xl w-full max-h-[95vh] overflow-y-auto shadow-2xl transform transition-transform duration-500 scale-95 opacity-0 min-w-0" id="talent-modal-content" role="document">
-      <div class="p-6 min-w-0">
-        <div class="flex justify-between items-start mb-6 min-w-0">
-          <h2 id="talent-modal-title" class="text-3xl font-bold text-default bg-gradient-to-r from-purple-400 to-primary bg-clip-text text-transparent min-w-0">Talent Profile</h2>
+  
+  <!-- Mobile: Bottom Drawer -->
+  <div class="fixed inset-x-0 bottom-0 transform translate-y-full transition-transform duration-300 ease-out mobile-drawer" id="talent-modal-mobile">
+    <div class="bg-default rounded-t-2xl h-[90vh] overflow-y-auto shadow-2xl" role="document">
+      <div class="p-6">
+        <!-- Header with Name and Close button -->
+        <div class="flex justify-between items-start mb-4">
+          <div>
+            <h3 id="talent-modal-name-mobile" class="text-2xl font-bold text-default"></h3>
+            <p id="talent-modal-specialty-mobile" class="text-primary font-medium text-lg"></p>
+          </div>
           <button
-            id="close-talent-modal"
+            id="close-talent-modal-mobile"
+            type="button"
+            class="text-default/60 hover:text-primary hover:rotate-90 transition-all duration-300 text-2xl font-bold focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-full p-2 flex-shrink-0 ml-4"
+            aria-label="Close talent profile modal"
+          >
+            ×
+          </button>
+        </div>
+
+        <!-- Mobile Content -->
+        <div class="space-y-6">
+
+          <!-- Main Image -->
+          <div class="aspect-[3/4] bg-default/20 rounded-lg flex items-center justify-center overflow-hidden">
+            <img
+              id="talent-modal-main-image-mobile"
+              src=""
+              alt=""
+              class="w-full h-full object-cover rounded-lg hidden"
+              loading="lazy"
+            />
+            <span id="talent-modal-main-image-placeholder-mobile" class="text-default/60 text-sm">Photo Coming Soon</span>
+          </div>
+          
+          <!-- Thumbnail gallery -->
+          <div id="talent-thumbnail-gallery-mobile" class="grid grid-cols-4 gap-2 hidden">
+            <!-- Thumbnails will be populated by JavaScript -->
+          </div>
+
+          <!-- About Section -->
+          <div>
+            <h4 class="font-semibold mb-3 text-lg text-default">About</h4>
+            <p id="talent-modal-about-mobile" class="text-default/80 leading-relaxed"></p>
+          </div>
+
+          <!-- Personal Details Section -->
+          <div>
+            <h4 class="font-semibold mb-3 text-lg text-default">Personal Details</h4>
+            <div id="talent-modal-personal-mobile" class="grid grid-cols-2 gap-4 text-sm">
+              <!-- Personal details will be populated by JavaScript -->
+            </div>
+          </div>
+
+          <!-- Download Portfolio Button -->
+          <div class="flex gap-4 pt-6 border-t border-default/20">
+            <button id="download-portfolio-btn-mobile" class="flex-1 border-2 border-primary text-primary px-8 py-4 rounded-lg hover:bg-primary/10 hover:border-purple-600 hover:text-purple-600 focus:ring-2 focus:ring-purple-400 focus:outline-none transition-all duration-300 font-semibold text-lg hover:shadow-lg hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none">
+              <span class="portfolio-text">Download Portfolio</span>
+              <span class="portfolio-spinner hidden animate-spin ml-2">⏳</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Desktop: Right Side Drawer -->
+  <div class="fixed inset-y-0 right-0 w-[56%] transform translate-x-full transition-transform duration-300 ease-out desktop-drawer" id="talent-modal-desktop">
+    <div class="bg-default w-full h-full overflow-y-auto shadow-2xl" role="document">
+      <div class="p-6">
+        <!-- Header with close button -->
+        <div class="flex justify-between items-start mb-6">
+          <h2 class="text-2xl font-bold text-default bg-gradient-to-r from-purple-400 to-primary bg-clip-text text-transparent">Talent Profile</h2>
+          <button
+            id="close-talent-modal-desktop"
             type="button"
             class="text-default/60 hover:text-primary hover:rotate-90 transition-all duration-300 text-2xl font-bold focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-full p-2"
             aria-label="Close talent profile modal"
@@ -19,64 +88,56 @@
           </button>
         </div>
 
-        <div class="space-y-6 min-w-0">
-          <!-- Hidden description for screen readers -->
-          <div id="talent-modal-sr-description" class="sr-only">
-            Modal dialog displaying talent profile information including photos, personal details, and portfolio download option. Use Tab to navigate between elements, Escape to close.
+        <!-- Desktop Content - Two Column Layout -->
+        <div class="flex gap-8 h-full">
+          <!-- Left Column: Image Gallery -->
+          <div class="w-1/2 space-y-4">
+            <!-- Main Image -->
+            <div class="aspect-[3/4] bg-default/20 rounded-lg flex items-center justify-center overflow-hidden">
+              <img
+                id="talent-modal-main-image-desktop"
+                src=""
+                alt=""
+                class="w-full h-full object-cover rounded-lg hidden"
+                loading="lazy"
+              />
+              <span id="talent-modal-main-image-placeholder-desktop" class="text-default/60 text-sm">Photo Coming Soon</span>
+            </div>
+            
+            <!-- Thumbnail gallery -->
+            <div id="talent-thumbnail-gallery-desktop" class="grid grid-cols-4 gap-2 hidden">
+              <!-- Thumbnails will be populated by JavaScript -->
+            </div>
           </div>
-          
-          <div class="flex flex-col-reverse lg:flex-row gap-8 min-w-0">
-            <!-- Photo Gallery Section -->
-            <div class="w-full lg:w-1/2 min-w-0">
-              <div id="talent-photo-gallery" class="space-y-4 min-w-0">
-                <!-- Main photo -->
-                <div class="aspect-[3/4] bg-default/20 rounded-lg flex items-center justify-center overflow-hidden">
-                  <img
-                    id="talent-modal-main-image"
-                    src=""
-                    alt=""
-                    class="w-full h-full object-cover rounded-lg hidden"
-                    loading="lazy"
-                  />
-                  <span id="talent-modal-main-image-placeholder" class="text-default/60 text-sm">Photo Coming Soon</span>
-                </div>
-                
-                <!-- Thumbnail gallery -->
-                <div id="talent-thumbnail-gallery" class="grid grid-cols-4 gap-2 hidden">
-                  <!-- Thumbnails will be populated by JavaScript -->
-                </div>
+
+          <!-- Right Column: Information -->
+          <div class="w-1/2 space-y-6 overflow-y-auto">
+            <!-- Name and Specialty -->
+            <div>
+              <h3 id="talent-modal-name-desktop" class="text-2xl font-bold text-default"></h3>
+              <p id="talent-modal-specialty-desktop" class="text-primary font-medium text-lg"></p>
+            </div>
+
+            <!-- About Section -->
+            <div>
+              <h4 class="font-semibold mb-3 text-lg text-default">About</h4>
+              <p id="talent-modal-about-desktop" class="text-default/80 leading-relaxed"></p>
+            </div>
+
+            <!-- Personal Details Section -->
+            <div>
+              <h4 class="font-semibold mb-3 text-lg text-default">Personal Details</h4>
+              <div id="talent-modal-personal-desktop" class="grid grid-cols-2 gap-4 text-sm">
+                <!-- Personal details will be populated by JavaScript -->
               </div>
             </div>
 
-            <!-- Info Section - below gallery on mobile, right on desktop -->
-            <div class="w-full lg:w-1/2 space-y-6 min-w-0">
-              <!-- Name and Specialty -->
-              <div class="min-w-0">
-                <h3 id="talent-modal-name" class="text-2xl font-bold text-default min-w-0"></h3>
-                <p id="talent-modal-specialty" class="text-primary font-medium text-lg min-w-0"></p>
-              </div>
-
-              <!-- About Section -->
-              <div class="min-w-0">
-                <h4 class="font-semibold mb-3 text-lg text-default">About</h4>
-                <p id="talent-modal-about" class="text-default/80 leading-relaxed min-w-0"></p>
-              </div>
-
-              <!-- Personal Details Section -->
-              <div class="min-w-0">
-                <h4 class="font-semibold mb-3 text-lg text-default">Personal Details</h4>
-                <div id="talent-modal-personal" class="grid grid-cols-2 gap-4 text-sm min-w-0">
-                  <!-- Personal details will be populated by JavaScript -->
-                </div>
-              </div>
-
-              <!-- Download Portfolio Button -->
-              <div class="flex gap-4 pt-6 border-t border-default/20 min-w-0">
-                <button id="download-portfolio-btn" class="flex-1 border-2 border-primary text-primary px-8 py-4 rounded-lg hover:bg-primary/10 hover:border-purple-600 hover:text-purple-600 focus:ring-2 focus:ring-purple-400 focus:outline-none transition-all duration-300 font-semibold text-lg hover:shadow-lg hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none min-w-0">
-                  <span class="portfolio-text">Download Portfolio</span>
-                  <span class="portfolio-spinner hidden animate-spin ml-2">⏳</span>
-                </button>
-              </div>
+            <!-- Download Portfolio Button -->
+            <div class="pt-6 border-t border-default/20">
+              <button id="download-portfolio-btn-desktop" class="w-full border-2 border-primary text-primary px-6 py-3 rounded-lg hover:bg-primary/10 hover:border-purple-600 hover:text-purple-600 focus:ring-2 focus:ring-purple-400 focus:outline-none transition-all duration-300 font-semibold hover:shadow-lg hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none">
+                <span class="portfolio-text">Download Portfolio</span>
+                <span class="portfolio-spinner hidden animate-spin ml-2">⏳</span>
+              </button>
             </div>
           </div>
         </div>
@@ -86,9 +147,11 @@
 </div>
 
 <script>
-  // Only initialize if this is the first load of the component
-  if (!window.talentModalInitialized) {
-    window.talentModalInitialized = true;
+  // Initialize talent modal component
+  console.log('Talent modal component script running...');
+  
+  // Always initialize to ensure it works
+  console.log('Initializing talent modal');
     
     // Get talents data from the main page
     function getTalentsData() {
@@ -106,91 +169,26 @@
       }
     }
 
-    // Main modal open function - extracted from working talents.astro
-    function openTalentModal(id, name, specialties, description, image, location, birth, age, height, eyeColor, hairColor, shoeSize, dressSize, imgs, portfolioUrl) {    
-      var button = null;
-      if (window.event && window.event.target) {
-        button = window.event.target.closest('button');
-      }
+    // Helper function to populate content for both mobile and desktop
+    function populateModalContent(talent, isMobile = false) {
+      const suffix = isMobile ? '-mobile' : '-desktop';
       
-      console.log('Button found:', button);
-      
-      if (button) {
-        button.disabled = true;
-        var loadingText = button.querySelector('.loading-text');
-        var loadingSpinner = button.querySelector('.loading-spinner');
-        var arrowIcon = button.querySelector('.arrow-icon');
-        
-        console.log('Button elements:', { loadingText, loadingSpinner, arrowIcon });
-        
-        if (loadingText) loadingText.textContent = 'Loading...';
-        if (loadingSpinner) loadingSpinner.classList.remove('hidden');
-        if (arrowIcon) arrowIcon.classList.add('hidden');
-      }
-    
+      // Get elements
+      const modalName = document.getElementById(`talent-modal-name${suffix}`);
+      const modalSpecialty = document.getElementById(`talent-modal-specialty${suffix}`);
+      const modalDescription = document.getElementById(`talent-modal-about${suffix}`);
+      const modalMainImage = document.getElementById(`talent-modal-main-image${suffix}`);
+      const modalMainImagePlaceholder = document.getElementById(`talent-modal-main-image-placeholder${suffix}`);
+      const modalPersonal = document.getElementById(`talent-modal-personal${suffix}`);
+      const thumbnailGallery = document.getElementById(`talent-thumbnail-gallery${suffix}`);
+      const downloadBtn = document.getElementById(`download-portfolio-btn${suffix}`);
 
-      var modal = document.getElementById('talent-modal');
-      var modalContent = document.getElementById('talent-modal-content');
-      var modalTitle = document.getElementById('talent-modal-title');
-      var modalName = document.getElementById('talent-modal-name');
-      var modalSpecialty = document.getElementById('talent-modal-specialty');
-      var modalDescription = document.getElementById('talent-modal-about');
-      var modalMainImage = document.getElementById('talent-modal-main-image');
-      var modalMainImagePlaceholder = document.getElementById('talent-modal-main-image-placeholder');
-      var modalPersonal = document.getElementById('talent-modal-personal');
-      var thumbnailGallery = document.getElementById('talent-thumbnail-gallery');
-
-      console.log('Modal elements:', {
-        modal,
-        modalContent,
-        modalTitle,
-        modalName,
-        modalSpecialty,
-        modalDescription,
-        modalMainImage,
-        modalMainImagePlaceholder,
-        modalPersonal,
-        thumbnailGallery
-      });
-      
-      if (!modal || !modalContent || !modalName || !modalSpecialty || !modalDescription || !modalPersonal) {
-        console.error('Some modal elements are missing!');
+      if (!modalName || !modalSpecialty || !modalDescription || !modalPersonal) {
+        console.error(`Some modal elements are missing for ${suffix}!`);
         return;
       }
 
-      // Find the talent data from the talents array
-      const talentsData = getTalentsData();
-      var talent = null;
-      for (var i = 0; i < talentsData.length; i++) {
-        if (String(talentsData[i].id) === String(id)) {
-          talent = talentsData[i];
-          break;
-        }
-      }
-
-      if (!talent) {
-        talent = {
-          id: id,
-          name: name,
-          specialties: specialties ? specialties.split(', ') : [],
-          specialty: specialties,
-          description: description,
-          image: image,
-          location: location,
-          birth: birth,
-          height: height,
-          eyeColor: eyeColor,
-          hairColor: hairColor,
-          shoeSize: shoeSize,
-          dressSize: dressSize,
-          imgs: imgs,
-          portfolioUrl: portfolioUrl
-        };
-      }
-
-      console.log('Talent data being used:', talent);
-
-      // Populate modal content
+      // Populate basic info
       modalName.textContent = talent.name || '';
       
       let specialtyText = '';
@@ -201,10 +199,8 @@
       } else if (talent.specialty) {
         specialtyText = talent.specialty;
       }
-      console.log('Specialty text:', specialtyText);
       modalSpecialty.textContent = specialtyText;
       modalDescription.textContent = talent.description || '';
-      console.log('Description:', talent.description);
 
       // Populate personal details
       modalPersonal.innerHTML = '';
@@ -218,19 +214,24 @@
         { key: 'dressSize', label: 'Dress Size', value: talent.dressSize }
       ];
 
-      console.log('Personal fields data check:');
       personalFields.forEach(field => {
-        console.log(`${field.label}: "${field.value}" (type: ${typeof field.value})`);
-      });
-
-      personalFields.forEach(field => {
-        const fieldDiv = document.createElement('div');
-        fieldDiv.className = 'min-w-0';
-        fieldDiv.innerHTML = `
-          <span class="text-sm text-default/60 block">${field.label}</span>
-          <span class="text-default font-medium block">${field.value || 'Not provided'}</span>
-        `;
-        modalPersonal.appendChild(fieldDiv);
+        if (field.value) {
+          const fieldDiv = document.createElement('div');
+          if (isMobile) {
+            fieldDiv.className = 'min-w-0';
+            fieldDiv.innerHTML = `
+              <span class="text-sm text-default/60 block">${field.label}</span>
+              <span class="text-default font-medium block">${field.value}</span>
+            `;
+          } else {
+            fieldDiv.className = 'min-w-0';
+            fieldDiv.innerHTML = `
+              <span class="text-sm text-default/60 block">${field.label}</span>
+              <span class="text-default font-medium block">${field.value}</span>
+            `;
+          }
+          modalPersonal.appendChild(fieldDiv);
+        }
       });
 
       // Handle images
@@ -243,14 +244,14 @@
         photos = [talent.image];
       }
 
-      if (photos.length > 0) {
+      if (photos.length > 0 && modalMainImage && modalMainImagePlaceholder) {
         modalMainImage.src = photos[0];
         modalMainImage.alt = `${talent.name} - ${specialtyText}`;
         modalMainImage.classList.remove('hidden');
         modalMainImagePlaceholder.classList.add('hidden');
         
         // Show thumbnails if there are multiple photos
-        if (photos.length > 1) {
+        if (photos.length > 1 && thumbnailGallery) {
           thumbnailGallery.classList.remove('hidden');
           thumbnailGallery.innerHTML = '';
           
@@ -289,31 +290,18 @@
           if (thumbnailGallery.firstChild) {
             thumbnailGallery.firstChild.classList.add('ring-2', 'ring-primary');
           }
-        } else {
+        } else if (thumbnailGallery) {
           thumbnailGallery.classList.add('hidden');
         }
-      } else {
+      } else if (modalMainImage && modalMainImagePlaceholder) {
         modalMainImage.classList.add('hidden');
         modalMainImagePlaceholder.classList.remove('hidden');
-        thumbnailGallery.classList.add('hidden');
+        if (thumbnailGallery) {
+          thumbnailGallery.classList.add('hidden');
+        }
       }
 
-      // Show modal with animation
-      console.log('Opening modal:', modal);
-      modal.classList.remove('hidden');
-      modal.setAttribute('aria-hidden', 'false');
-      modal.dataset.currentTalentId = id;
-      document.body.style.overflow = 'hidden';
-      
-      // Animate modal content
-      setTimeout(function() {
-        console.log('Animating modal content');
-        modalContent.classList.remove('scale-95', 'opacity-0');
-        modalContent.classList.add('scale-100', 'opacity-100');
-      }, 10);
-      
       // Set up download portfolio button
-      var downloadBtn = document.getElementById('download-portfolio-btn');
       if (downloadBtn) {
         downloadBtn.onclick = function() {
           if (talent.portfolioUrl || talent.pdfUrl) {
@@ -334,31 +322,79 @@
           downloadBtn.style.opacity = '0.5';
         }
       }
-      
-      // Reset button state after modal is fully loaded
-      setTimeout(function() {
-        console.log('Resetting button state');
-        if (button) {
-          button.disabled = false;
-          var loadingText = button.querySelector('.loading-text');
-          var loadingSpinner = button.querySelector('.loading-spinner');
-          var arrowIcon = button.querySelector('.arrow-icon');
-          
-          if (loadingText) loadingText.textContent = 'View Profile';
-          if (loadingSpinner) loadingSpinner.classList.add('hidden');
-          if (arrowIcon) arrowIcon.classList.remove('hidden');
-        }
-      }, 500);
     }
 
-    // Close modal function
+    // Main modal open function - updated for drawer design
+    function openTalentModal(id, name, specialties, description, image, location, birth, age, height, eyeColor, hairColor, shoeSize, dressSize, imgs, portfolioUrl) {    
+      console.log('Opening talent modal for:', id);
+
+      var modal = document.getElementById('talent-modal');
+      var mobileDrawer = document.getElementById('talent-modal-mobile');
+      var desktopDrawer = document.getElementById('talent-modal-desktop');
+      
+      if (!modal || !mobileDrawer || !desktopDrawer) {
+        console.error('Modal elements are missing!');
+        return;
+      }
+
+      // Find the talent data from the talents array
+      const talentsData = getTalentsData();
+      var talent = null;
+      for (var i = 0; i < talentsData.length; i++) {
+        if (String(talentsData[i].id) === String(id)) {
+          talent = talentsData[i];
+          break;
+        }
+      }
+
+      if (!talent) {
+        talent = {
+          id: id,
+          name: name,
+          specialties: specialties ? specialties.split(', ') : [],
+          specialty: specialties,
+          description: description,
+          image: image,
+          location: location,
+          birth: birth,
+          height: height,
+          eyeColor: eyeColor,
+          hairColor: hairColor,
+          shoeSize: shoeSize,
+          dressSize: dressSize,
+          imgs: imgs,
+          portfolioUrl: portfolioUrl
+        };
+      }
+
+      console.log('Talent data being used:', talent);
+
+      // Populate content for both mobile and desktop
+      populateModalContent(talent, true);  // Mobile
+      populateModalContent(talent, false); // Desktop
+
+      // Show modal with animation
+      modal.classList.remove('hidden');
+      modal.setAttribute('aria-hidden', 'false');
+      modal.dataset.currentTalentId = id;
+      document.body.style.overflow = 'hidden';
+      
+      // Animate drawers
+      setTimeout(function() {
+        mobileDrawer.classList.remove('translate-y-full');
+        desktopDrawer.classList.remove('translate-x-full');
+      }, 10);
+    }
+
+    // Close modal function - updated for drawer design
     function closeTalentModal() {
       var modal = document.getElementById('talent-modal');
-      var modalContent = document.getElementById('talent-modal-content');
+      var mobileDrawer = document.getElementById('talent-modal-mobile');
+      var desktopDrawer = document.getElementById('talent-modal-desktop');
       
-      // Animate modal content out
-      modalContent.classList.add('scale-95', 'opacity-0');
-      modalContent.classList.remove('scale-100', 'opacity-100');
+      // Animate drawers out
+      mobileDrawer.classList.add('translate-y-full');
+      desktopDrawer.classList.add('translate-x-full');
       
       // Delay hiding the modal to allow animation to complete
       setTimeout(function() {
@@ -371,16 +407,40 @@
     // Make functions globally available
     window.openTalentModal = openTalentModal;
     window.closeTalentModal = closeTalentModal;
+    
+    // Debug: Confirm functions are assigned
+    console.log('Modal functions assigned to window:', {
+      openTalentModal: typeof window.openTalentModal,
+      closeTalentModal: typeof window.closeTalentModal
+    });
+    
+    // Test modal elements exist
+    console.log('Modal elements check:', {
+      modal: !!document.getElementById('talent-modal'),
+      mobileDrawer: !!document.getElementById('talent-modal-mobile'),
+      desktopDrawer: !!document.getElementById('talent-modal-desktop')
+    });
+    
+    // Add test function to window for debugging
+    window.testModal = function() {
+      console.log('Testing modal...');
+      openTalentModal('test', 'Test Name', 'Test Specialty', 'Test description', '', 'Berlin', '1990', '30', '180', 'brown', 'black', '42', '38', [], '');
+    };
 
     // Set up event listeners
     document.addEventListener('DOMContentLoaded', function() {
-      // Close button
-      var closeBtn = document.getElementById('close-talent-modal');
-      if (closeBtn) {
-        closeBtn.addEventListener('click', closeTalentModal);
+      // Close buttons
+      var closeBtnMobile = document.getElementById('close-talent-modal-mobile');
+      var closeBtnDesktop = document.getElementById('close-talent-modal-desktop');
+      
+      if (closeBtnMobile) {
+        closeBtnMobile.addEventListener('click', closeTalentModal);
+      }
+      if (closeBtnDesktop) {
+        closeBtnDesktop.addEventListener('click', closeTalentModal);
       }
 
-      // Close modal when clicking outside
+      // Close modal when clicking outside (on backdrop)
       var talentModal = document.getElementById('talent-modal');
       if (talentModal) {
         talentModal.addEventListener('click', function(e) {
@@ -403,7 +463,6 @@
         }
       });
     });
-  }
 </script>
 
 <style>
@@ -438,14 +497,45 @@
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  #talent-modal-content {
-    transition-duration: 0.3s;
-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  /* Mobile bottom drawer styles */
+  #talent-modal-mobile {
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Desktop left drawer styles */
+  #talent-modal-desktop {
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Smooth scrolling for drawer content */
+  #talent-modal-mobile > div,
+  #talent-modal-desktop > div {
+    scroll-behavior: smooth;
+  }
+
+  /* Responsive visibility for drawers */
+  .mobile-drawer {
+    display: block;
+  }
+  
+  .desktop-drawer {
+    display: none;
+  }
+
+  @media (min-width: 768px) {
+    .mobile-drawer {
+      display: none;
+    }
+    
+    .desktop-drawer {
+      display: block;
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
     #talent-modal,
-    #talent-modal-content {
+    #talent-modal-mobile,
+    #talent-modal-desktop {
       animation-duration: 0.01ms !important;
       animation-iteration-count: 1 !important;
       transition-duration: 0.01ms !important;
