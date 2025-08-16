@@ -1,0 +1,288 @@
+---
+import { Icon } from "astro-icon/components";
+import type { NavItem } from "~/types";
+
+const navItems: Array<NavItem & { icon: string }> = [
+  { title: "Home", url: "#", icon: "mdi:home" },
+  { title: "Talent", url: "#talents", icon: "mdi:account-group" },
+  { title: "Contact", url: "#contact", icon: "mdi:message" },
+  { title: "About", url: "#aboutus", icon: "mdi:information" },
+  { title: "Apply", url: "#", icon: "mdi:plus-circle", isAction: true },
+];
+---
+
+<!-- Material Design 3 Bottom Navigation -->
+<nav 
+  id="bottom-nav"
+  class="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-surface-container border-t border-outline-variant"
+  role="navigation"
+  aria-label="Main navigation"
+>
+  <div class="flex items-center justify-around h-20 px-2">
+    {navItems.map(({ title, url, icon, isAction }) => (
+      <button
+        type="button"
+        class={`bottom-nav-item flex flex-col items-center justify-center min-w-0 flex-1 h-full px-1 py-2 transition-all duration-200 ease-out relative ${
+          isAction ? 'nav-action-item' : 'nav-regular-item'
+        }`}
+        data-url={url}
+        data-action={isAction ? 'apply' : 'navigate'}
+        aria-label={title}
+      >
+        <!-- Icon Container -->
+        <div class={`icon-container relative transition-all duration-200 ease-out ${
+          isAction 
+            ? 'w-8 h-8 rounded-full bg-primary flex items-center justify-center mb-1' 
+            : 'w-6 h-6 mb-1'
+        }`}>
+          <Icon 
+            name={icon} 
+            class={`transition-all duration-200 ease-out ${
+              isAction ? 'w-5 h-5 text-white' : 'w-6 h-6 text-on-surface-variant'
+            }`}
+          />
+          <!-- Active indicator -->
+          <div class="active-indicator absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-4 h-1 rounded-full bg-primary opacity-0 transition-all duration-200 ease-out"></div>
+        </div>
+        
+        <!-- Label -->
+        <span class={`text-xs font-medium leading-none transition-all duration-200 ease-out truncate max-w-full ${
+          isAction ? 'text-primary' : 'text-on-surface-variant'
+        }`}>
+          {title}
+        </span>
+        
+        <!-- Ripple effect container -->
+        <div class="ripple-container absolute inset-0 rounded-lg overflow-hidden"></div>
+      </button>
+    ))}
+  </div>
+</nav>
+
+<script>
+  // Bottom navigation functionality
+  const bottomNav = document.getElementById('bottom-nav');
+  const navItems = document.querySelectorAll('.bottom-nav-item');
+  
+  // Set active item based on current scroll position
+  function setActiveNavItem() {
+    const sections = ['#', '#talents', '#contact', '#aboutus'];
+    const scrollPosition = window.scrollY + 100;
+    
+    let activeSection = '#';
+    sections.forEach(section => {
+      if (section === '#') return;
+      const element = document.querySelector(section);
+      if (element && element.offsetTop <= scrollPosition) {
+        activeSection = section;
+      }
+    });
+    
+    // Update active states
+    navItems.forEach(item => {
+      const url = item.getAttribute('data-url');
+      const isActive = url === activeSection;
+      const isAction = item.getAttribute('data-action') === 'apply';
+      
+      if (!isAction) {
+        item.classList.toggle('active', isActive);
+        const indicator = item.querySelector('.active-indicator');
+        const icon = item.querySelector('svg');
+        const label = item.querySelector('span');
+        
+        if (isActive) {
+          indicator.style.opacity = '1';
+          icon.style.color = 'var(--color-primary)';
+          label.style.color = 'var(--color-primary)';
+        } else {
+          indicator.style.opacity = '0';
+          icon.style.color = 'var(--color-on-surface-variant)';
+          label.style.color = 'var(--color-on-surface-variant)';
+        }
+      }
+    });
+  }
+  
+  // Handle navigation item clicks
+  navItems.forEach(item => {
+    item.addEventListener('click', (e) => {
+      const action = item.getAttribute('data-action');
+      const url = item.getAttribute('data-url');
+      
+      // Add ripple effect
+      createRipple(e, item);
+      
+      if (action === 'apply') {
+        // Open apply modal
+        if (typeof openApplyModal === 'function') {
+          openApplyModal();
+        }
+      } else if (url && url !== '#') {
+        // Navigate to section
+        const targetElement = document.querySelector(url);
+        if (targetElement) {
+          targetElement.scrollIntoView({ 
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      } else if (url === '#') {
+        // Navigate to top
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    });
+  });
+  
+  // Create ripple effect
+  function createRipple(event, element) {
+    const rect = element.getBoundingClientRect();
+    const size = Math.max(rect.width, rect.height);
+    const x = event.clientX - rect.left - size / 2;
+    const y = event.clientY - rect.top - size / 2;
+    
+    const ripple = document.createElement('div');
+    ripple.style.width = ripple.style.height = size + 'px';
+    ripple.style.left = x + 'px';
+    ripple.style.top = y + 'px';
+    ripple.classList.add('ripple');
+    
+    const rippleContainer = element.querySelector('.ripple-container');
+    rippleContainer.appendChild(ripple);
+    
+    // Remove ripple after animation
+    setTimeout(() => {
+      ripple.remove();
+    }, 600);
+  }
+  
+  // Update active state on scroll
+  window.addEventListener('scroll', setActiveNavItem);
+  
+  // Set initial active state
+  document.addEventListener('DOMContentLoaded', setActiveNavItem);
+</script>
+
+<style>
+  /* Material Design 3 Bottom Navigation Styles */
+  #bottom-nav {
+    background: #06191C;
+    border-top: 1px solid var(--md-sys-color-outline-variant, #c4c7c5);
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  [data-theme="dark"] #bottom-nav {
+    background: #06191C;
+    border-top-color: var(--md-sys-color-outline-variant, #444746);
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.3);
+  }
+  
+  .bottom-nav-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+    margin: 0 2px;
+  }
+  
+  .bottom-nav-item:hover {
+    background: var(--md-sys-color-surface-variant, rgba(103, 80, 164, 0.08));
+  }
+  
+  .bottom-nav-item:active {
+    transform: scale(0.95);
+  }
+  
+  /* Action item (Apply button) specific styles */
+  .nav-action-item .icon-container {
+    background: #A07BFC;
+    box-shadow: 0 2px 4px rgba(160, 123, 252, 0.3);
+  }
+  
+  .nav-action-item:hover .icon-container {
+    background: #A07BFC;
+    box-shadow: 0 4px 8px rgba(160, 123, 252, 0.4);
+    transform: scale(1.05);
+  }
+  
+  /* Apply button text color */
+  .nav-action-item span {
+    color: white !important;
+  }
+  
+  /* Ripple effect */
+  .ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: var(--md-sys-color-primary, #6750a4);
+    opacity: 0.3;
+    transform: scale(0);
+    animation: ripple-animation 0.6s ease-out;
+    pointer-events: none;
+  }
+  
+  @keyframes ripple-animation {
+    to {
+      transform: scale(2);
+      opacity: 0;
+    }
+  }
+  
+  /* Active state indicator */
+  .bottom-nav-item.active .active-indicator {
+    opacity: 1 !important;
+  }
+  
+  /* Focus states for accessibility */
+  .bottom-nav-item:focus {
+    outline: 2px solid var(--md-sys-color-primary, #6750a4);
+    outline-offset: 2px;
+  }
+  
+  .bottom-nav-item:focus-visible {
+    background: var(--md-sys-color-surface-variant, rgba(103, 80, 164, 0.12));
+  }
+  
+  /* Color system variables */
+  :root {
+    --md-sys-color-surface-container: #f3f3f3;
+    --md-sys-color-outline-variant: #c4c7c5;
+    --md-sys-color-on-surface-variant: #46464f;
+    --md-sys-color-primary: #6750a4;
+    --md-sys-color-on-primary: #ffffff;
+    --md-sys-color-surface-variant: rgba(103, 80, 164, 0.08);
+  }
+  
+  [data-theme="dark"] {
+    --md-sys-color-surface-container: #1e1e1e;
+    --md-sys-color-outline-variant: #444746;
+    --md-sys-color-on-surface-variant: #c4c7c5;
+    --md-sys-color-primary: #a987ff;
+    --md-sys-color-on-primary: #1e1e1e;
+    --md-sys-color-surface-variant: rgba(169, 135, 255, 0.08);
+  }
+  
+  /* Animation for state changes */
+  .bottom-nav-item * {
+    transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+  }
+  
+  /* Ensure proper spacing on different screen sizes */
+  @media (max-width: 320px) {
+    .bottom-nav-item span {
+      font-size: 10px;
+    }
+    
+    #bottom-nav {
+      height: 68px;
+    }
+    
+    .bottom-nav-item {
+      padding: 4px 2px;
+    }
+  }
+  
+  @media (min-width: 360px) {
+    .bottom-nav-item {
+      margin: 0 4px;
+    }
+  }
+</style>
