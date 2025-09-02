@@ -1,0 +1,37 @@
+<svg width="800" height="300" viewBox="0 0 800 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Unides text (handwritten style) -->
+  <path d="M50 80 Q60 60 80 70 Q100 80 120 75 Q140 70 160 75 Q180 80 200 75 Q220 70 240 75 Q260 80 280 75 Q300 70 320 75 Q340 80 360 75 Q380 70 400 75 Q420 80 440 75 Q460 70 480 75 Q500 80 520 75" stroke="#0A353A" stroke-width="3" fill="none"/>
+  <text x="50" y="90" font-family="'Dancing Script', cursive" font-size="60" fill="#0A353A" font-weight="400">unides</text>
+  
+  <!-- Chain/rope element -->
+  <g transform="translate(50, 130)">
+    <!-- Main chain body -->
+    <ellipse cx="60" cy="15" rx="45" ry="18" fill="#0A353A"/>
+    <ellipse cx="140" cy="15" rx="45" ry="18" fill="#0A353A"/>
+    <ellipse cx="220" cy="15" rx="45" ry="18" fill="#0A353A"/>
+    <ellipse cx="300" cy="15" rx="45" ry="18" fill="#0A353A"/>
+    <ellipse cx="380" cy="15" rx="45" ry="18" fill="#0A353A"/>
+    <ellipse cx="460" cy="15" rx="45" ry="18" fill="#0A353A"/>
+    <ellipse cx="540" cy="15" rx="45" ry="18" fill="#0A353A"/>
+    
+    <!-- Chain holes/links -->
+    <ellipse cx="60" cy="15" rx="20" ry="8" fill="white"/>
+    <ellipse cx="140" cy="15" rx="20" ry="8" fill="white"/>
+    <ellipse cx="220" cy="15" rx="20" ry="8" fill="white"/>
+    <ellipse cx="300" cy="15" rx="20" ry="8" fill="white"/>
+    <ellipse cx="380" cy="15" rx="20" ry="8" fill="white"/>
+    <ellipse cx="460" cy="15" rx="20" ry="8" fill="white"/>
+    <ellipse cx="540" cy="15" rx="20" ry="8" fill="white"/>
+    
+    <!-- Chain connection lines -->
+    <rect x="105" y="10" width="35" height="10" fill="#0A353A"/>
+    <rect x="185" y="10" width="35" height="10" fill="#0A353A"/>
+    <rect x="265" y="10" width="35" height="10" fill="#0A353A"/>
+    <rect x="345" y="10" width="35" height="10" fill="#0A353A"/>
+    <rect x="425" y="10" width="35" height="10" fill="#0A353A"/>
+    <rect x="505" y="10" width="35" height="10" fill="#0A353A"/>
+  </g>
+  
+  <!-- Agency text (handwritten style) -->
+  <text x="50" y="240" font-family="'Dancing Script', cursive" font-size="60" fill="#0A353A" font-weight="400">agency</text>
+</svg>

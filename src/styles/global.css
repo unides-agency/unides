@@ -18,6 +18,136 @@ a,
   font-style: normal;
 }
 
+/* Section Titles */
+.section-title {
+  font-family: 'Jaro', sans-serif;
+  font-size: 50px;
+  color: #0A353A;
+  font-weight: normal;
+  text-transform: lowercase;
+  position: relative;
+  display: inline-block;
+  z-index: 2;
+}
+
+/* Title Background Rectangles */
+.title-rectangle {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  height: 60%;
+  width: 70%;
+  z-index: 1;
+}
+
+/* Special positioning for queens title */
+.title-rectangle.queens {
+  left: 50%;
+  right: auto;
+  width: 30%;
+  transform: translateX(-10%);
+}
+
+/* Section-specific rectangle colors */
+.title-rectangle.talents {
+  background-color: #A987FF; /* Purple */
+}
+
+.title-rectangle.about {
+  background-color: #FD5D13; /* Orange */
+}
+
+.title-rectangle.contact {
+  background-color: #FF69B4; /* Pink */
+}
+
+.title-rectangle.queens {
+  background-color: #FD5D13; /* Orange */
+}
+
+/* Body Typography */
+body {
+  font-family: 'Work Sans', sans-serif;
+}
+
+/* Body text elements */
+p, span, div, li, a, button {
+  font-family: 'Work Sans', sans-serif;
+}
+
+/* Hero Section Styling */
+.hero-bg {
+  background-image: url('/hero-bg-purple.svg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.hero-tagline {
+  font-family: 'Jaro', sans-serif;
+  font-size: 40px; /* Mobile size */
+  color: white;
+  font-weight: normal;
+  text-transform: lowercase;
+  line-height: 1.2;
+  margin: 0;
+}
+
+/* Desktop responsive sizing */
+@media (min-width: 768px) {
+  .hero-tagline {
+    font-size: 56px; /* Desktop size */
+  }
+}
+
+.hero-tagline-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* Mobile: Show two lines, hide single line */
+.mobile-line {
+  display: block;
+}
+
+.desktop-line {
+  display: none;
+}
+
+/* Desktop: Show single line, hide two lines */
+@media (min-width: 768px) {
+  .mobile-line {
+    display: none;
+  }
+  
+  .desktop-line {
+    display: block;
+  }
+}
+
+.hero-logo {
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+}
+
+.hero-highlight {
+  color: #E4F50F; /* Yellow highlight */
+  font-family: 'Jaro', sans-serif;
+}
+
+/* Ensure all hero text uses Jaro font */
+.mobile-line, .desktop-line {
+  font-family: 'Jaro', sans-serif;
+}
+
+/* Navigation Styling */
+.nav-link {
+  font-family: 'Jaro', sans-serif !important;
+  color: #E4F50F !important; /* Yellow navigation links */
+  text-transform: lowercase;
+  font-weight: normal;
+}
+
 /* Button Styles */
 .btn-primary {
   @apply bg-primary text-white hover:bg-purple-dark;
@@ -238,6 +368,13 @@ p {
   transform: translateY(-5px) scale(1.02);
   box-shadow: 0 10px 25px rgba(169, 135, 255, 0.25);
   background-color: rgba(19, 79, 85, 0.4);
+}
+
+/* Talent Card Name Styling - 25% larger than text-sm */
+.talent-name {
+  font-size: 1.125rem !important; /* 18px - 25% larger than text-sm (14px) */
+  font-weight: bold !important;
+  line-height: 1.25 !important;
 }
 
 /* View profile button effects */
