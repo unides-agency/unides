@@ -38,7 +38,7 @@ const navItems: Array<NavItem & { icon: string }> = [
           <Icon 
             name={icon} 
             class={`transition-all duration-200 ease-out ${
-              isAction ? 'w-5 h-5 text-white' : 'w-6 h-6 text-on-surface-variant'
+              isAction ? 'w-5 h-5 text-white' : 'w-6 h-6 text-white'
             }`}
           />
           <!-- Active indicator -->
@@ -47,7 +47,7 @@ const navItems: Array<NavItem & { icon: string }> = [
         
         <!-- Label -->
         <span class={`text-xs font-medium leading-none transition-all duration-200 ease-out truncate max-w-full ${
-          isAction ? 'text-primary' : 'text-on-surface-variant'
+          isAction ? 'text-primary' : 'text-white'
         }`}>
           {title}
         </span>
@@ -96,8 +96,8 @@ const navItems: Array<NavItem & { icon: string }> = [
           label.style.color = 'var(--color-primary)';
         } else {
           indicator.style.opacity = '0';
-          icon.style.color = 'var(--color-on-surface-variant)';
-          label.style.color = 'var(--color-on-surface-variant)';
+          icon.style.color = 'white';
+          label.style.color = 'white';
         }
       }
     });
@@ -168,12 +168,6 @@ const navItems: Array<NavItem & { icon: string }> = [
     background: #06191C;
     border-top: 1px solid var(--md-sys-color-outline-variant, #c4c7c5);
     box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  [data-theme="dark"] #bottom-nav {
-    background: #06191C;
-    border-top-color: var(--md-sys-color-outline-variant, #444746);
-    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.3);
   }
   
   .bottom-nav-item {
