@@ -117,7 +117,7 @@ function getCount(type) {
             data-type={person.type}
             data-talent-id={person.id}
             data-talent-name={person.name}
-            data-talent-specialties={person.specialties ? JSON.stringify(person.specialties) : person.specialty}
+            data-talent-specialties={person.specialties ? person.specialties.join(', ') : person.specialty}
             data-talent-description={person.description}
             data-talent-image={person.image}
             data-talent-location={person.location}
@@ -130,6 +130,7 @@ function getCount(type) {
             data-talent-dresssize={person.dressSize}
             data-talent-imgs={person.imgs ? JSON.stringify(person.imgs) : ''}
             data-talent-portfoliourl={person.portfolioUrl || ''}
+            data-talent-personalinfo={person.personalInfo ? JSON.stringify(person.personalInfo) : ''}
           >
             <div class="aspect-[2/3] bg-default/20 flex items-center justify-center relative">
               {person.image && person.image.trim() !== "" ? (
@@ -160,7 +161,9 @@ function getCount(type) {
                       </span>
                     )}
                   </div>
-                  <div class="text-xs text-default/80 truncate" title={person.specialty}>{person.specialty}</div>
+                  <div class="text-xs text-default/80 truncate" title={person.specialties ? person.specialties.join(', ') : person.specialty}>
+                    {person.specialties ? person.specialties.join(', ') : person.specialty}
+                  </div>
                   <div class="text-xs text-default/60 truncate" title={person.type}>{person.type}</div>
                 </div>
               </div>
@@ -178,7 +181,7 @@ function getCount(type) {
               data-type={person.type}
               data-talent-id={person.id}
               data-talent-name={person.name}
-              data-talent-specialties={person.specialties ? JSON.stringify(person.specialties) : person.specialty}
+              data-talent-specialties={person.specialties ? person.specialties.join(', ') : person.specialty}
               data-talent-description={person.description}
               data-talent-image={person.image}
               data-talent-location={person.location}
@@ -191,6 +194,7 @@ function getCount(type) {
               data-talent-dresssize={person.dressSize}
               data-talent-imgs={person.imgs ? JSON.stringify(person.imgs) : ''}
               data-talent-portfoliourl={person.portfolioUrl || ''}
+            data-talent-personalinfo={person.personalInfo ? JSON.stringify(person.personalInfo) : ''}
             >
               <div class="aspect-[3/4] bg-default/20 flex items-center justify-center relative">
                 {person.image && person.image.trim() !== "" ? (
@@ -216,7 +220,9 @@ function getCount(type) {
                         </div>
                       )}
                     </div>
-                    <div class="text-xs text-default/80 truncate" title={person.specialty}>{person.specialty}</div>
+                    <div class="text-xs text-default/80 truncate" title={person.specialties ? person.specialties.join(', ') : person.specialty}>
+                      {person.specialties ? person.specialties.join(', ') : person.specialty}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -263,7 +269,7 @@ function getCount(type) {
 
     const filterButtons = document.querySelectorAll('.filter-btn');
     const desktopCards = document.querySelectorAll('#people-grid-desktop .talent-card');
-    const mobileCards = document.querySelectorAll('#carousel-wrapper .talent-card');
+    const mobileCards = document.querySelectorAll('#people-grid-mobile .talent-card');
     const allTalentCards = document.querySelectorAll('.talent-card'); // Keep this for backward compatibility
     let currentFilter = 'ALL';
 
@@ -307,11 +313,6 @@ function getCount(type) {
 
         // Filter cards for both desktop and mobile
         filterCards(filter);
-        
-        // Reset carousel position after filtering
-        if (window.innerWidth < 768) {
-          resetCarousel();
-        }
       });
     });
 
@@ -319,11 +320,21 @@ function getCount(type) {
       filterButtons.forEach(btn => {
         const btnFilter = btn.getAttribute('data-filter');
         if (btnFilter === activeFilter) {
-          btn.classList.add('bg-primary', 'text-white');
-          btn.classList.remove('bg-white/80');
+          // Apply selected filter styling
+          btn.style.borderWidth = '2px';
+          btn.style.borderColor = 'white';
+          btn.style.fontWeight = '800';
+          btn.style.backgroundColor = 'var(--color-primary)';
+          btn.style.color = 'white';
+          btn.classList.remove('bg-white/20');
         } else {
-          btn.classList.remove('bg-primary', 'text-white');
-          btn.classList.add('bg-white/80');
+          // Apply unselected filter styling
+          btn.style.borderWidth = '';
+          btn.style.borderColor = '';
+          btn.style.fontWeight = '';
+          btn.style.backgroundColor = '';
+          btn.style.color = '';
+          btn.classList.add('bg-white/20');
         }
       });
     }
@@ -402,6 +413,7 @@ function getCount(type) {
       var dressSize = this.getAttribute('data-talent-dresssize');
       var imgs = this.getAttribute('data-talent-imgs');
       var portfolioUrl = this.getAttribute('data-talent-portfoliourl');
+      var personalInfo = this.getAttribute('data-talent-personalinfo');
 
       // Parse imgs JSON string back to array
       var imgsArray = [];
@@ -413,7 +425,17 @@ function getCount(type) {
         }
       }
 
-      console.log('Opening modal for talent:', { id, name, specialties, description, image, location, birth, age, height, eyeColor, hairColor, shoeSize, dressSize, imgsArray, portfolioUrl });
+      // Parse personalInfo JSON string back to object
+      var personalInfoObj = {};
+      if (personalInfo && personalInfo !== "") {
+        try {
+          personalInfoObj = JSON.parse(personalInfo);
+        } catch (e) {
+          console.error('Error parsing personalInfo:', e);
+        }
+      }
+
+      console.log('Opening modal for talent:', { id, name, specialties, description, image, location, birth, age, height, eyeColor, hairColor, shoeSize, dressSize, imgsArray, portfolioUrl, personalInfoObj });
 
       // Set global event for openTalentModal
       window.event = e;
@@ -421,7 +443,7 @@ function getCount(type) {
       // Call the modal function
       if (typeof window.openTalentModal === 'function') {
         console.log('Calling openTalentModal function');
-        window.openTalentModal(id, name, specialties, description, image, location, birth, age, height, eyeColor, hairColor, shoeSize, dressSize, imgsArray, portfolioUrl);
+        window.openTalentModal(id, name, specialties, description, image, location, birth, age, height, eyeColor, hairColor, shoeSize, dressSize, imgsArray, portfolioUrl, personalInfoObj);
       } else {
         console.error('openTalentModal function not found');
       }
@@ -450,6 +472,7 @@ function getCount(type) {
         var dressSize = btn.getAttribute('data-talent-dresssize');
         var imgs = btn.getAttribute('data-talent-imgs');
         var portfolioUrl = btn.getAttribute('data-talent-portfoliourl');
+        var personalInfo = btn.getAttribute('data-talent-personalinfo');
         
         // Parse imgs JSON string back to array
         var imgsArray = [];
@@ -460,6 +483,16 @@ function getCount(type) {
             console.error('Error parsing imgs:', e);
           }
         }
+
+        // Parse personalInfo JSON string back to object
+        var personalInfoObj = {};
+        if (personalInfo && personalInfo !== "") {
+          try {
+            personalInfoObj = JSON.parse(personalInfo);
+          } catch (e) {
+            console.error('Error parsing personalInfo:', e);
+          }
+        }
         
         console.log('Opening modal for talent:', { id, name, specialties, description, image, location, birth, age, height, eyeColor, hairColor, shoeSize, dressSize, imgsArray, portfolioUrl });
         
@@ -468,7 +501,7 @@ function getCount(type) {
         
         // Call the modal function
         if (typeof window.openTalentModal === 'function') {
-          window.openTalentModal(id, name, specialties, description, image, location, birth, age, height, eyeColor, hairColor, shoeSize, dressSize, imgsArray, portfolioUrl);
+          window.openTalentModal(id, name, specialties, description, image, location, birth, age, height, eyeColor, hairColor, shoeSize, dressSize, imgsArray, portfolioUrl, personalInfoObj);
         } else {
           console.error('openTalentModal function not found');
         }

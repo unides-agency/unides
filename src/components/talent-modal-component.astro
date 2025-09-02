@@ -234,6 +234,42 @@
         }
       });
 
+      // Add external links from personalInfo
+      if (talent.personalInfo && Object.keys(talent.personalInfo).length > 0) {
+        Object.entries(talent.personalInfo).forEach(([key, value]) => {
+          if (value !== null && value !== undefined && value !== '') {
+            const fieldDiv = document.createElement('div');
+            // Format the key to be more readable (camelCase to Title Case)
+            const formattedLabel = key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase());
+            // Detect if value is a URL
+            const urlPattern = /^(https?:\/\/|www\.)[\w\-]+(\.[\w\-]+)+([\w.,@?^=%&:/~+#\-]*[\w@?^=%&/~+#\-])?$/;
+            let valueHtml = '';
+            if (typeof value === 'string' && urlPattern.test(value.trim())) {
+              let url = value.trim();
+              if (!/^https?:\/\//.test(url)) url = 'https://' + url;
+              valueHtml = `<a href="${url}" target="_blank" rel="noopener noreferrer" class="text-primary underline break-all">${value}</a>`;
+            } else {
+              valueHtml = `<span class="text-default break-words">${value}</span>`;
+            }
+            
+            if (isMobile) {
+              fieldDiv.className = 'min-w-0';
+              fieldDiv.innerHTML = `
+                <span class="text-sm text-default/60 block">${formattedLabel}</span>
+                ${valueHtml}
+              `;
+            } else {
+              fieldDiv.className = 'min-w-0';
+              fieldDiv.innerHTML = `
+                <span class="text-sm text-default/60 block">${formattedLabel}</span>
+                ${valueHtml}
+              `;
+            }
+            modalPersonal.appendChild(fieldDiv);
+          }
+        });
+      }
+
       // Handle images
       var photos = [];
       if (talent.images && Array.isArray(talent.images) && talent.images.length > 0) {
@@ -325,7 +361,7 @@
     }
 
     // Main modal open function - updated for drawer design
-    function openTalentModal(id, name, specialties, description, image, location, birth, age, height, eyeColor, hairColor, shoeSize, dressSize, imgs, portfolioUrl) {    
+    function openTalentModal(id, name, specialties, description, image, location, birth, age, height, eyeColor, hairColor, shoeSize, dressSize, imgs, portfolioUrl, personalInfo) {    
       console.log('Opening talent modal for:', id);
 
       var modal = document.getElementById('talent-modal');
@@ -363,7 +399,8 @@
           shoeSize: shoeSize,
           dressSize: dressSize,
           imgs: imgs,
-          portfolioUrl: portfolioUrl
+          portfolioUrl: portfolioUrl,
+          personalInfo: personalInfo || {}
         };
       }
 
