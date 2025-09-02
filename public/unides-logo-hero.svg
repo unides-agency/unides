@@ -1,0 +1,30 @@
+<svg width="600" height="200" viewBox="0 0 600 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Unides text (script font) -->
+  <text x="50" y="60" font-family="cursive" font-size="48" fill="#0A353A" font-style="italic">unides</text>
+  
+  <!-- Chain/rope element -->
+  <g transform="translate(50, 80)">
+    <!-- Chain links -->
+    <ellipse cx="50" cy="0" rx="25" ry="12" fill="#0A353A" stroke="none"/>
+    <ellipse cx="100" cy="0" rx="25" ry="12" fill="#0A353A" stroke="none"/>
+    <ellipse cx="150" cy="0" rx="25" ry="12" fill="#0A353A" stroke="none"/>
+    <ellipse cx="200" cy="0" rx="25" ry="12" fill="#0A353A" stroke="none"/>
+    <ellipse cx="250" cy="0" rx="25" ry="12" fill="#0A353A" stroke="none"/>
+    <ellipse cx="300" cy="0" rx="25" ry="12" fill="#0A353A" stroke="none"/>
+    <ellipse cx="350" cy="0" rx="25" ry="12" fill="#0A353A" stroke="none"/>
+    <ellipse cx="400" cy="0" rx="25" ry="12" fill="#0A353A" stroke="none"/>
+    
+    <!-- Chain holes/links -->
+    <ellipse cx="50" cy="0" rx="12" ry="6" fill="#B794F6"/>
+    <ellipse cx="100" cy="0" rx="12" ry="6" fill="#B794F6"/>
+    <ellipse cx="150" cy="0" rx="12" ry="6" fill="#B794F6"/>
+    <ellipse cx="200" cy="0" rx="12" ry="6" fill="#B794F6"/>
+    <ellipse cx="250" cy="0" rx="12" ry="6" fill="#B794F6"/>
+    <ellipse cx="300" cy="0" rx="12" ry="6" fill="#B794F6"/>
+    <ellipse cx="350" cy="0" rx="12" ry="6" fill="#B794F6"/>
+    <ellipse cx="400" cy="0" rx="12" ry="6" fill="#B794F6"/>
+  </g>
+  
+  <!-- Agency text (script font) -->
+  <text x="50" y="160" font-family="cursive" font-size="48" fill="#0A353A" font-style="italic">agency</text>
+</svg>

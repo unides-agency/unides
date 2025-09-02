@@ -1,0 +1,12 @@
+<svg width="1920" height="1080" viewBox="0 0 1920 1080" fill="none" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<linearGradient id="purpleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+<stop offset="0%" style="stop-color:#B794F6;stop-opacity:1" />
+<stop offset="25%" style="stop-color:#A78BFA;stop-opacity:1" />
+<stop offset="50%" style="stop-color:#9F7AEA;stop-opacity:1" />
+<stop offset="75%" style="stop-color:#8B5CF6;stop-opacity:1" />
+<stop offset="100%" style="stop-color:#805AD5;stop-opacity:1" />
+</linearGradient>
+</defs>
+<rect width="1920" height="1080" fill="url(#purpleGradient)"/>
+</svg>

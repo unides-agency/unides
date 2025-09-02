@@ -6,7 +6,9 @@ import TeamMemberCard from "./ui/TeamMemberCard.astro";
 
 ---
 
-<ContentSection title="About Us" id="aboutus">
+<div style="background-color: #D9FD12; width: 100vw; margin-left: calc(-50vw + 50%); padding: 4rem 0;">
+  <div class="container mx-auto px-4 md:px-8">
+    <ContentSection title="about us" id="aboutus" sectionType="about">
   <Fragment slot="lead">
     At Unides, we connect artists, filmmakers, models and creators of all kinds with brands, stages and screens.
 <br>
@@ -70,7 +72,10 @@ import TeamMemberCard from "./ui/TeamMemberCard.astro";
     <div class="about-section-divider"></div>
 
     <div class="text-center py-12">
-      <h3 class="font-bold text-xl mb-8 text-purple-600">Meet the Queens</h3>
+      <div class="relative mb-8">
+        <h3 class="section-title text-center">meet the queens</h3>
+        <div class="title-rectangle queens"></div>
+      </div>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
 
         <TeamMemberCard
@@ -139,6 +144,8 @@ import TeamMemberCard from "./ui/TeamMemberCard.astro";
     </div>
   </div>
 </ContentSection>
+  </div>
+</div>
 
 <style>
   .team-card {

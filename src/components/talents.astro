@@ -84,7 +84,7 @@ function getCount(type) {
 }
 ---
 
-<ContentSection title="Talent" id="talents">
+<ContentSection title="talents" id="talents" sectionType="talents">
   <Fragment slot="lead">
     Discover our <span class="text-primary">exceptional talent & creative pool</span> ready to bring your vision to life.
   </Fragment>
@@ -147,7 +147,7 @@ function getCount(type) {
               <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-2 text-white">
                 <div class="space-y-1">
                   <div class="text-white">
-                    <h3 class="font-bold text-sm leading-tight">{person.name}</h3>
+                    <h3 class="talent-name leading-tight">{person.name}</h3>
                   </div>
                   <div class="flex flex-wrap gap-1 items-center min-w-0">
                     {person.location && (
@@ -211,7 +211,7 @@ function getCount(type) {
                 <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-2 text-white">
                   <div class="space-y-1">
                     <div class="text-white">
-                      <h3 class="font-bold text-xs leading-tight">{person.name}</h3>
+                      <h3 class="talent-name leading-tight">{person.name}</h3>
                     </div>
                     <div class="flex flex-wrap gap-1 items-center min-w-0">
                       {person.location && (
@@ -695,7 +695,7 @@ function getCount(type) {
   /* Mobile Grid Styles */
   @media (max-width: 767px) {
     #people-grid-mobile {
-      padding: 0 16px;
+      /* Removed padding since main container already has px-4 (16px) */
     }
     
     #people-grid-mobile .talent-card {
