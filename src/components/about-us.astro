@@ -2,6 +2,7 @@
 import ContentSection from "~/components/content-section.astro";
 import ApplyModal from "./apply-modal.astro";
 import Image from "astro/components/Image.astro";
+import TeamMemberCard from "./ui/TeamMemberCard.astro";
 
 ---
 
@@ -71,89 +72,51 @@ import Image from "astro/components/Image.astro";
     <div class="text-center py-12">
       <h3 class="font-bold text-xl mb-8 text-purple-600">Meet the Queens</h3>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
-        <!-- Grasi -->
-        <div class="team-card bg-offset rounded-lg shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden">
-          <div class="image-container relative">
-            <Image
-              src="https://unides.s3.eu-central-1.amazonaws.com/images/about/_DSC4263.JPG"
-              alt="Grasi - Founder"
-              width={300}
-              height={350}
-              class="primary-image w-full h-80 object-cover transition-opacity duration-500"
-            />
-            <Image
-              src="https://unides.s3.eu-central-1.amazonaws.com/images/about/_DSC4263.JPG"
-              alt="Grasi - Founder (alternate)"
-              width={300}
-              height={350}
-              class="hover-image absolute inset-0 w-full h-80 object-cover opacity-0 transition-opacity duration-500"
-            />
-          </div>
-          <div class="text-container p-4 text-center">
-            <h4 class="font-bold text-base mb-1">
-              Grasi <span class="font-normal text-xs text-default/70">she/her</span>
-            </h4>
-            <p class="text-purple-600 font-medium text-xs">Founder</p>
-            <p class="text-default/70 text-xs">Operations & Talent Management</p>
-          </div>
-        </div>
 
-        <!-- Oguz Kabaksil -->
-        <div class="team-card bg-offset rounded-lg shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden">
-          <div class="image-container relative">
-            <div class="primary-image w-full h-80 bg-gradient-to-br from-purple-200 to-purple-300 flex items-center justify-center transition-opacity duration-500">
-              <span class="text-6xl text-purple-700 font-bold">OK</span>
-            </div>
-            <div class="hover-image absolute inset-0 w-full h-80 bg-gradient-to-br from-purple-300 to-purple-400 flex items-center justify-center opacity-0 transition-opacity duration-500">
-              <span class="text-6xl">🚀</span>
-            </div>
-          </div>
-          <div class="text-container p-4 text-center">
-            <h4 class="font-bold text-base mb-1">
-              Oguz Kabaksil <span class="font-normal text-xs text-default/70">he/him</span>
-            </h4>
-            <p class="text-purple-600 font-medium text-xs">Front End Developer</p>
-            <p class="text-default/70 text-xs">Web Technologies & User Experience</p>
-          </div>
-        </div>
+        <TeamMemberCard
+          name="Grasi Pacheco"
+          pronouns="she/they"
+          role="Founder"
+          description="Operations & Talent Management"
+          imageSlug="grasi-primary.jpg"
+          hoverImageSlug="grasi-hover.jpg"
+          fallbackColor="purple"
+          initials="GR"
+        />
 
-        <!-- Eve Queiroz -->
-        <div class="team-card bg-offset rounded-lg shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden">
-          <div class="image-container relative">
-            <div class="primary-image w-full h-80 bg-gradient-to-br from-pink-200 to-pink-300 flex items-center justify-center transition-opacity duration-500">
-              <span class="text-6xl text-pink-700 font-bold">EQ</span>
-            </div>
-            <div class="hover-image absolute inset-0 w-full h-80 bg-gradient-to-br from-pink-300 to-pink-400 flex items-center justify-center opacity-0 transition-opacity duration-500">
-              <span class="text-6xl">🎨</span>
-            </div>
-          </div>
-          <div class="text-container p-4 text-center">
-            <h4 class="font-bold text-base mb-1">
-              Eve Queiroz <span class="font-normal text-xs text-default/70">she/her</span>
-            </h4>
-            <p class="text-pink-600 font-medium text-xs">Visual Identity</p>
-            <p class="text-default/70 text-xs">Brand Design & Cultural Narratives</p>
-          </div>
-        </div>
+        <TeamMemberCard
+          name="Oguz Kabaksil"
+          pronouns="he/him"
+          role="Front End Developer"
+          description="Web Technologies & User Experience"
+          imageSlug="oguz-primary.jpg"
+          hoverImageSlug="oguz-hover.jpg"
+          fallbackColor="purple"
+          initials="OK"
+        />
 
-        <!-- Cavi Loos -->
-        <div class="team-card bg-offset rounded-lg shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden">
-          <div class="image-container relative">
-            <div class="primary-image w-full h-80 bg-gradient-to-br from-orange-200 to-orange-300 flex items-center justify-center transition-opacity duration-500">
-              <span class="text-6xl text-orange-700 font-bold">CL</span>
-            </div>
-            <div class="hover-image absolute inset-0 w-full h-80 bg-gradient-to-br from-orange-300 to-orange-400 flex items-center justify-center opacity-0 transition-opacity duration-500">
-              <span class="text-6xl">✨</span>
-            </div>
-          </div>
-          <div class="text-container p-4 text-center">
-            <h4 class="font-bold text-base mb-1">
-              Cavi Loos <span class="font-normal text-xs text-default/70">they/them</span>
-            </h4>
-            <p class="text-orange-600 font-medium text-xs">Web Designer</p>
-            <p class="text-default/70 text-xs">Digital Spaces & Creative Interfaces</p>
-          </div>
-        </div>
+        <TeamMemberCard
+          name="Eve Queiroz"
+          pronouns="she/her"
+          role="Creative Director"
+          description="Artistic Vision & Strategy"
+          imageSlug="eve-primary.jpg"
+          hoverImageSlug="eve-hover.jpg"
+          fallbackColor="pink"
+          initials="EQ"
+        />
+
+        <TeamMemberCard
+          name="Cavi Loos"
+          pronouns="he/him"
+          role="Web Designer"
+          description="Digital Spaces & Creative Interfaces"
+          imageSlug="cavi-primary.jpg"
+          hoverImageSlug="cavi-hover.jpg"
+          fallbackColor="orange"
+          initials="CL"
+        />
+
       </div>
     </div>
 

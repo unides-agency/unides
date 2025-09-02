@@ -1,0 +1,203 @@
+---
+interface Props {
+  name: string;
+  pronouns: string;
+  role: string;
+  description: string;
+  imageSlug: string;
+  hoverImageSlug?: string;
+  fallbackColor: string;
+  initials: string;
+}
+
+const {
+  name,
+  pronouns,
+  role,
+  description,
+  imageSlug,
+  hoverImageSlug,
+  fallbackColor,
+  initials
+} = Astro.props;
+
+const baseS3Url = "https://unides.s3.eu-central-1.amazonaws.com/images/about/meetTheQueens";
+const primaryImageUrl = `${baseS3Url}/${imageSlug}`;
+const hoverImageUrl = hoverImageSlug ? `${baseS3Url}/${hoverImageSlug}` : primaryImageUrl;
+---
+
+<div class="team-card bg-offset rounded-lg shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden">
+  <div class="image-container relative">
+    <!-- Primary Image -->
+    <img
+      src={primaryImageUrl}
+      alt={`${name} - ${role}`}
+      width="300"
+      height="350"
+      loading="lazy"
+      class="primary-image w-full h-80 object-cover object-top transition-opacity duration-500"
+      onload="this.style.opacity='1'"
+      onerror={`
+        this.style.display='none';
+        this.nextElementSibling.style.display='flex';
+      `}
+      style="opacity: 0; object-position: center top;"
+    />
+
+    <!-- Fallback for Primary Image -->
+    <div
+      class={`fallback-primary absolute inset-0 w-full h-80 bg-gradient-to-br from-${fallbackColor}-200 to-${fallbackColor}-300 flex items-center justify-center transition-opacity duration-500`}
+      style="display: none;"
+    >
+      <span class={`text-6xl text-${fallbackColor}-700 font-bold`}>{initials}</span>
+    </div>
+
+    <!-- Hover Image -->
+    <img
+      src={hoverImageUrl}
+      alt={`${name} - ${role} (alternate)`}
+      width="300"
+      height="350"
+      loading="lazy"
+      class="hover-image absolute inset-0 w-full h-80 object-cover object-top opacity-0 transition-opacity duration-500"
+      onload="this.style.opacity='0'"
+      onerror={`
+        this.style.display='none';
+        this.nextElementSibling.style.display='flex';
+      `}
+      style="object-position: center top;"
+    />
+
+    <!-- Fallback for Hover Image -->
+    <div
+      class={`fallback-hover absolute inset-0 w-full h-80 bg-gradient-to-br from-${fallbackColor}-300 to-${fallbackColor}-400 flex items-center justify-center opacity-0 transition-opacity duration-500`}
+      style="display: none;"
+    >
+      <span class="text-6xl">✨</span>
+    </div>
+  </div>
+
+  <div class="text-container p-4 text-center">
+    <h4 class="font-bold text-base mb-1">
+      {name} <span class="font-normal text-xs text-default/70">{pronouns}</span>
+    </h4>
+    <p class={`text-${fallbackColor}-600 font-medium text-xs`}>{role}</p>
+    <p class="text-default/70 text-xs">{description}</p>
+  </div>
+</div>
+
+<style>
+  .team-card:hover .primary-image {
+    opacity: 0;
+  }
+
+  .team-card:hover .hover-image {
+    opacity: 1;
+  }
+
+  .team-card:hover .fallback-primary {
+    opacity: 0;
+  }
+
+  .team-card:hover .fallback-hover {
+    opacity: 1;
+  }
+
+  /* Better image positioning to prevent head cropping */
+  .primary-image,
+  .hover-image {
+    object-fit: cover;
+    object-position: center 20%; /* Focus on upper portion to keep heads visible */
+  }
+
+  /* Specific adjustments for team members who might need different positioning */
+  .team-card:nth-child(1) .primary-image,
+  .team-card:nth-child(1) .hover-image {
+    object-position: center 15%; /* Grasi - focus more on top */
+  }
+
+  .team-card:nth-child(4) .primary-image,
+  .team-card:nth-child(4) .hover-image {
+    object-position: center 25%; /* Cavi - slight adjustment */
+  }
+
+  /* Responsive image sizes with better aspect ratios */
+  @media (max-width: 768px) {
+    .image-container {
+      height: 300px;
+    }
+    .image-container img,
+    .image-container .fallback-primary,
+    .image-container .fallback-hover {
+      height: 300px;
+    }
+  }
+
+  @media (min-width: 769px) and (max-width: 1023px) {
+    .image-container {
+      height: 320px;
+    }
+    .image-container img,
+    .image-container .fallback-primary,
+    .image-container .fallback-hover {
+      height: 320px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .image-container {
+      height: 350px;
+    }
+    .image-container img,
+    .image-container .fallback-primary,
+    .image-container .fallback-hover {
+      height: 350px;
+    }
+  }
+
+  /* Alternative: Use contain for portraits that are being cropped */
+  .team-card.portrait-mode img {
+    object-fit: contain;
+    background-color: var(--color-offset, #f8f9fa);
+  }
+</style>
+
+<script>
+  // Enhanced error handling with retry mechanism and better image positioning
+  document.addEventListener('DOMContentLoaded', function() {
+    const images = document.querySelectorAll('.team-card img');
+
+    images.forEach((img, index) => {
+      let retryCount = 0;
+      const maxRetries = 2;
+
+      function attemptLoad() {
+        if (retryCount < maxRetries) {
+          retryCount++;
+          // Small delay before retry
+          setTimeout(() => {
+            img.src = img.src;
+          }, 1000 * retryCount);
+        }
+      }
+
+      // Check image aspect ratio and adjust positioning if needed
+      img.addEventListener('load', function() {
+        const aspectRatio = this.naturalWidth / this.naturalHeight;
+
+        // If image is very tall (portrait), adjust positioning
+        if (aspectRatio < 0.8) {
+          this.style.objectPosition = 'center 10%';
+        }
+        // If image is very wide (landscape), center it
+        else if (aspectRatio > 1.2) {
+          this.style.objectPosition = 'center center';
+        }
+
+        this.style.opacity = '1';
+      });
+
+      img.addEventListener('error', attemptLoad);
+    });
+  });
+</script>
