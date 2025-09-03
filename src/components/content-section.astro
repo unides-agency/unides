@@ -11,10 +11,10 @@ const { title, id, sectionType, style } = Astro.props;
 
 <section
   id={id}
-  class="flex scroll-mt-18 flex-col items-center gap-8 space-y-10"
+  class="flex scroll-mt-18 flex-col items-center"
   style={style}
 >
-  <div class="flex flex-col items-center gap-8">
+  <div class="flex flex-col items-center gap-8 mb-6">
     <slot name="eyebrow" />
     <div class="relative">
       <h2
@@ -27,7 +27,7 @@ const { title, id, sectionType, style } = Astro.props;
       )}
     </div>
   </div>
-  <p class="w-full text-center font-extrabold text-2xl">
+  <p class="w-full text-center font-normal text-2xl mb-10">
     <slot name="lead" />
   </p>
   <slot />
