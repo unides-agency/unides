@@ -6,7 +6,12 @@ import Starfield from "~/components/starfield.astro";
 
 <section class="relative h-full overflow-hidden hero-bg">
   <div class="relative grid h-full place-items-center px-4">
-    <div class="text-center">
+    <div class="text-center flex flex-col items-center gap-12">
+      <!-- Logo -->
+      <div class="hero-logo">
+        <Image src="/unides_agency_green.png" alt="Unides Agency" class="w-auto h-60 md:h-80 lg:h-100" width={800} height={400}/>
+      </div>
+      
       <!-- Tagline -->
       <div class="hero-tagline-container">
         <h1 class="hero-tagline">
