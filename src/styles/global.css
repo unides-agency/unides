@@ -391,11 +391,40 @@ p {
   background-color: rgba(19, 79, 85, 0.4);
 }
 
-/* Talent Card Name Styling - 25% larger than text-sm */
+/* Talent Card Name Styling - Responsive sizing */
 .talent-name {
-  font-size: 1.125rem !important; /* 18px - 25% larger than text-sm (14px) */
+  font-size: 1.125rem !important; /* 18px - mobile size */
   font-weight: bold !important;
   line-height: 1.25 !important;
+}
+
+/* Desktop talent card names - 1.5rem */
+@media (min-width: 768px) {
+  .talent-name {
+    font-size: 1.5rem !important; /* 24px - desktop size */
+  }
+}
+
+/* Specialty Tags Title Case */
+.specialty-tag {
+  text-transform: capitalize;
+}
+
+/* Tag Color System using website palette */
+.location-tag {
+  background-color: rgba(169, 135, 255, 0.3) !important; /* Primary purple with transparency */
+  border: 1px solid rgba(169, 135, 255, 0.5);
+}
+
+.specialty-tag {
+  background-color: rgba(253, 93, 19, 0.3) !important; /* Secondary orange with transparency */
+  border: 1px solid rgba(253, 93, 19, 0.5);
+}
+
+.birth-tag {
+  background-color: rgba(228, 245, 15, 0.3) !important; /* Accent yellow with transparency */
+  border: 1px solid rgba(228, 245, 15, 0.5);
+  color: #0A353A !important; /* Dark text for better contrast on yellow */
 }
 
 /* View profile button effects */
@@ -410,12 +439,7 @@ p {
 
 /* Talent specialty tags animation */
 .talent-card span.rounded-full {
-  transition: all 0.2s ease;
-}
-
-.talent-card span.rounded-full:hover {
-  transform: scale(1.1);
-  background-color: rgba(169, 135, 255, 0.3);
+  transition: none;
 }
 
 /* 

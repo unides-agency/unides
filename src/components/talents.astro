@@ -67,19 +67,25 @@ try {
 // Filtering logic
 const FILTERS = [
   { label: 'All', value: 'ALL' },
-  { label: 'Talent', value: 'Talent' },
-  { label: 'Creative', value: 'Creative' },
+  { label: 'Models', value: 'Model' },
+  { label: 'Creatives', value: 'Creative' },
   // Add more filters as needed, e.g., Actress, Model, etc.
 ];
 let selectedFilter = 'ALL';
 
 function getFilteredPeople() {
   if (selectedFilter === 'ALL') return allPeople;
+  if (selectedFilter === 'Model') {
+    return allPeople.filter(person => person.specialty === 'Model' || (person.specialties && person.specialties.includes('Model')));
+  }
   return allPeople.filter(person => person.type === selectedFilter);
 }
 
 function getCount(type) {
   if (type === 'ALL') return allPeople.length;
+  if (type === 'Model') {
+    return allPeople.filter(person => person.specialty === 'Model' || (person.specialties && person.specialties.includes('Model'))).length;
+  }
   return allPeople.filter(person => person.type === type).length;
 }
 ---
@@ -144,27 +150,29 @@ function getCount(type) {
               ) : (
                 <span class="text-default/60 text-xs">Photo Coming Soon</span>
               )}
-              <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-2 text-white">
+              <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent pt-2 px-4 pb-4 text-white">
                 <div class="space-y-1">
                   <div class="text-white">
                     <h3 class="talent-name leading-tight">{person.name}</h3>
                   </div>
                   <div class="flex flex-wrap gap-1 items-center min-w-0">
                     {person.location && (
-                      <div class="bg-black/40 text-white text-xs py-0.5 px-1.5 rounded-full backdrop-blur-sm flex items-center min-w-0">
+                      <div class="location-tag bg-black/40 text-white text-xs py-0.5 px-1.5 rounded-full backdrop-blur-sm flex items-center min-w-0">
                         <span class="mr-1">📍</span>{person.location}
                       </div>
                     )}
-                    {person.birth && (
-                      <span class="text-xs text-white bg-black/30 px-1.5 py-0.5 rounded backdrop-blur-sm min-w-0" title="Birth">
-                        {person.birth}
+                  </div>
+                  <div class="flex flex-wrap gap-1 items-center">
+                    {person.specialties ? person.specialties.map(specialty => (
+                      <span class="specialty-tag bg-black/40 text-white text-xs py-0.5 px-1.5 rounded-full backdrop-blur-sm">
+                        {specialty}
+                      </span>
+                    )) : (
+                      <span class="specialty-tag bg-black/40 text-white text-xs py-0.5 px-1.5 rounded-full backdrop-blur-sm">
+                        {person.specialty}
                       </span>
                     )}
                   </div>
-                  <div class="text-xs text-default/80 truncate" title={person.specialties ? person.specialties.join(', ') : person.specialty}>
-                    {person.specialties ? person.specialties.join(', ') : person.specialty}
-                  </div>
-                  <div class="text-xs text-default/60 truncate" title={person.type}>{person.type}</div>
                 </div>
               </div>
             </div>
@@ -208,20 +216,28 @@ function getCount(type) {
                 ) : (
                   <span class="text-default/60 text-xs">Photo Coming Soon</span>
                 )}
-                <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-2 text-white">
+                <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent pt-2 px-4 pb-4 text-white">
                   <div class="space-y-1">
                     <div class="text-white">
                       <h3 class="talent-name leading-tight">{person.name}</h3>
                     </div>
                     <div class="flex flex-wrap gap-1 items-center min-w-0">
                       {person.location && (
-                        <div class="bg-black/40 text-white text-xs py-0.5 px-1 rounded-full backdrop-blur-sm flex items-center min-w-0">
+                        <div class="location-tag bg-black/40 text-white text-xs py-0.5 px-1 rounded-full backdrop-blur-sm flex items-center min-w-0">
                           <span class="mr-0.5 text-xs">📍</span><span class="text-xs">{person.location}</span>
                         </div>
                       )}
                     </div>
-                    <div class="text-xs text-default/80 truncate" title={person.specialties ? person.specialties.join(', ') : person.specialty}>
-                      {person.specialties ? person.specialties.join(', ') : person.specialty}
+                    <div class="flex flex-wrap gap-1 items-center">
+                      {person.specialties ? person.specialties.slice(0, 3).map(specialty => (
+                        <span class="specialty-tag bg-black/40 text-white text-xs py-0.5 px-1.5 rounded-full backdrop-blur-sm">
+                          {specialty}
+                        </span>
+                      )) : (
+                        <span class="specialty-tag bg-black/40 text-white text-xs py-0.5 px-1.5 rounded-full backdrop-blur-sm">
+                          {person.specialty}
+                        </span>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -345,7 +361,18 @@ function getCount(type) {
       // Filter desktop cards
       desktopCards.forEach(card => {
         const cardType = card.getAttribute('data-type');
-        if (filter === 'ALL' || cardType === filter) {
+        const cardSpecialties = card.getAttribute('data-talent-specialties');
+        let shouldShow = false;
+        
+        if (filter === 'ALL') {
+          shouldShow = true;
+        } else if (filter === 'Model') {
+          shouldShow = cardSpecialties && cardSpecialties.includes('Model');
+        } else {
+          shouldShow = cardType === filter;
+        }
+        
+        if (shouldShow) {
           card.style.display = '';  // Reset to default display instead of 'block'
           card.classList.add('fade-in');
         } else {
@@ -357,7 +384,18 @@ function getCount(type) {
       // Filter mobile cards
       mobileCards.forEach(card => {
         const cardType = card.getAttribute('data-type');
-        if (filter === 'ALL' || cardType === filter) {
+        const cardSpecialties = card.getAttribute('data-talent-specialties');
+        let shouldShow = false;
+        
+        if (filter === 'ALL') {
+          shouldShow = true;
+        } else if (filter === 'Model') {
+          shouldShow = cardSpecialties && cardSpecialties.includes('Model');
+        } else {
+          shouldShow = cardType === filter;
+        }
+        
+        if (shouldShow) {
           card.style.display = '';  // Reset to default display instead of 'block'
           card.classList.add('fade-in');
         } else {
