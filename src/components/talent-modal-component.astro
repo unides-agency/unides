@@ -1,70 +1,140 @@
 ---
-// Talent Modal Component - Responsive Drawer Design
+// Talent Modal Component - Responsive Drawer Design (Updated Layout)
 ---
+
+<!-- Fullscreen Photo Lightbox -->
+<div id="photo-lightbox" class="fixed inset-0 z-[100] hidden bg-white" aria-hidden="true" role="dialog" aria-label="Photo viewer">
+  <!-- Close Button -->
+  <button
+    id="lightbox-close"
+    type="button"
+    class="absolute top-6 right-6 z-10 text-black hover:text-gray-600 transition-colors"
+    aria-label="Close photo viewer"
+  >
+    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12" />
+    </svg>
+  </button>
+
+  <!-- Previous Button -->
+  <button
+    id="lightbox-prev"
+    type="button"
+    class="absolute left-6 top-1/2 -translate-y-1/2 z-10 text-black hover:text-gray-600 transition-colors p-2"
+    aria-label="Previous photo"
+  >
+    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 19l-7-7 7-7" />
+    </svg>
+  </button>
+
+  <!-- Next Button -->
+  <button
+    id="lightbox-next"
+    type="button"
+    class="absolute right-6 top-1/2 -translate-y-1/2 z-10 text-black hover:text-gray-600 transition-colors p-2"
+    aria-label="Next photo"
+  >
+    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7" />
+    </svg>
+  </button>
+
+  <!-- Photo Container -->
+  <div class="w-full h-full flex items-center justify-center p-16">
+    <img
+      id="lightbox-image"
+      src=""
+      alt=""
+      class="max-w-full max-h-full object-contain"
+    />
+  </div>
+</div>
 
 <!-- Talent Modal HTML - Responsive Drawer Design -->
 <div id="talent-modal" class="modal hidden fixed inset-0 z-50 bg-black bg-opacity-60 backdrop-blur-sm" aria-hidden="true" role="dialog" aria-labelledby="talent-modal-title" aria-describedby="talent-modal-description">
   
   <!-- Mobile: Bottom Drawer -->
   <div class="fixed inset-x-0 bottom-0 transform translate-y-full transition-transform duration-300 ease-out mobile-drawer" id="talent-modal-mobile">
-    <div class="bg-default rounded-t-2xl h-[90vh] overflow-y-auto shadow-2xl" role="document">
-      <div class="p-6">
-        <!-- Header with Name and Close button -->
-        <div class="flex justify-between items-start mb-4">
-          <div>
-            <h3 id="talent-modal-name-mobile" class="text-2xl font-bold text-default"></h3>
-            <p id="talent-modal-specialty-mobile" class="text-primary font-medium text-lg"></p>
-          </div>
-          <button
-            id="close-talent-modal-mobile"
-            type="button"
-            class="text-default/60 hover:text-primary hover:rotate-90 transition-all duration-300 text-2xl font-bold focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-full p-2 flex-shrink-0 ml-4"
-            aria-label="Close talent profile modal"
-          >
-            ×
-          </button>
-        </div>
+    <div class="bg-white rounded-t-2xl h-[90vh] overflow-y-auto shadow-2xl relative" role="document">
+      <!-- Close Button - Top Right -->
+      <button
+        id="close-talent-modal-mobile"
+        type="button"
+        class="absolute top-4 right-4 z-10 text-gray-400 hover:text-gray-600 transition-all duration-300"
+        aria-label="Close talent profile modal"
+      >
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
 
+      <div class="p-6 pt-12">
         <!-- Mobile Content -->
         <div class="space-y-6">
+          <!-- Name and Pronouns -->
+          <div>
+            <h3 id="talent-modal-name-mobile" class="text-3xl font-bold text-black tracking-tight"></h3>
+            <p id="talent-modal-pronouns-mobile" class="text-gray-600 text-sm mt-1"></p>
+          </div>
 
           <!-- Main Image -->
-          <div class="aspect-[3/4] bg-default/20 rounded-lg flex items-center justify-center overflow-hidden">
+          <div class="bg-gray-100 flex items-center justify-center overflow-hidden relative group main-image-container">
             <img
               id="talent-modal-main-image-mobile"
               src=""
               alt=""
-              class="w-full h-full object-cover rounded-lg hidden"
+              class="max-w-full w-auto h-auto object-contain hidden cursor-pointer"
               loading="lazy"
             />
-            <span id="talent-modal-main-image-placeholder-mobile" class="text-default/60 text-sm">Photo Coming Soon</span>
-          </div>
-          
-          <!-- Thumbnail gallery -->
-          <div id="talent-thumbnail-gallery-mobile" class="grid grid-cols-4 gap-2 hidden">
-            <!-- Thumbnails will be populated by JavaScript -->
-          </div>
-
-          <!-- About Section -->
-          <div>
-            <h4 class="font-semibold mb-3 text-lg text-default">About</h4>
-            <p id="talent-modal-about-mobile" class="text-default/80 leading-relaxed"></p>
-          </div>
-
-          <!-- Personal Details Section -->
-          <div>
-            <h4 class="font-semibold mb-3 text-lg text-default">Personal Details</h4>
-            <div id="talent-modal-personal-mobile" class="grid grid-cols-2 gap-4 text-sm">
-              <!-- Personal details will be populated by JavaScript -->
+            <span id="talent-modal-main-image-placeholder-mobile" class="text-gray-400 text-sm p-20">Photo Coming Soon</span>
+            <!-- Photo counter overlay -->
+            <div id="photo-counter-mobile" class="absolute bottom-4 right-4 bg-black/60 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity hidden">
+              1/1
             </div>
           </div>
 
-          <!-- Download Portfolio Button -->
-          <div class="flex gap-4 pt-6 border-t border-default/20">
-            <button id="download-portfolio-btn-mobile" class="flex-1 border-2 border-primary text-primary px-8 py-4 rounded-lg hover:bg-primary/10 hover:border-purple-600 hover:text-purple-600 focus:ring-2 focus:ring-purple-400 focus:outline-none transition-all duration-300 font-semibold text-lg hover:shadow-lg hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none">
-              <span class="portfolio-text">Download Portfolio</span>
-              <span class="portfolio-spinner hidden animate-spin ml-2">⏳</span>
+          <!-- Physical Stats -->
+          <div class="space-y-1.5 text-sm">
+            <div id="talent-modal-stats-mobile">
+              <!-- Stats will be populated by JavaScript -->
+            </div>
+          </div>
+
+          <!-- Divider before Sedcard -->
+          <hr class="border-gray-200" />
+
+          <!-- Sedcard Button -->
+          <div class="flex items-center gap-2">
+            <button id="sedcard-btn-mobile" class="flex items-center gap-2 border border-black rounded-sm px-3 py-1.5 hover:bg-gray-50 transition-colors">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+              </svg>
+              <span class="text-sm">Sedcard</span>
             </button>
+          </div>
+
+          <!-- Location -->
+          <div id="talent-modal-booking-mobile" class="mt-2 hidden">
+            <h4 class="font-bold text-sm text-black">Location</h4>
+            <p id="talent-modal-booking-value-mobile" class="text-sm text-gray-700 mt-1"></p>
+          </div>
+
+          <!-- Sports/Activities -->
+          <div id="talent-modal-sports-section-mobile" class="hidden">
+            <h4 class="font-bold text-sm text-black">Sportler:in</h4>
+            <p id="talent-modal-sports-mobile" class="text-sm text-gray-700 mt-1"></p>
+          </div>
+
+          <!-- Special Features -->
+          <div id="talent-modal-features-section-mobile" class="hidden">
+            <h4 class="font-bold text-sm text-black">Special Features</h4>
+            <p id="talent-modal-features-mobile" class="text-sm text-gray-700 mt-1"></p>
+          </div>
+
+          <!-- Photo Gallery -->
+          <div id="talent-thumbnail-gallery-mobile" class="grid grid-cols-2 gap-2 hidden">
+            <!-- Thumbnails will be populated by JavaScript -->
           </div>
         </div>
       </div>
@@ -72,74 +142,90 @@
   </div>
 
   <!-- Desktop: Right Side Drawer -->
-  <div class="fixed inset-y-0 right-0 w-[56%] transform translate-x-full transition-transform duration-300 ease-out desktop-drawer" id="talent-modal-desktop">
-    <div class="bg-default w-full h-full overflow-y-auto shadow-2xl" role="document">
-      <div class="p-6">
-        <!-- Header with close button -->
-        <div class="flex justify-between items-start mb-6">
-          <h2 class="text-2xl font-bold text-default bg-gradient-to-r from-purple-400 to-primary bg-clip-text text-transparent">Talent Profile</h2>
-          <button
-            id="close-talent-modal-desktop"
-            type="button"
-            class="text-default/60 hover:text-primary hover:rotate-90 transition-all duration-300 text-2xl font-bold focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-full p-2"
-            aria-label="Close talent profile modal"
-          >
-            ×
-          </button>
-        </div>
+  <div class="fixed inset-y-0 right-0 w-[70%] max-w-5xl transform translate-x-full transition-transform duration-300 ease-out desktop-drawer" id="talent-modal-desktop">
+    <div class="bg-white w-full h-full overflow-y-auto shadow-2xl relative" role="document">
+      <!-- Close Button - Top Right -->
+      <button
+        id="close-talent-modal-desktop"
+        type="button"
+        class="absolute top-6 right-6 z-10 text-gray-400 hover:text-gray-600 transition-all duration-300"
+        aria-label="Close talent profile modal"
+      >
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
 
+      <div class="p-8 lg:p-12 h-full flex flex-col">
         <!-- Desktop Content - Two Column Layout -->
-        <div class="flex gap-8 h-full">
-          <!-- Left Column: Image Gallery -->
-          <div class="w-1/2 space-y-4">
-            <!-- Main Image -->
-            <div class="aspect-[3/4] bg-default/20 rounded-lg flex items-center justify-center overflow-hidden">
+        <div class="flex gap-8 lg:gap-12 flex-1 min-h-0">
+          <!-- Left Column: Info -->
+          <div class="w-2/5 flex flex-col">
+            <!-- Name -->
+            <h3 id="talent-modal-name-desktop" class="text-4xl lg:text-5xl font-bold text-black tracking-tight leading-tight"></h3>
+            
+            <!-- Pronouns -->
+            <p id="talent-modal-pronouns-desktop" class="text-gray-600 text-sm mt-2"></p>
+            
+            <!-- Physical Stats -->
+            <div class="mt-8 space-y-1.5 text-sm" id="talent-modal-stats-desktop">
+              <!-- Stats will be populated by JavaScript -->
+            </div>
+
+            <!-- Divider before Sedcard -->
+            <hr class="border-gray-200 my-6" />
+
+            <!-- Sedcard Button -->
+            <div class="flex items-center gap-2">
+              <button id="sedcard-btn-desktop" class="flex items-center gap-2 border border-black rounded-sm px-3 py-1.5 hover:bg-gray-50 transition-colors">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                </svg>
+                <span class="text-sm">Sedcard</span>
+              </button>
+            </div>
+
+            <!-- Location -->
+            <div id="talent-modal-booking-desktop" class="mt-8 hidden">
+              <h4 class="font-bold text-sm text-black">Location</h4>
+              <p id="talent-modal-booking-value-desktop" class="text-sm text-gray-700 mt-1"></p>
+            </div>
+
+            <!-- Sports/Activities -->
+            <div id="talent-modal-sports-section-desktop" class="mt-6 hidden">
+              <h4 class="font-bold text-sm text-black">Sportler:in</h4>
+              <p id="talent-modal-sports-desktop" class="text-sm text-gray-700 mt-1 leading-relaxed"></p>
+            </div>
+
+            <!-- Special Features -->
+            <div id="talent-modal-features-section-desktop" class="mt-6 hidden">
+              <h4 class="font-bold text-sm text-black">Special Features</h4>
+              <p id="talent-modal-features-desktop" class="text-sm text-gray-700 mt-1"></p>
+            </div>
+          </div>
+
+          <!-- Right Column: Main Image -->
+          <div class="w-3/5 flex flex-col">
+            <div class="bg-gray-100 flex items-center justify-center overflow-hidden relative group main-image-container max-h-[70vh]">
               <img
                 id="talent-modal-main-image-desktop"
                 src=""
                 alt=""
-                class="w-full h-full object-cover rounded-lg hidden"
+                class="max-w-full max-h-[70vh] w-auto h-auto object-contain hidden cursor-pointer"
                 loading="lazy"
               />
-              <span id="talent-modal-main-image-placeholder-desktop" class="text-default/60 text-sm">Photo Coming Soon</span>
-            </div>
-            
-            <!-- Thumbnail gallery -->
-            <div id="talent-thumbnail-gallery-desktop" class="grid grid-cols-4 gap-2 hidden">
-              <!-- Thumbnails will be populated by JavaScript -->
-            </div>
-          </div>
-
-          <!-- Right Column: Information -->
-          <div class="w-1/2 space-y-6 overflow-y-auto">
-            <!-- Name and Specialty -->
-            <div>
-              <h3 id="talent-modal-name-desktop" class="text-2xl font-bold text-default"></h3>
-              <p id="talent-modal-specialty-desktop" class="text-primary font-medium text-lg"></p>
-            </div>
-
-            <!-- About Section -->
-            <div>
-              <h4 class="font-semibold mb-3 text-lg text-default">About</h4>
-              <p id="talent-modal-about-desktop" class="text-default/80 leading-relaxed"></p>
-            </div>
-
-            <!-- Personal Details Section -->
-            <div>
-              <h4 class="font-semibold mb-3 text-lg text-default">Personal Details</h4>
-              <div id="talent-modal-personal-desktop" class="grid grid-cols-2 gap-4 text-sm">
-                <!-- Personal details will be populated by JavaScript -->
+              <span id="talent-modal-main-image-placeholder-desktop" class="text-gray-400 text-sm p-20">Photo Coming Soon</span>
+              <!-- Photo counter overlay -->
+              <div id="photo-counter-desktop" class="absolute bottom-4 right-4 bg-black/60 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity hidden">
+                1/1
               </div>
             </div>
-
-            <!-- Download Portfolio Button -->
-            <div class="pt-6 border-t border-default/20">
-              <button id="download-portfolio-btn-desktop" class="w-full border-2 border-primary text-primary px-6 py-3 rounded-lg hover:bg-primary/10 hover:border-purple-600 hover:text-purple-600 focus:ring-2 focus:ring-purple-400 focus:outline-none transition-all duration-300 font-semibold hover:shadow-lg hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none">
-                <span class="portfolio-text">Download Portfolio</span>
-                <span class="portfolio-spinner hidden animate-spin ml-2">⏳</span>
-              </button>
-            </div>
           </div>
+        </div>
+
+        <!-- Photo Gallery - Below both columns -->
+        <div id="talent-thumbnail-gallery-desktop" class="grid grid-cols-2 lg:grid-cols-4 gap-2 mt-6 hidden">
+          <!-- Thumbnails will be populated by JavaScript -->
         </div>
       </div>
     </div>
@@ -152,6 +238,80 @@
   
   // Always initialize to ensure it works
   console.log('Initializing talent modal');
+
+    // Lightbox state
+    var lightboxPhotos = [];
+    var lightboxCurrentIndex = 0;
+
+    // Lightbox functions
+    function openLightbox(photos, startIndex) {
+      lightboxPhotos = photos;
+      lightboxCurrentIndex = startIndex || 0;
+      
+      var lightbox = document.getElementById('photo-lightbox');
+      var lightboxImage = document.getElementById('lightbox-image');
+      
+      if (lightbox && lightboxImage) {
+        lightboxImage.src = lightboxPhotos[lightboxCurrentIndex];
+        lightboxImage.alt = 'Photo ' + (lightboxCurrentIndex + 1) + ' of ' + lightboxPhotos.length;
+        lightbox.classList.remove('hidden');
+        lightbox.setAttribute('aria-hidden', 'false');
+        
+        // Update button visibility
+        updateLightboxNav();
+      }
+    }
+
+    function closeLightbox() {
+      var lightbox = document.getElementById('photo-lightbox');
+      if (lightbox) {
+        lightbox.classList.add('hidden');
+        lightbox.setAttribute('aria-hidden', 'true');
+      }
+    }
+
+    function lightboxPrev() {
+      if (lightboxCurrentIndex > 0) {
+        lightboxCurrentIndex--;
+        updateLightboxImage();
+      }
+    }
+
+    function lightboxNext() {
+      if (lightboxCurrentIndex < lightboxPhotos.length - 1) {
+        lightboxCurrentIndex++;
+        updateLightboxImage();
+      }
+    }
+
+    function updateLightboxImage() {
+      var lightboxImage = document.getElementById('lightbox-image');
+      if (lightboxImage && lightboxPhotos[lightboxCurrentIndex]) {
+        lightboxImage.src = lightboxPhotos[lightboxCurrentIndex];
+        lightboxImage.alt = 'Photo ' + (lightboxCurrentIndex + 1) + ' of ' + lightboxPhotos.length;
+      }
+      updateLightboxNav();
+    }
+
+    function updateLightboxNav() {
+      var prevBtn = document.getElementById('lightbox-prev');
+      var nextBtn = document.getElementById('lightbox-next');
+      
+      if (prevBtn) {
+        prevBtn.style.opacity = lightboxCurrentIndex === 0 ? '0.3' : '1';
+        prevBtn.style.pointerEvents = lightboxCurrentIndex === 0 ? 'none' : 'auto';
+      }
+      if (nextBtn) {
+        nextBtn.style.opacity = lightboxCurrentIndex === lightboxPhotos.length - 1 ? '0.3' : '1';
+        nextBtn.style.pointerEvents = lightboxCurrentIndex === lightboxPhotos.length - 1 ? 'none' : 'auto';
+      }
+    }
+
+    // Make lightbox functions globally available
+    window.openLightbox = openLightbox;
+    window.closeLightbox = closeLightbox;
+    window.lightboxPrev = lightboxPrev;
+    window.lightboxNext = lightboxNext;
     
     // Get talents data from the main page
     function getTalentsData() {
@@ -175,99 +335,101 @@
       
       // Get elements
       const modalName = document.getElementById(`talent-modal-name${suffix}`);
-      const modalSpecialty = document.getElementById(`talent-modal-specialty${suffix}`);
-      const modalDescription = document.getElementById(`talent-modal-about${suffix}`);
+      const modalPronouns = document.getElementById(`talent-modal-pronouns${suffix}`);
+      const modalStats = document.getElementById(`talent-modal-stats${suffix}`);
       const modalMainImage = document.getElementById(`talent-modal-main-image${suffix}`);
       const modalMainImagePlaceholder = document.getElementById(`talent-modal-main-image-placeholder${suffix}`);
-      const modalPersonal = document.getElementById(`talent-modal-personal${suffix}`);
       const thumbnailGallery = document.getElementById(`talent-thumbnail-gallery${suffix}`);
-      const downloadBtn = document.getElementById(`download-portfolio-btn${suffix}`);
+      const sedcardBtn = document.getElementById(`sedcard-btn${suffix}`);
+      
+      // Location elements
+      const bookingSection = document.getElementById(`talent-modal-booking${suffix}`);
+      const bookingValue = document.getElementById(`talent-modal-booking-value${suffix}`);
+      
+      // Sports elements
+      const sportsSection = document.getElementById(`talent-modal-sports-section${suffix}`);
+      const sportsValue = document.getElementById(`talent-modal-sports${suffix}`);
+      
+      // Features elements
+      const featuresSection = document.getElementById(`talent-modal-features-section${suffix}`);
+      const featuresValue = document.getElementById(`talent-modal-features${suffix}`);
 
-      if (!modalName || !modalSpecialty || !modalDescription || !modalPersonal) {
-        console.error(`Some modal elements are missing for ${suffix}!`);
+      if (!modalName) {
+        console.error(`Modal name element missing for ${suffix}!`);
         return;
       }
 
-      // Populate basic info
+      // Populate name
       modalName.textContent = talent.name || '';
       
-      let specialtyText = '';
-      if (Array.isArray(talent.specialties)) {
-        specialtyText = talent.specialties.join(' - ');
-      } else if (talent.specialties) {
-        specialtyText = talent.specialties;
-      } else if (talent.specialty) {
-        specialtyText = talent.specialty;
+      // Populate pronouns
+      if (modalPronouns) {
+        modalPronouns.textContent = talent.pronouns || '';
       }
-      modalSpecialty.textContent = specialtyText;
-      modalDescription.textContent = talent.description || '';
 
-      // Populate personal details
-      modalPersonal.innerHTML = '';
-      const personalFields = [
-        { key: 'location', label: 'Location', value: talent.location },
-        { key: 'birth', label: 'Birth', value: talent.birth || talent.born },
-        { key: 'height', label: 'Height', value: talent.height ? talent.height + 'cm' : null },
-        { key: 'eyeColor', label: 'Eye Color', value: talent.eyeColor },
-        { key: 'hairColor', label: 'Hair Color', value: talent.hairColor },
-        { key: 'shoeSize', label: 'Shoe Size', value: talent.shoeSize },
-        { key: 'dressSize', label: 'Dress Size', value: talent.dressSize }
-      ];
+      // Populate physical stats in vertical format
+      if (modalStats) {
+        modalStats.innerHTML = '';
+        const statsFields = [
+          { label: 'Height', value: talent.height },
+          { label: 'Hair', value: talent.hairColor },
+          { label: 'Eyes', value: talent.eyeColor },
+          { label: 'Shoes', value: talent.shoeSize },
+          { label: 'Clothing size', value: talent.clothingSize || talent.dressSize },
+          { label: 'Age', value: talent.age }
+        ];
 
-      personalFields.forEach(field => {
-        if (field.value) {
-          const fieldDiv = document.createElement('div');
-          if (isMobile) {
-            fieldDiv.className = 'min-w-0';
-            fieldDiv.innerHTML = `
-              <span class="text-sm text-default/60 block">${field.label}</span>
-              <span class="text-default font-medium block">${field.value}</span>
-            `;
-          } else {
-            fieldDiv.className = 'min-w-0';
-            fieldDiv.innerHTML = `
-              <span class="text-sm text-default/60 block">${field.label}</span>
-              <span class="text-default font-medium block">${field.value}</span>
-            `;
-          }
-          modalPersonal.appendChild(fieldDiv);
-        }
-      });
-
-      // Add external links from personalInfo
-      if (talent.personalInfo && Object.keys(talent.personalInfo).length > 0) {
-        Object.entries(talent.personalInfo).forEach(([key, value]) => {
-          if (value !== null && value !== undefined && value !== '') {
-            const fieldDiv = document.createElement('div');
-            // Format the key to be more readable (camelCase to Title Case)
-            const formattedLabel = key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase());
-            // Detect if value is a URL
-            const urlPattern = /^(https?:\/\/|www\.)[\w\-]+(\.[\w\-]+)+([\w.,@?^=%&:/~+#\-]*[\w@?^=%&/~+#\-])?$/;
-            let valueHtml = '';
-            if (typeof value === 'string' && urlPattern.test(value.trim())) {
-              let url = value.trim();
-              if (!/^https?:\/\//.test(url)) url = 'https://' + url;
-              valueHtml = `<a href="${url}" target="_blank" rel="noopener noreferrer" class="text-primary underline break-all">${value}</a>`;
-            } else {
-              valueHtml = `<span class="text-default break-words">${value}</span>`;
-            }
-            
-            if (isMobile) {
-              fieldDiv.className = 'min-w-0';
-              fieldDiv.innerHTML = `
-                <span class="text-sm text-default/60 block">${formattedLabel}</span>
-                ${valueHtml}
-              `;
-            } else {
-              fieldDiv.className = 'min-w-0';
-              fieldDiv.innerHTML = `
-                <span class="text-sm text-default/60 block">${formattedLabel}</span>
-                ${valueHtml}
-              `;
-            }
-            modalPersonal.appendChild(fieldDiv);
+        statsFields.forEach(field => {
+          if (field.value) {
+            const statDiv = document.createElement('div');
+            statDiv.className = 'text-sm';
+            statDiv.innerHTML = `<span class="text-black font-medium">${field.label}</span> <span class="text-gray-600">${field.value}</span>`;
+            modalStats.appendChild(statDiv);
           }
         });
+      }
+
+      // Populate Location
+      if (bookingSection && bookingValue) {
+        if (talent.bookingBase || talent.location) {
+          bookingSection.classList.remove('hidden');
+          bookingValue.textContent = talent.bookingBase || talent.location;
+        } else {
+          bookingSection.classList.add('hidden');
+        }
+      }
+
+      // Populate sports
+      if (sportsSection && sportsValue) {
+        if (talent.sports && Array.isArray(talent.sports) && talent.sports.length > 0) {
+          sportsSection.classList.remove('hidden');
+          sportsValue.textContent = talent.sports.join(', ');
+        } else {
+          sportsSection.classList.add('hidden');
+        }
+      }
+
+      // Populate special features
+      if (featuresSection && featuresValue) {
+        if (talent.specialFeatures && Array.isArray(talent.specialFeatures) && talent.specialFeatures.length > 0) {
+          featuresSection.classList.remove('hidden');
+          featuresValue.textContent = talent.specialFeatures.join(', ');
+        } else {
+          featuresSection.classList.add('hidden');
+        }
+      }
+
+      // Set up sedcard button
+      if (sedcardBtn) {
+        sedcardBtn.onclick = function() {
+          if (talent.portfolioUrl || talent.pdfUrl) {
+            var url = talent.portfolioUrl || talent.pdfUrl;
+            window.open(url, '_blank');
+          } else {
+            console.log('No portfolio URL available for this talent');
+            alert('Sedcard not available for this talent');
+          }
+        };
       }
 
       // Handle images
@@ -280,11 +442,33 @@
         photos = [talent.image];
       }
 
+      let specialtyText = '';
+      if (Array.isArray(talent.specialties)) {
+        specialtyText = talent.specialties.join(' - ');
+      } else if (talent.specialties) {
+        specialtyText = talent.specialties;
+      } else if (talent.specialty) {
+        specialtyText = talent.specialty;
+      }
+
       if (photos.length > 0 && modalMainImage && modalMainImagePlaceholder) {
         modalMainImage.src = photos[0];
         modalMainImage.alt = `${talent.name} - ${specialtyText}`;
         modalMainImage.classList.remove('hidden');
         modalMainImagePlaceholder.classList.add('hidden');
+        
+        // Update photo counter
+        const photoCounter = document.getElementById(`photo-counter${suffix}`);
+        if (photoCounter && photos.length > 1) {
+          photoCounter.textContent = `1/${photos.length}`;
+          photoCounter.classList.remove('hidden');
+        }
+        
+        // Make main image clickable to open lightbox
+        modalMainImage.style.cursor = 'pointer';
+        modalMainImage.onclick = function() {
+          openLightbox(photos, 0);
+        };
         
         // Show thumbnails if there are multiple photos
         if (photos.length > 1 && thumbnailGallery) {
@@ -293,22 +477,22 @@
           
           photos.forEach(function(photo, index) {
             var thumbnailDiv = document.createElement('div');
-            thumbnailDiv.className = 'aspect-square bg-default/20 rounded overflow-hidden cursor-pointer hover:opacity-80 hover:ring-2 hover:ring-primary transition-all duration-200 focus:ring-2 focus:ring-primary focus:outline-none';
+            thumbnailDiv.className = 'aspect-[4/5] bg-gray-100 overflow-hidden cursor-pointer transition-all duration-200 focus:outline-none relative group';
             thumbnailDiv.tabIndex = 0;
             thumbnailDiv.setAttribute('role', 'button');
             thumbnailDiv.setAttribute('aria-label', 'View photo ' + (index + 1) + ' of ' + photos.length);
-            thumbnailDiv.innerHTML = '<img src="' + photo + '" alt="' + talent.name + ' - Photo ' + (index + 1) + '" class="w-full h-full object-cover" loading="lazy" />';
+            thumbnailDiv.innerHTML = `
+              <img src="${photo}" alt="${talent.name} - Photo ${index + 1}" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" loading="lazy" />
+              <div class="absolute bottom-3 right-3">
+                <svg class="w-5 h-5 text-black opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                </svg>
+              </div>
+            `;
             
             var handleImageClick = function() {
-              modalMainImage.src = photo;
-              modalMainImage.alt = talent.name + ' - Photo ' + (index + 1);
-              
-              // Update active thumbnail styling
-              var thumbs = thumbnailGallery.querySelectorAll('div');
-              for (var j = 0; j < thumbs.length; j++) {
-                thumbs[j].classList.remove('ring-2', 'ring-primary');
-              }
-              thumbnailDiv.classList.add('ring-2', 'ring-primary');
+              // Open fullscreen lightbox
+              openLightbox(photos, index);
             };
             
             thumbnailDiv.addEventListener('click', handleImageClick);
@@ -321,11 +505,6 @@
             
             thumbnailGallery.appendChild(thumbnailDiv);
           });
-          
-          // Mark first thumbnail as active
-          if (thumbnailGallery.firstChild) {
-            thumbnailGallery.firstChild.classList.add('ring-2', 'ring-primary');
-          }
         } else if (thumbnailGallery) {
           thumbnailGallery.classList.add('hidden');
         }
@@ -334,28 +513,6 @@
         modalMainImagePlaceholder.classList.remove('hidden');
         if (thumbnailGallery) {
           thumbnailGallery.classList.add('hidden');
-        }
-      }
-
-      // Set up download portfolio button
-      if (downloadBtn) {
-        downloadBtn.onclick = function() {
-          if (talent.portfolioUrl || talent.pdfUrl) {
-            var url = talent.portfolioUrl || talent.pdfUrl;
-            window.open(url, '_blank');
-          } else {
-            console.log('No portfolio URL available for this talent');
-            alert('Portfolio not available for this talent');
-          }
-        };
-        
-        // Update button state based on portfolio availability
-        if (talent.portfolioUrl || talent.pdfUrl) {
-          downloadBtn.disabled = false;
-          downloadBtn.style.opacity = '1';
-        } else {
-          downloadBtn.disabled = true;
-          downloadBtn.style.opacity = '0.5';
         }
       }
     }
@@ -392,15 +549,21 @@
           description: description,
           image: image,
           location: location,
+          bookingBase: location,
           birth: birth,
+          age: age,
           height: height,
           eyeColor: eyeColor,
           hairColor: hairColor,
           shoeSize: shoeSize,
           dressSize: dressSize,
+          clothingSize: dressSize,
           imgs: imgs,
           portfolioUrl: portfolioUrl,
-          personalInfo: personalInfo || {}
+          personalInfo: personalInfo || {},
+          pronouns: '',
+          sports: [],
+          specialFeatures: []
         };
       }
 
@@ -487,9 +650,55 @@
         });
       }
 
+      // Lightbox event listeners
+      var lightboxCloseBtn = document.getElementById('lightbox-close');
+      var lightboxPrevBtn = document.getElementById('lightbox-prev');
+      var lightboxNextBtn = document.getElementById('lightbox-next');
+      var lightbox = document.getElementById('photo-lightbox');
+
+      if (lightboxCloseBtn) {
+        lightboxCloseBtn.addEventListener('click', closeLightbox);
+      }
+      if (lightboxPrevBtn) {
+        lightboxPrevBtn.addEventListener('click', lightboxPrev);
+      }
+      if (lightboxNextBtn) {
+        lightboxNextBtn.addEventListener('click', lightboxNext);
+      }
+
+      // Close lightbox when clicking on background
+      if (lightbox) {
+        lightbox.addEventListener('click', function(e) {
+          if (e.target.id === 'photo-lightbox' || e.target.tagName === 'DIV') {
+            // Only close if clicking on the background, not the image
+            if (e.target.id !== 'lightbox-image') {
+              closeLightbox();
+            }
+          }
+        });
+      }
+
       // Keyboard navigation
       document.addEventListener('keydown', function(e) {
-        const modal = document.getElementById('talent-modal');
+        var lightbox = document.getElementById('photo-lightbox');
+        var modal = document.getElementById('talent-modal');
+        
+        // Lightbox keyboard navigation (takes priority)
+        if (lightbox && !lightbox.classList.contains('hidden')) {
+          if (e.key === 'Escape') {
+            e.preventDefault();
+            closeLightbox();
+          } else if (e.key === 'ArrowLeft') {
+            e.preventDefault();
+            lightboxPrev();
+          } else if (e.key === 'ArrowRight') {
+            e.preventDefault();
+            lightboxNext();
+          }
+          return;
+        }
+        
+        // Modal keyboard navigation
         if (!modal || modal.classList.contains('hidden')) {
           return;
         }
@@ -517,7 +726,7 @@
   
   .modal button:focus,
   .modal [tabindex]:focus {
-    outline: 2px solid var(--color-primary);
+    outline: 2px solid #000;
     outline-offset: 2px;
   }
   
@@ -539,7 +748,7 @@
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  /* Desktop left drawer styles */
+  /* Desktop right drawer styles */
   #talent-modal-desktop {
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
@@ -569,10 +778,85 @@
     }
   }
 
+  /* Custom styling for the talent profile stats */
+  #talent-modal-stats-desktop > div,
+  #talent-modal-stats-mobile > div {
+    display: flex;
+    gap: 0.375rem;
+  }
+
+  #talent-modal-stats-desktop > div > span:first-child,
+  #talent-modal-stats-mobile > div > span:first-child {
+    font-weight: 500;
+    color: #000;
+  }
+  
+  #talent-modal-stats-desktop > div > span:last-child,
+  #talent-modal-stats-mobile > div > span:last-child {
+    color: #6b7280;
+  }
+
+  /* Main image hover state */
+  .main-image-container {
+    cursor: pointer;
+  }
+  
+  .main-image-container img {
+    transition: transform 0.3s ease;
+  }
+  
+  .main-image-container:hover img {
+    transform: scale(1.02);
+  }
+
+  /* Gallery thumbnail styles */
+  #talent-thumbnail-gallery-desktop > div,
+  #talent-thumbnail-gallery-mobile > div {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  }
+  
+  #talent-thumbnail-gallery-desktop > div:hover,
+  #talent-thumbnail-gallery-mobile > div:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  }
+
+  /* Lightbox styles */
+  #photo-lightbox {
+    transition: opacity 0.2s ease-out;
+  }
+  
+  #photo-lightbox[aria-hidden="false"] {
+    display: flex !important;
+  }
+  
+  #photo-lightbox[aria-hidden="true"] {
+    display: none !important;
+  }
+
+  #lightbox-image {
+    max-height: calc(100vh - 8rem);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+  }
+
+  #lightbox-prev,
+  #lightbox-next {
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+
+  #lightbox-prev:hover,
+  #lightbox-next:hover {
+    transform: translateY(-50%) scale(1.1);
+  }
+
+  #lightbox-close:hover {
+    transform: scale(1.1);
+  }
+
   @media (prefers-reduced-motion: reduce) {
     #talent-modal,
     #talent-modal-mobile,
-    #talent-modal-desktop {
+    #talent-modal-desktop,
+    #photo-lightbox {
       animation-duration: 0.01ms !important;
       animation-iteration-count: 1 !important;
       transition-duration: 0.01ms !important;
