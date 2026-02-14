@@ -1,5 +1,5 @@
 /* TODO: consider creating <Button> and <GradientText> components */
-a,
+a:not(.nav-link-new),
 .btn {
   @apply transition-colors duration-200;
   @apply hover:text-secondary;
@@ -21,8 +21,8 @@ a,
 /* Section Titles */
 .section-title {
   font-family: 'Jaro', sans-serif;
-  font-size: 50px;
-  color: #0A353A;
+  font-size: 40px;
+  color: #1a1a2e;
   font-weight: normal;
   text-transform: lowercase;
   position: relative;
@@ -30,22 +30,20 @@ a,
   z-index: 2;
 }
 
-/* Title Background Rectangles */
-.title-rectangle {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  height: 60%;
-  width: 70%;
-  z-index: 1;
+@media (min-width: 768px) {
+  .section-title {
+    font-size: 50px;
+  }
 }
 
-/* Special positioning for queens title */
-.title-rectangle.queens {
-  left: 50%;
-  right: auto;
-  width: 30%;
-  transform: translateX(-10%);
+/* Title Background Rectangles - Underline style */
+.title-rectangle {
+  position: absolute;
+  bottom: 2px;
+  left: 0;
+  height: 8px;
+  width: 100%;
+  z-index: -1;
 }
 
 /* Section-specific rectangle colors */
@@ -77,96 +75,57 @@ p, span, div, li, a, button {
 
 /* Hero Section Styling */
 .hero-bg {
-  background-image: url('/hero-bg-purple.svg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  background-color: #B794F6;
   position: relative;
-}
-
-.hero-bg::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: url('/abstract-hero.png');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  opacity: 0.58;
-  z-index: 1;
-}
-
-.hero-bg > * {
-  position: relative;
-  z-index: 2;
 }
 
 .hero-tagline {
-  font-family: 'Jaro', sans-serif;
-  font-size: 40px; /* Mobile size */
-  color: white;
-  font-weight: normal;
-  text-transform: lowercase;
-  line-height: 1.2;
+  font-family: 'DM Sans', 'Work Sans', sans-serif;
+  font-size: 18px;
+  color: #1a1a2e;
+  font-weight: 500;
+  line-height: 1.4;
   margin: 0;
+  letter-spacing: 0.02em;
 }
 
-/* Desktop responsive sizing */
 @media (min-width: 768px) {
   .hero-tagline {
-    font-size: 56px; /* Desktop size */
+    font-size: 22px;
   }
 }
 
 .hero-tagline-container {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-}
-
-/* Mobile: Show two lines, hide single line */
-.mobile-line {
-  display: block;
-}
-
-.desktop-line {
-  display: none;
-}
-
-/* Desktop: Show single line, hide two lines */
-@media (min-width: 768px) {
-  .mobile-line {
-    display: none;
-  }
-  
-  .desktop-line {
-    display: block;
-  }
+  align-items: center;
 }
 
 .hero-logo {
-  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+  filter: none;
 }
 
 .hero-highlight {
-  color: #E4F50F; /* Yellow highlight */
-  font-family: 'Jaro', sans-serif;
-}
-
-/* Ensure all hero text uses Jaro font */
-.mobile-line, .desktop-line {
-  font-family: 'Jaro', sans-serif;
+  color: #D9FD12;
+  font-weight: 600;
 }
 
 /* Navigation Styling */
-.nav-link {
-  font-family: 'Jaro', sans-serif !important;
-  color: #E4F50F !important; /* Yellow navigation links */
-  text-transform: lowercase;
-  font-weight: normal;
+.nav-link-new {
+  font-family: 'DM Mono', 'Work Sans', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #1a1a2e;
+  text-decoration: none;
+  text-decoration-line: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 4px;
+  transition: all 0.2s ease;
+  letter-spacing: 0.01em;
+}
+
+.nav-link-new:hover {
+  text-decoration-color: #1a1a2e;
 }
 
 /* Button Styles */
