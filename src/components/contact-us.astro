@@ -23,7 +23,7 @@ import ContentSection from "~/components/content-section.astro";
           </div>
           <div>
             <h4 class="font-semibold text-sm md:text-base text-[#FFC0CB]">Address</h4>
-            <p class="text-offset text-sm md:text-base font-medium leading-6">Soldiner Straße 72<br>13359 Berlin</p>
+            <p class="text-offset text-sm md:text-base font-medium leading-6">Kollwitzstraße 76<br>10435 Berlin</p>
           </div>
         </div>
       </div>
@@ -35,7 +35,7 @@ import ContentSection from "~/components/content-section.astro";
             id="name" 
             name="name" 
             placeholder="Your full name"
-            class="w-full px-4 py-3 bg-[#0a353a] border border-[#FFC0CB] rounded-md focus:outline-none focus:ring-2 focus:ring-[#d9fd12] text-white placeholder:text-gray-400" 
+nothing changed,            class="w-full px-4 py-3 bg-white border border-[#FFC0CB] rounded-md focus:outline-none focus:ring-2 focus:ring-[#FFC0CB] text-[#0a353a] placeholder:text-gray-400"
             required
           >
         </div>
@@ -46,7 +46,7 @@ import ContentSection from "~/components/content-section.astro";
             id="email" 
             name="email" 
             placeholder="your.email@example.com"
-            class="w-full px-4 py-3 bg-[#0a353a] border border-[#FFC0CB] rounded-md focus:outline-none focus:ring-2 focus:ring-[#d9fd12] text-white placeholder:text-gray-400" 
+            class="w-full px-4 py-3 bg-white border border-[#FFC0CB] rounded-md focus:outline-none focus:ring-2 focus:ring-[#FFC0CB] text-[#0a353a] placeholder:text-gray-400" 
             required
           >
         </div>
@@ -57,7 +57,7 @@ import ContentSection from "~/components/content-section.astro";
             name="message" 
             rows="4" 
             placeholder="Tell us about your project or idea..."
-            class="w-full px-4 py-3 bg-[#0a353a] border border-[#FFC0CB] rounded-md focus:outline-none focus:ring-2 focus:ring-[#d9fd12] text-white placeholder:text-gray-400" 
+            class="w-full px-4 py-3 bg-white border border-[#FFC0CB] rounded-md focus:outline-none focus:ring-2 focus:ring-[#FFC0CB] text-[#0a353a] placeholder:text-gray-400" 
             required
           ></textarea>
         </div>
@@ -131,3 +131,31 @@ import ContentSection from "~/components/content-section.astro";
         });
     }
 </script>
+
+<style>
+  /* Override global form styles for contact form */
+  #contact-form input,
+  #contact-form textarea {
+    background-color: white !important;
+    border: 2px solid #FFC0CB !important;
+    color: #0a353a !important;
+  }
+
+  #contact-form input:focus,
+  #contact-form textarea:focus {
+    background-color: white !important;
+    border-color: #FFC0CB !important;
+    box-shadow: 0 0 0 3px rgba(255, 192, 203, 0.2) !important;
+  }
+
+  #contact-form input:hover,
+  #contact-form textarea:hover {
+    background-color: white !important;
+    border-color: #FFC0CB !important;
+  }
+
+  #contact-form input::placeholder,
+  #contact-form textarea::placeholder {
+    color: #9ca3af !important;
+  }
+</style>
