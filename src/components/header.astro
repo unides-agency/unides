@@ -49,11 +49,47 @@ const navItems: Array<NavItem> = [
   const header = document.getElementById('page-header');
   const page = document.documentElement;
 
-  // Handle scroll for fixed header
+  // Handle scroll for fixed header and section detection
   if (header) {
     document.addEventListener('scroll', () => {
-      const d = page.clientHeight - page.scrollTop - header.offsetHeight;
-      header.classList.toggle('fixed-header', d < 0);
+      const talentsSection = document.getElementById('talents');
+      const headerHeight = header.offsetHeight;
+      const scrollY = window.scrollY;
+      
+      // Become fixed when reaching talents section title
+      let isFixed = false;
+      if (talentsSection) {
+        isFixed = scrollY >= talentsSection.offsetTop - headerHeight - 20;
+      }
+      
+      header.classList.toggle('fixed-header', isFixed);
+      
+      if (isFixed) {
+        // Detect which section is currently in view
+        const aboutSection = document.getElementById('aboutus');
+        const contactSection = document.getElementById('contact');
+        
+        let onAboutSection = false;
+        let onContactSection = false;
+        
+        if (aboutSection) {
+          const aboutTop = aboutSection.offsetTop - headerHeight - 50;
+          const aboutBottom = aboutTop + aboutSection.offsetHeight;
+          onAboutSection = scrollY >= aboutTop && scrollY < aboutBottom;
+        }
+        
+        if (contactSection) {
+          const contactTop = contactSection.offsetTop - headerHeight - 50;
+          const contactBottom = contactTop + contactSection.offsetHeight;
+          onContactSection = scrollY >= contactTop && scrollY < contactBottom;
+        }
+        
+        header.classList.toggle('on-about-section', onAboutSection);
+        header.classList.toggle('on-contact-section', onContactSection);
+      } else {
+        header.classList.remove('on-about-section');
+        header.classList.remove('on-contact-section');
+      }
     });
   }
 </script>
@@ -66,10 +102,32 @@ const navItems: Array<NavItem> = [
   }
   
   .fixed-header .nav-link-new {
-    color: #0A353A !important;
+    color: #A987FF !important;
   }
   
   .fixed-header .nav-link-new:hover {
+    text-decoration-color: #A987FF !important;
+  }
+  
+  /* On about us section (lime background) - use orange */
+  .fixed-header.on-about-section .nav-link-new {
+    color: #F26522 !important;
+  }
+  
+  .fixed-header.on-about-section .nav-link-new:hover {
+    text-decoration-color: #F26522 !important;
+  }
+  
+  /* On contact section - green background */
+  .fixed-header.on-contact-section {
+    background: #D9FD12 !important;
+  }
+  
+  .fixed-header.on-contact-section .nav-link-new {
+    color: #0A353A !important;
+  }
+  
+  .fixed-header.on-contact-section .nav-link-new:hover {
     text-decoration-color: #0A353A !important;
   }
   

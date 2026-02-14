@@ -106,7 +106,7 @@
 
           <!-- Sedcard Button -->
           <div class="flex items-center gap-2">
-            <button id="sedcard-btn-mobile" class="flex items-center gap-2 border border-black rounded-sm px-3 py-1.5 hover:bg-gray-50 transition-colors">
+            <button id="sedcard-btn-mobile" class="hidden flex items-center gap-2 border border-black rounded-sm px-3 py-1.5 hover:bg-gray-50 transition-colors">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
               </svg>
@@ -142,13 +142,13 @@
   </div>
 
   <!-- Desktop: Right Side Drawer -->
-  <div class="fixed inset-y-0 right-0 w-[70%] max-w-5xl transform translate-x-full transition-transform duration-300 ease-out desktop-drawer" id="talent-modal-desktop">
+  <div class="fixed inset-y-0 right-0 w-[90%] md:w-[85%] lg:w-[80%] xl:w-[75%] max-w-6xl transform translate-x-full transition-transform duration-300 ease-out desktop-drawer" id="talent-modal-desktop">
     <div class="bg-white w-full h-full overflow-y-auto shadow-2xl relative" role="document">
       <!-- Close Button - Top Right -->
       <button
         id="close-talent-modal-desktop"
         type="button"
-        class="absolute top-6 right-6 z-10 text-gray-400 hover:text-gray-600 transition-all duration-300"
+        class="absolute top-4 right-4 md:top-6 md:right-6 z-10 text-gray-400 hover:text-gray-600 transition-all duration-300"
         aria-label="Close talent profile modal"
       >
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -156,62 +156,63 @@
         </svg>
       </button>
 
-      <div class="p-8 lg:p-12 h-full flex flex-col">
-        <!-- Desktop Content - Two Column Layout -->
-        <div class="flex gap-8 lg:gap-12 flex-1 min-h-0">
+      <div class="p-6 md:p-8 lg:p-10">
+        <!-- Top Section: Info + Main Photo side by side -->
+        <div class="flex flex-row gap-8 lg:gap-12">
           <!-- Left Column: Info -->
-          <div class="w-2/5 flex flex-col">
+          <div class="w-[220px] md:w-[260px] lg:w-[300px] flex-shrink-0 flex flex-col">
             <!-- Name -->
-            <h3 id="talent-modal-name-desktop" class="text-4xl lg:text-5xl font-bold text-black tracking-tight leading-tight"></h3>
+            <h3 id="talent-modal-name-desktop" class="text-3xl md:text-4xl font-bold text-black tracking-tight leading-tight"></h3>
             
             <!-- Pronouns -->
-            <p id="talent-modal-pronouns-desktop" class="text-gray-600 text-sm mt-2"></p>
+            <p id="talent-modal-pronouns-desktop" class="text-gray-600 text-sm mt-1"></p>
             
             <!-- Physical Stats -->
-            <div class="mt-8 space-y-1.5 text-sm" id="talent-modal-stats-desktop">
+            <div class="mt-4 space-y-1" id="talent-modal-stats-desktop">
               <!-- Stats will be populated by JavaScript -->
             </div>
 
-            <!-- Divider before Sedcard -->
-            <hr class="border-gray-200 my-6" />
-
-            <!-- Sedcard Button -->
-            <div class="flex items-center gap-2">
-              <button id="sedcard-btn-desktop" class="flex items-center gap-2 border border-black rounded-sm px-3 py-1.5 hover:bg-gray-50 transition-colors">
+            <!-- Action Buttons Row -->
+            <div class="mt-5 flex flex-wrap items-center gap-2">
+              <!-- Sedcard Button -->
+              <button id="sedcard-btn-desktop" class="hidden inline-flex items-center gap-1.5 border border-black rounded-sm px-3 py-1.5 hover:bg-gray-50 transition-colors text-sm">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                 </svg>
-                <span class="text-sm">Sedcard</span>
+                <span>Sedcard</span>
               </button>
             </div>
 
+            <!-- Divider -->
+            <hr class="border-gray-300 my-5" />
+
             <!-- Location -->
-            <div id="talent-modal-booking-desktop" class="mt-8 hidden">
+            <div id="talent-modal-booking-desktop" class="hidden">
               <h4 class="font-bold text-sm text-black">Location</h4>
               <p id="talent-modal-booking-value-desktop" class="text-sm text-gray-700 mt-1"></p>
             </div>
 
             <!-- Sports/Activities -->
-            <div id="talent-modal-sports-section-desktop" class="mt-6 hidden">
+            <div id="talent-modal-sports-section-desktop" class="mt-4 hidden">
               <h4 class="font-bold text-sm text-black">Sportler:in</h4>
               <p id="talent-modal-sports-desktop" class="text-sm text-gray-700 mt-1 leading-relaxed"></p>
             </div>
 
             <!-- Special Features -->
-            <div id="talent-modal-features-section-desktop" class="mt-6 hidden">
-              <h4 class="font-bold text-sm text-black">Special Features</h4>
+            <div id="talent-modal-features-section-desktop" class="mt-4 hidden">
+              <h4 class="font-bold text-sm text-black">Features and Skills</h4>
               <p id="talent-modal-features-desktop" class="text-sm text-gray-700 mt-1"></p>
             </div>
           </div>
 
           <!-- Right Column: Main Image -->
-          <div class="w-3/5 flex flex-col">
-            <div class="bg-gray-100 flex items-center justify-center overflow-hidden relative group main-image-container max-h-[70vh]">
+          <div class="flex-1 min-w-0">
+            <div class="bg-gray-100 flex items-center justify-center overflow-hidden relative group main-image-container aspect-[3/4] max-h-[70vh]">
               <img
                 id="talent-modal-main-image-desktop"
                 src=""
                 alt=""
-                class="max-w-full max-h-[70vh] w-auto h-auto object-contain hidden cursor-pointer"
+                class="w-full h-full object-cover hidden cursor-pointer"
                 loading="lazy"
               />
               <span id="talent-modal-main-image-placeholder-desktop" class="text-gray-400 text-sm p-20">Photo Coming Soon</span>
@@ -223,8 +224,8 @@
           </div>
         </div>
 
-        <!-- Photo Gallery - Below both columns -->
-        <div id="talent-thumbnail-gallery-desktop" class="grid grid-cols-2 lg:grid-cols-4 gap-2 mt-6 hidden">
+        <!-- Photo Gallery - Full width below -->
+        <div id="talent-thumbnail-gallery-desktop" class="grid grid-cols-4 gap-3 mt-6 hidden">
           <!-- Thumbnails will be populated by JavaScript -->
         </div>
       </div>
@@ -419,17 +420,24 @@
         }
       }
 
-      // Set up sedcard button
+      // Set up sedcard button - only show if portfolioUrl or pdfUrl exists
       if (sedcardBtn) {
-        sedcardBtn.onclick = function() {
-          if (talent.portfolioUrl || talent.pdfUrl) {
-            var url = talent.portfolioUrl || talent.pdfUrl;
-            window.open(url, '_blank');
-          } else {
-            console.log('No portfolio URL available for this talent');
-            alert('Sedcard not available for this talent');
-          }
-        };
+        const sedcardUrl = talent.portfolioUrl || talent.pdfUrl;
+        if (sedcardUrl) {
+          sedcardBtn.classList.remove('hidden');
+          sedcardBtn.onclick = function() {
+            // Create a temporary link to trigger download
+            const link = document.createElement('a');
+            link.href = sedcardUrl;
+            link.download = (talent.name || 'sedcard') + '_sedcard.pdf';
+            link.target = '_blank';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+          };
+        } else {
+          sedcardBtn.classList.add('hidden');
+        }
       }
 
       // Handle images
@@ -477,14 +485,14 @@
           
           photos.forEach(function(photo, index) {
             var thumbnailDiv = document.createElement('div');
-            thumbnailDiv.className = 'aspect-[4/5] bg-gray-100 overflow-hidden cursor-pointer transition-all duration-200 focus:outline-none relative group';
+            thumbnailDiv.className = 'aspect-[3/4] bg-gray-100 overflow-hidden cursor-pointer transition-all duration-200 focus:outline-none relative group';
             thumbnailDiv.tabIndex = 0;
             thumbnailDiv.setAttribute('role', 'button');
             thumbnailDiv.setAttribute('aria-label', 'View photo ' + (index + 1) + ' of ' + photos.length);
             thumbnailDiv.innerHTML = `
               <img src="${photo}" alt="${talent.name} - Photo ${index + 1}" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" loading="lazy" />
-              <div class="absolute bottom-3 right-3">
-                <svg class="w-5 h-5 text-black opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div class="absolute bottom-2 right-2">
+                <svg class="w-5 h-5 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
                 </svg>
               </div>
@@ -518,7 +526,7 @@
     }
 
     // Main modal open function - updated for drawer design
-    function openTalentModal(id, name, specialties, description, image, location, birth, age, height, eyeColor, hairColor, shoeSize, dressSize, imgs, portfolioUrl, personalInfo) {    
+    function openTalentModal(id, name, specialties, description, image, location, birth, age, height, eyeColor, hairColor, shoeSize, dressSize, imgs, portfolioUrl, pdfUrl, personalInfo) {    
       console.log('Opening talent modal for:', id);
 
       var modal = document.getElementById('talent-modal');
@@ -560,6 +568,7 @@
           clothingSize: dressSize,
           imgs: imgs,
           portfolioUrl: portfolioUrl,
+          pdfUrl: pdfUrl,
           personalInfo: personalInfo || {},
           pronouns: '',
           sports: [],
@@ -781,8 +790,8 @@
   /* Custom styling for the talent profile stats */
   #talent-modal-stats-desktop > div,
   #talent-modal-stats-mobile > div {
-    display: flex;
-    gap: 0.375rem;
+    font-size: 0.875rem;
+    line-height: 1.6;
   }
 
   #talent-modal-stats-desktop > div > span:first-child,
@@ -790,12 +799,31 @@
     font-weight: 500;
     color: #000;
   }
-  
+
   #talent-modal-stats-desktop > div > span:last-child,
   #talent-modal-stats-mobile > div > span:last-child {
-    color: #6b7280;
+    color: #4b5563;
+    margin-left: 0.25rem;
   }
 
+  /* Ensure desktop drawer has proper z-index and overflow */
+  .desktop-drawer {
+    z-index: 51;
+  }
+
+  /* Better thumbnail gallery sizing */
+  #talent-thumbnail-gallery-desktop > div,
+  #talent-thumbnail-gallery-mobile > div {
+    aspect-ratio: 3/4;
+  }
+
+  #talent-thumbnail-gallery-desktop img,
+  #talent-thumbnail-gallery-mobile img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
+  
   /* Main image hover state */
   .main-image-container {
     cursor: pointer;

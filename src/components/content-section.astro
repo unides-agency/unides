@@ -16,14 +16,15 @@ const { title, id, sectionType, style } = Astro.props;
 >
   <div class="flex flex-col items-center gap-8 mb-6">
     <slot name="eyebrow" />
-    <div class="relative">
+    <div class="relative" style="isolation: isolate;">
       <h2
         class="section-title text-center"
+        style="position: relative; z-index: 2;"
       >
         {title}
       </h2>
       {sectionType && (
-        <div class={`title-rectangle ${sectionType}`}></div>
+        <div class={`title-rectangle ${sectionType}`} style="z-index: 1;"></div>
       )}
     </div>
   </div>

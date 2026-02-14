@@ -18,6 +18,7 @@ interface Props {
     dressSize?: string;
     imgs?: string[];
     portfolioUrl?: string;
+    pdfUrl?: string;
   };
   priority?: boolean;
   size?: 'small' | 'medium' | 'large';
@@ -62,6 +63,7 @@ const initials = person.name.split(' ').map(n => n[0]).join('').toUpperCase().sl
   data-talent-dresssize={person.dressSize}
   data-talent-imgs={person.imgs ? JSON.stringify(person.imgs) : ''}
   data-talent-portfoliourl={person.portfolioUrl || ''}
+  data-talent-pdfurl={person.pdfUrl || ''}
 >
   <div class={`${containerClass} bg-default/20 flex items-center justify-center relative overflow-hidden`}>
 
