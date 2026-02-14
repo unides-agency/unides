@@ -89,7 +89,7 @@
             />
             <span id="talent-modal-main-image-placeholder-mobile" class="text-gray-400 text-sm p-20">Photo Coming Soon</span>
             <!-- Photo counter overlay -->
-            <div id="photo-counter-mobile" class="absolute bottom-4 right-4 bg-black/60 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity hidden">
+            <div id="photo-counter-mobile" class="absolute bottom-4 right-4 bg-black/60 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity hidden pointer-events-none">
               1/1
             </div>
           </div>
@@ -217,7 +217,7 @@
               />
               <span id="talent-modal-main-image-placeholder-desktop" class="text-gray-400 text-sm p-20">Photo Coming Soon</span>
               <!-- Photo counter overlay -->
-              <div id="photo-counter-desktop" class="absolute bottom-4 right-4 bg-black/60 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity hidden">
+              <div id="photo-counter-desktop" class="absolute bottom-4 right-4 bg-black/60 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity hidden pointer-events-none">
                 1/1
               </div>
             </div>
@@ -532,15 +532,6 @@
           modalMainImage.alt = `${talent.name} - ${specialtyText}`;
           modalMainImage.classList.remove('hidden');
           modalMainImagePlaceholder.classList.add('hidden');
-          
-          // Make main image clickable to open lightbox (only for images)
-          modalMainImage.style.cursor = 'pointer';
-          modalMainImage.onclick = function() {
-            const photoIndex = photos.indexOf(media);
-            if (photoIndex >= 0) {
-              openLightbox(photos, photoIndex);
-            }
-          };
         }
 
         // Update photo counter
@@ -554,7 +545,32 @@
       if (allMedia.length > 0 && modalMainImage && modalMainImagePlaceholder) {
         // Display first media item
         updateMainMedia(0);
-        
+
+        // Add click handler to main image container to open lightbox
+        const mainImageContainer = modalMainImage.parentElement;
+
+        if (mainImageContainer) {
+          // Remove any existing onclick handlers
+          mainImageContainer.onclick = null;
+
+          // Set direct onclick handler (most reliable)
+          mainImageContainer.onclick = function(e) {
+            const currentMedia = allMedia[currentMediaIndex];
+
+            if (!isYouTubeUrl(currentMedia) && !isSoundCloudUrl(currentMedia)) {
+              const photoIndex = photos.indexOf(currentMedia);
+              if (photoIndex >= 0) {
+                e.preventDefault();
+                e.stopPropagation();
+                window.openLightbox(photos, photoIndex);
+              }
+            }
+          };
+
+          // Set pointer cursor on container
+          mainImageContainer.style.cursor = 'pointer';
+        }
+
         // Show thumbnails if there are multiple media items
         if (allMedia.length > 1 && thumbnailGallery) {
           thumbnailGallery.classList.remove('hidden');
@@ -740,6 +756,49 @@
     // Make functions globally available
     window.openTalentModal = openTalentModal;
     window.closeTalentModal = closeTalentModal;
+
+    // Global click handler for main images using event delegation (backup)
+    document.addEventListener('click', function(e) {
+      // Check if click is on main image container (but not thumbnails)
+      const container = e.target.closest('.main-image-container');
+
+      if (container && !e.target.closest('#talent-thumbnail-gallery-mobile') && !e.target.closest('#talent-thumbnail-gallery-desktop')) {
+
+        // Get the modal that contains this container
+        const modal = e.target.closest('#talent-modal');
+        if (!modal) return;
+
+        // Get current talent ID from modal
+        const talentId = modal.dataset.currentTalentId;
+        console.log('Talent ID:', talentId);
+
+        // Get talents data
+        const talentsData = getTalentsData();
+        const talent = talentsData.find(t => String(t.id) === String(talentId));
+
+        if (talent) {
+
+          // Get all media
+          let allMedia = [];
+          if (talent.images && Array.isArray(talent.images)) {
+            allMedia = talent.images.filter(item => item && item.trim() !== "");
+          } else if (talent.imgs && Array.isArray(talent.imgs)) {
+            allMedia = talent.imgs.filter(item => item && item.trim() !== "");
+          }
+
+          // Filter to photos only
+          const photos = allMedia.filter(item => {
+            return !isYouTubeUrl(item) && !isSoundCloudUrl(item);
+          });
+
+          if (photos.length > 0) {
+            e.preventDefault();
+            e.stopPropagation();
+            openLightbox(photos, 0);
+          }
+        }
+      }
+    }, true);
 
     // Set up event listeners
     document.addEventListener('DOMContentLoaded', function() {
