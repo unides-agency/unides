@@ -60,7 +60,11 @@ a:not(.nav-link-new),
 }
 
 .title-rectangle.contact {
-  background-color: #FF69B4; /* Pink */
+  background-color: #FFC0CB; /* Light Pink */
+  height: 30%;
+  bottom: 10px;
+  left: 10%;
+  width: 100%;
 }
 
 .title-rectangle.queens {
