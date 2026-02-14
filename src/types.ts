@@ -18,10 +18,17 @@ export interface Talent {
   hairColor?: string;
   shoeSize?: string;
   dressSize?: string;
+  clothingSize?: string;
   height?: string;
+  age?: number | string;
+  pronouns?: string;
+  bookingBase?: string;
+  sports?: string[];
+  specialFeatures?: string[];
   stats?: Record<string, any>;
   enabled?: boolean;
   pdfUrl?: string;
+  portfolioUrl?: string;
 }
 
 export interface Creative {
