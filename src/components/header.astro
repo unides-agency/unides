@@ -19,7 +19,8 @@ const navItems: Array<NavItem> = [
 >
   <a class="flex items-center hover:opacity-80 transition-opacity flex-shrink-0" href="#">
     <h1 class="sr-only">Unides</h1>
-    <Image src="/unides_yellow.png" alt="Unides Logo" class="header-logo h-6 sm:h-8 w-auto" width={200} height={50}/>
+    <Image src="/unides_yellow.png" alt="Unides Logo" class="header-logo-yellow h-6 sm:h-8 w-auto" width={200} height={50}/>
+    <Image src="/unides_green.png" alt="Unides Logo" class="header-logo-green h-6 sm:h-8 w-auto hidden" width={200} height={50}/>
     <Image src="/unides_pink.png" alt="Unides Logo" class="header-logo-pink h-6 sm:h-8 w-auto hidden" width={200} height={50}/>
   </a>
   
@@ -88,21 +89,40 @@ const navItems: Array<NavItem> = [
         header.classList.toggle('on-about-section', onAboutSection);
         header.classList.toggle('on-contact-section', onContactSection);
 
-        // Toggle logo visibility
-        const yellowLogo = header.querySelector('.header-logo');
+        // Toggle logo visibility based on section
+        const yellowLogo = header.querySelector('.header-logo-yellow');
+        const greenLogo = header.querySelector('.header-logo-green');
         const pinkLogo = header.querySelector('.header-logo-pink');
-        if (yellowLogo && pinkLogo) {
+
+        if (yellowLogo && greenLogo && pinkLogo) {
+          // Hide all logos first
+          yellowLogo.classList.add('hidden');
+          greenLogo.classList.add('hidden');
+          pinkLogo.classList.add('hidden');
+
+          // Show appropriate logo
           if (onContactSection) {
-            yellowLogo.classList.add('hidden');
             pinkLogo.classList.remove('hidden');
-          } else {
+          } else if (onAboutSection) {
             yellowLogo.classList.remove('hidden');
-            pinkLogo.classList.add('hidden');
+          } else {
+            greenLogo.classList.remove('hidden');
           }
         }
       } else {
         header.classList.remove('on-about-section');
         header.classList.remove('on-contact-section');
+
+        // Show yellow logo when not fixed
+        const yellowLogo = header.querySelector('.header-logo-yellow');
+        const greenLogo = header.querySelector('.header-logo-green');
+        const pinkLogo = header.querySelector('.header-logo-pink');
+
+        if (yellowLogo && greenLogo && pinkLogo) {
+          yellowLogo.classList.remove('hidden');
+          greenLogo.classList.add('hidden');
+          pinkLogo.classList.add('hidden');
+        }
       }
     });
   }
