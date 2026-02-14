@@ -440,15 +440,45 @@
         }
       }
 
-      // Handle images
-      var photos = [];
-      if (talent.images && Array.isArray(talent.images) && talent.images.length > 0) {
-        photos = talent.images.filter(function(img) { return img && img.trim() !== ""; });
-      } else if (talent.imgs && Array.isArray(talent.imgs) && talent.imgs.length > 0) {
-        photos = talent.imgs.filter(function(img) { return img && img.trim() !== ""; });
-      } else if (talent.image && talent.image.trim() !== "") {
-        photos = [talent.image];
+      // Helper function to check if URL is a YouTube video
+      function isYouTubeUrl(url) {
+        return typeof url === 'string' && /(youtube\.com|youtu\.be)\//.test(url);
       }
+
+      // Helper function to check if URL is a SoundCloud link
+      function isSoundCloudUrl(url) {
+        return typeof url === 'string' && /soundcloud\.com\//.test(url);
+      }
+
+      // Helper function to extract YouTube video ID
+      function getYouTubeVideoId(url) {
+        const patterns = [
+          /[?&]v=([\w-]{11})/,
+          /youtu\.be\/([\w-]{11})/,
+          /youtube\.com\/embed\/([\w-]{11})/,
+          /youtube\.com\/shorts\/([\w-]{11})/,
+          /youtube\.com\/live\/([\w-]{11})/,
+          /youtube\.com\/v\/([\w-]{11})/
+        ];
+        for (const pattern of patterns) {
+          const match = url.match(pattern);
+          if (match) return match[1];
+        }
+        return null;
+      }
+
+      // Handle media (images + videos)
+      var allMedia = [];
+      if (talent.images && Array.isArray(talent.images) && talent.images.length > 0) {
+        allMedia = talent.images.filter(function(item) { return item && item.trim() !== ""; });
+      } else if (talent.imgs && Array.isArray(talent.imgs) && talent.imgs.length > 0) {
+        allMedia = talent.imgs.filter(function(item) { return item && item.trim() !== ""; });
+      } else if (talent.image && talent.image.trim() !== "") {
+        allMedia = [talent.image];
+      }
+
+      // Separate images from videos for lightbox (only images go to lightbox)
+      var photos = allMedia.filter(function(item) { return !isYouTubeUrl(item) && !isSoundCloudUrl(item); });
 
       let specialtyText = '';
       if (Array.isArray(talent.specialties)) {
@@ -459,60 +489,157 @@
         specialtyText = talent.specialty;
       }
 
-      if (photos.length > 0 && modalMainImage && modalMainImagePlaceholder) {
-        modalMainImage.src = photos[0];
-        modalMainImage.alt = `${talent.name} - ${specialtyText}`;
-        modalMainImage.classList.remove('hidden');
-        modalMainImagePlaceholder.classList.add('hidden');
+      // Current media index for main display
+      var currentMediaIndex = 0;
+
+      // Function to update main media display
+      function updateMainMedia(index) {
+        currentMediaIndex = index;
+        const media = allMedia[index];
         
+        // Remove any existing video iframe
+        const existingVideo = document.getElementById(`talent-modal-video${suffix}`);
+        if (existingVideo && existingVideo.parentNode) {
+          existingVideo.parentNode.removeChild(existingVideo);
+        }
+
+        if (isYouTubeUrl(media)) {
+          // Show YouTube video
+          const videoId = getYouTubeVideoId(media);
+          if (videoId) {
+            modalMainImage.classList.add('hidden');
+            modalMainImagePlaceholder.classList.add('hidden');
+            
+            const iframe = document.createElement('iframe');
+            iframe.id = `talent-modal-video${suffix}`;
+            iframe.className = 'w-full h-full absolute inset-0';
+            iframe.src = `https://www.youtube.com/embed/${videoId}?rel=0&showinfo=0`;
+            iframe.title = 'YouTube video player';
+            iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
+            iframe.setAttribute('allowfullscreen', '');
+            iframe.style.border = 'none';
+            
+            modalMainImage.parentNode.appendChild(iframe);
+          }
+        } else if (isSoundCloudUrl(media)) {
+          // Show SoundCloud embed
+          modalMainImage.classList.add('hidden');
+          modalMainImagePlaceholder.classList.add('hidden');
+          
+          const iframe = document.createElement('iframe');
+          iframe.id = `talent-modal-video${suffix}`;
+          iframe.className = 'w-full h-full absolute inset-0';
+          iframe.src = `https://w.soundcloud.com/player/?url=${encodeURIComponent(media)}&color=%23ff5500&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=true`;
+          iframe.title = 'SoundCloud player';
+          iframe.setAttribute('allow', 'autoplay');
+          iframe.style.border = 'none';
+          
+          modalMainImage.parentNode.appendChild(iframe);
+        } else {
+          // Show image
+          modalMainImage.src = media;
+          modalMainImage.alt = `${talent.name} - ${specialtyText}`;
+          modalMainImage.classList.remove('hidden');
+          modalMainImagePlaceholder.classList.add('hidden');
+          
+          // Make main image clickable to open lightbox (only for images)
+          modalMainImage.style.cursor = 'pointer';
+          modalMainImage.onclick = function() {
+            const photoIndex = photos.indexOf(media);
+            if (photoIndex >= 0) {
+              openLightbox(photos, photoIndex);
+            }
+          };
+        }
+
         // Update photo counter
         const photoCounter = document.getElementById(`photo-counter${suffix}`);
-        if (photoCounter && photos.length > 1) {
-          photoCounter.textContent = `1/${photos.length}`;
+        if (photoCounter && allMedia.length > 1) {
+          photoCounter.textContent = `${index + 1}/${allMedia.length}`;
           photoCounter.classList.remove('hidden');
         }
+      }
+
+      if (allMedia.length > 0 && modalMainImage && modalMainImagePlaceholder) {
+        // Display first media item
+        updateMainMedia(0);
         
-        // Make main image clickable to open lightbox
-        modalMainImage.style.cursor = 'pointer';
-        modalMainImage.onclick = function() {
-          openLightbox(photos, 0);
-        };
-        
-        // Show thumbnails if there are multiple photos
-        if (photos.length > 1 && thumbnailGallery) {
+        // Show thumbnails if there are multiple media items
+        if (allMedia.length > 1 && thumbnailGallery) {
           thumbnailGallery.classList.remove('hidden');
           thumbnailGallery.innerHTML = '';
           
-          photos.forEach(function(photo, index) {
+          allMedia.forEach(function(media, index) {
             var thumbnailDiv = document.createElement('div');
             thumbnailDiv.className = 'aspect-[3/4] bg-gray-100 overflow-hidden cursor-pointer transition-all duration-200 focus:outline-none relative group';
             thumbnailDiv.tabIndex = 0;
             thumbnailDiv.setAttribute('role', 'button');
-            thumbnailDiv.setAttribute('aria-label', 'View photo ' + (index + 1) + ' of ' + photos.length);
-            thumbnailDiv.innerHTML = `
-              <img src="${photo}" alt="${talent.name} - Photo ${index + 1}" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" loading="lazy" />
-              <div class="absolute bottom-2 right-2">
-                <svg class="w-5 h-5 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-                </svg>
-              </div>
-            `;
+            thumbnailDiv.setAttribute('aria-label', 'View media ' + (index + 1) + ' of ' + allMedia.length);
             
-            var handleImageClick = function() {
-              // Open fullscreen lightbox
-              openLightbox(photos, index);
+            if (isYouTubeUrl(media)) {
+              // Show YouTube thumbnail with play icon
+              const videoId = getYouTubeVideoId(media);
+              if (videoId) {
+                thumbnailDiv.innerHTML = `
+                  <div class="relative w-full h-full">
+                    <img src="https://img.youtube.com/vi/${videoId}/hqdefault.jpg" alt="Video thumbnail" class="w-full h-full object-cover" loading="lazy" />
+                    <div class="absolute inset-0 flex items-center justify-center bg-black/30">
+                      <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M8 5v14l11-7z"/>
+                      </svg>
+                    </div>
+                  </div>
+                `;
+              } else {
+                thumbnailDiv.innerHTML = `<div class="w-full h-full flex items-center justify-center bg-gray-200"><span class="text-xs text-gray-500">Video</span></div>`;
+              }
+            } else if (isSoundCloudUrl(media)) {
+              // Show SoundCloud placeholder with audio icon
+              thumbnailDiv.innerHTML = `
+                <div class="relative w-full h-full bg-gradient-to-br from-orange-400 to-orange-600 flex items-center justify-center">
+                  <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+                  </svg>
+                </div>
+              `;
+            } else {
+              // Show image thumbnail
+              thumbnailDiv.innerHTML = `
+                <img src="${media}" alt="${talent.name} - Photo ${index + 1}" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" loading="lazy" />
+                <div class="absolute bottom-2 right-2">
+                  <svg class="w-5 h-5 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                  </svg>
+                </div>
+              `;
+            }
+            
+            var handleMediaClick = function() {
+              updateMainMedia(index);
+              // Update active thumbnail styling
+              const thumbs = thumbnailGallery.querySelectorAll('div.aspect-\\[3\\/4\\]');
+              thumbs.forEach(function(thumb) {
+                thumb.classList.remove('ring-2', 'ring-black');
+              });
+              thumbnailDiv.classList.add('ring-2', 'ring-black');
             };
             
-            thumbnailDiv.addEventListener('click', handleImageClick);
+            thumbnailDiv.addEventListener('click', handleMediaClick);
             thumbnailDiv.addEventListener('keydown', function(e) {
               if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
-                handleImageClick();
+                handleMediaClick();
               }
             });
             
             thumbnailGallery.appendChild(thumbnailDiv);
           });
+
+          // Mark first thumbnail as active
+          const firstThumb = thumbnailGallery.querySelector('div.aspect-\\[3\\/4\\]');
+          if (firstThumb) {
+            firstThumb.classList.add('ring-2', 'ring-black');
+          }
         } else if (thumbnailGallery) {
           thumbnailGallery.classList.add('hidden');
         }
@@ -600,6 +727,16 @@
       var modal = document.getElementById('talent-modal');
       var mobileDrawer = document.getElementById('talent-modal-mobile');
       var desktopDrawer = document.getElementById('talent-modal-desktop');
+      
+      // Remove any video iframes to stop playback
+      var videoMobile = document.getElementById('talent-modal-video-mobile');
+      var videoDesktop = document.getElementById('talent-modal-video-desktop');
+      if (videoMobile && videoMobile.parentNode) {
+        videoMobile.parentNode.removeChild(videoMobile);
+      }
+      if (videoDesktop && videoDesktop.parentNode) {
+        videoDesktop.parentNode.removeChild(videoDesktop);
+      }
       
       // Animate drawers out
       mobileDrawer.classList.add('translate-y-full');
