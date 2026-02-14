@@ -1,153 +1,270 @@
 ---
-import ContentSection from "~/components/content-section.astro";
 import ApplyModal from "./apply-modal.astro";
-import Image from "astro/components/Image.astro";
 import TeamMemberCard from "./ui/TeamMemberCard.astro";
 
+const talentCategories = [
+  "Models",
+  "Content Creators",
+  "Dancers",
+  "Actors",
+  "Directors",
+  "Production",
+  "Photographers and Videographers",
+  "Stylists",
+  "Makeup Artists and Nail Artists",
+  "Art Directors",
+  "Tattoo Artists"
+];
 ---
 
 <div style="background-color: #D9FD12; width: 100vw; margin-left: calc(-50vw + 50%); padding: 4rem 0;">
   <div class="container mx-auto px-4 md:px-8">
-    <ContentSection title="about us" id="aboutus" sectionType="about">
-  <Fragment slot="lead">
-    At Unides, we connect artists, filmmakers, models and creators of all kinds with brands, stages and screens.
-<br>
-    We also bring culture to life through unforgettable events - where music, art and community meet.
+    <section id="aboutus" class="flex scroll-mt-18 flex-col">
+      <!-- Title with orange rectangle -->
+      <div class="flex justify-center w-full mb-12">
+        <div class="about-title-wrapper">
+          <h2 class="about-title">about us</h2>
+          <div class="about-title-rectangle"></div>
+        </div>
+      </div>
 
-  </Fragment>
-  <div class="w-full space-y-8">
-    <div class="grid md:grid-cols-2 gap-8">
-      <div class="values-card bg-offset p-6 rounded-lg">
-        <h3 class="font-bold text-xl mb-4 text-purple-600">Our Mission</h3>
-        <p class="text-default/80 leading-relaxed">
-          Elevate the next generation of Latinx visionaries - from underground musicians to boundary-pushing visual artists.
-          Connect authentic creativity with brands and audiences hungry for something real.
-          Redefine what „Latin art“ means in Europe - breaking stereotypes with unstoppable innovation.
+      <!-- Mission and Manifest Section -->
+      <h3 class="mission-subtitle">our mission and manifest</h3>
+      
+      <div class="mission-grid">
+        <!-- Left: Text Content -->
+        <div class="mission-content">
+          <p class="mission-text">
+            Unides is the spot where creativity gets real connections. We link artists, filmmakers, models, and creators of all kinds with brands, festivals, stages, and screens. We also turn things upside down with events that are pure vibes, where music, art, and community come together and create unforgettable memories.
+          </p>
+          
+          <p class="mission-text">
+            Our mission? To boost the next generation of Latinx visionaries from the underground scene to visual artists who are breaking all the rules. We connect the most authentic creativity with brands and an audience that's tired of fake and hungry for something with soul. Our movement is to revolutionize what "Latin art" means in Europe, tearing apart stereotypes with attitude and innovation.
+          </p>
+          
+          <p class="mission-text">
+            The vision is clear: to unite Latinx talent and culture to transform the creative scene with courage, purpose, and energy. We honor our roots and celebrate the diversity that makes us strong. Because, seriously, what's the point of growing if we're not all rising together?
+          </p>
+          
+          <p class="mission-text last">
+            We build careers through real collaboration and a community that gets that the journey can be challenging. That's why we're not just agents, we're ride-or-die partners. Every connection we make is built on mutual respect, full transparency, and trust that's here to stay.
+          </p>
+        </div>
+
+        <!-- Right: Categories -->
+        <div class="categories-list">
+          {talentCategories.map(category => (
+            <div class="category-tag">{category}</div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Quote Section -->
+      <div class="quote-section">
+        <div class="quote-line"></div>
+        <p class="quote-text">
+          Since #DayOne, our goal has been clear: to connect incredible talent with the right platforms, people, and opportunities while staying true to who we are.
         </p>
+        <div class="quote-line"></div>
       </div>
-      <div class="values-card bg-offset p-6 rounded-lg">
-        <h3 class="font-bold text-xl mb-4 text-purple-600">Our Vision</h3>
-        <p class="text-default/80 leading-relaxed">
-          Uniting Latinx talent and culture to transform the creative landscape - boldly,
-          purposefully - together.
+
+      <div class="about-section-divider mt-16"></div>
+
+      <!-- Team Section -->
+      <div class="text-center py-12">
+        <div class="about-title-wrapper mb-8">
+          <h3 class="about-title">meet the queens</h3>
+          <div class="about-title-rectangle"></div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
+          <TeamMemberCard
+            name="Grasi Pacheco"
+            pronouns="she/they"
+            role="Founder"
+            description="Operations & Talent Management"
+            imageSlug="grasi-primary.jpg"
+            hoverImageSlug="grasi-hover.jpg"
+            fallbackColor="purple"
+            initials="GR"
+          />
+          <TeamMemberCard
+            name="Oguz Kabaksil"
+            pronouns="he/him"
+            role="Front End Developer"
+            description="Web Technologies & User Experience"
+            imageSlug="oguz-primary.jpg"
+            hoverImageSlug="oguz-hover.jpg"
+            fallbackColor="purple"
+            initials="OK"
+          />
+          <TeamMemberCard
+            name="Eve Queiroz"
+            pronouns="she/her"
+            role="Creative Director"
+            description="Artistic Vision & Strategy"
+            imageSlug="eve-primary.jpg"
+            hoverImageSlug="eve-hover.jpg"
+            fallbackColor="pink"
+            initials="EQ"
+          />
+          <TeamMemberCard
+            name="Cavi Loos"
+            pronouns="he/him"
+            role="Web Designer"
+            description="Digital Spaces & Creative Interfaces"
+            imageSlug="cavi-primary.jpg"
+            hoverImageSlug="cavi-hover.jpg"
+            fallbackColor="orange"
+            initials="CL"
+          />
+        </div>
+      </div>
+
+      <div class="about-section-divider"></div>
+
+      <!-- CTA Section -->
+      <div class="text-center bg-white/20 backdrop-blur-sm p-10 rounded-xl my-12 max-w-2xl mx-auto">
+        <h3 class="font-bold text-xl mb-6 text-[#0A353A]">Ready to Build Something Real?</h3>
+        <p class="text-[#0A353A]/80 mb-8">
+          Whether you're a visionary artist ready to rise or a brand searching for authentic,
+          culture-shaping talent — we're here to make powerful, purposeful connections. Let's create
+          something unforgettable, together.
         </p>
+        <button
+          class="cta-button bg-[#F26522] text-white px-8 py-4 rounded-full hover:bg-[#E05A1A] transition-all font-bold text-lg shadow-md"
+          onclick="openApplyModal()"
+        >
+          Apply now
+        </button>
+        <ApplyModal />
       </div>
-    </div>
-
-    <div class="text-center py-12">
-      <h3 class="font-bold text-xl mb-8 text-purple-600">Our Values</h3>
-      <div class="grid md:grid-cols-3 gap-6">
-        <div class="values-card bg-offset p-6 rounded-lg">
-          <h4 class="font-semibold text-primary mb-2">Rooted in Culture</h4>
-          <p class="text-sm text-default/80">
-            We honor our Latin American heritage and celebrate the diversity that makes us powerful.
-          </p>
-        </div>
-        <div class="values-card bg-offset p-6 rounded-lg">
-          <h4 class="font-semibold text-primary mb-2">Together We Rise</h4>
-          <p class="text-sm text-default/80">
-            Growth means nothing if we don't rise together. We build careers through real
-            collaboration and community.
-          </p>
-        </div>
-        <div class="values-card bg-offset p-6 rounded-lg">
-          <h4 class="font-semibold text-primary mb-2">Support & Elevation</h4>
-          <p class="text-sm text-default/80">
-            We understand how hard this path can be. That's why we're not just agents - we are allies.
-          </p>
-        </div>
-      </div>
-      <div class="grid md:grid-cols-1 gap-6 mt-6">
-        <div class="values-card bg-offset p-6 rounded-lg">
-          <h4 class="font-semibold text-primary mb-2">Trust & Respect</h4>
-          <p class="text-sm text-default/80">
-            Every relationship we build is grounded in mutual respect, transparency, and long-term
-            trust. From day one, our goal has been clear: to unite incredible talent with the right
-            platforms, people, and opportunities, while staying true to who we are.
-          </p>
-        </div>
-      </div>
-    </div>
-
-    <div class="about-section-divider"></div>
-
-    <div class="text-center py-12">
-      <div class="relative mb-8">
-        <h3 class="section-title text-center">meet the queens</h3>
-        <div class="title-rectangle queens"></div>
-      </div>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
-
-        <TeamMemberCard
-          name="Grasi Pacheco"
-          pronouns="she/they"
-          role="Founder"
-          description="Operations & Talent Management"
-          imageSlug="grasi-primary.jpg"
-          hoverImageSlug="grasi-hover.jpg"
-          fallbackColor="purple"
-          initials="GR"
-        />
-
-        <TeamMemberCard
-          name="Oguz Kabaksil"
-          pronouns="he/him"
-          role="Front End Developer"
-          description="Web Technologies & User Experience"
-          imageSlug="oguz-primary.jpg"
-          hoverImageSlug="oguz-hover.jpg"
-          fallbackColor="purple"
-          initials="OK"
-        />
-
-        <TeamMemberCard
-          name="Eve Queiroz"
-          pronouns="she/her"
-          role="Creative Director"
-          description="Artistic Vision & Strategy"
-          imageSlug="eve-primary.jpg"
-          hoverImageSlug="eve-hover.jpg"
-          fallbackColor="pink"
-          initials="EQ"
-        />
-
-        <TeamMemberCard
-          name="Cavi Loos"
-          pronouns="he/him"
-          role="Web Designer"
-          description="Digital Spaces & Creative Interfaces"
-          imageSlug="cavi-primary.jpg"
-          hoverImageSlug="cavi-hover.jpg"
-          fallbackColor="orange"
-          initials="CL"
-        />
-
-      </div>
-    </div>
-
-    <div class="about-section-divider"></div>
-
-    <div class="text-center bg-offset p-10 rounded-xl shadow-lg my-12">
-      <h3 class="font-bold text-xl mb-6 text-purple-600">Ready to Build Something Real?</h3>
-      <p class="text-default/80 mb-8 max-w-2xl mx-auto">
-        Whether you're a visionary artist ready to rise or a brand searching for authentic,
-        culture-shaping talent — we're here to make powerful, purposeful connections. Let's create
-        something unforgettable, together.
-      </p>
-      <button
-        class="cta-button bg-primary text-white px-8 py-4 rounded-lg hover:bg-primary/90 transition-all font-medium text-lg shadow-md"
-        onclick="openApplyModal()"
-      >
-        Apply now
-      </button>
-      <ApplyModal />
-    </div>
-  </div>
-</ContentSection>
+    </section>
   </div>
 </div>
 
 <style>
+  .about-title-wrapper {
+    position: relative;
+    display: inline-block;
+    isolation: isolate;
+    width: fit-content;
+  }
+
+  .about-title {
+    font-family: 'Jaro', sans-serif;
+    font-size: 3.5rem;
+    font-weight: 400;
+    color: #0A353A;
+    text-transform: lowercase;
+    position: relative;
+    z-index: 2;
+    margin: 0;
+    display: inline-block;
+  }
+
+  .about-title-rectangle {
+    position: absolute;
+    bottom: 10px;
+    left: 10%;
+    width: 100%;
+    height: 30%;
+    background-color: #F26522;
+    z-index: 1;
+  }
+
+  /* Mission Section */
+  .mission-subtitle {
+    font-family: 'Jaro', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 400;
+    color: #F26522;
+    text-transform: lowercase;
+    margin-bottom: 2rem;
+  }
+
+  .mission-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 4rem;
+    align-items: stretch;
+  }
+
+  @media (max-width: 768px) {
+    .mission-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .mission-content {
+    max-width: 100%;
+  }
+
+  .mission-text {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1.35rem;
+    font-weight: 500;
+    color: #0A353A;
+    line-height: 1.8;
+    text-align: justify;
+    margin-bottom: 2rem;
+  }
+
+  .mission-text.last {
+    margin-bottom: 0;
+  }
+
+  .mission-text:last-child {
+    margin-bottom: 0;
+  }
+
+  /* Categories */
+  .categories-list {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+  }
+
+  .category-tag {
+    font-family: 'Jaro', sans-serif;
+    font-size: 1.35rem;
+    font-weight: 400;
+    color: #F26522;
+    text-align: center;
+    padding: 0.75rem 1.75rem;
+    border: 2px solid #F26522;
+    border-radius: 0;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    min-width: 360px;
+  }
+
+
+  /* Quote Section */
+  .quote-section {
+    margin-top: 2rem;
+    padding: 0 1rem;
+  }
+
+  .quote-line {
+    height: 4px;
+    background-color: #F26522;
+    width: 100%;
+  }
+
+  .quote-text {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: #0A353A;
+    text-align: center;
+    padding: 2rem 1rem;
+    line-height: 1.6;
+  }
+
+  /* Team card styles */
   .team-card {
     transition: all 0.3s ease;
   }
@@ -177,7 +294,6 @@ import TeamMemberCard from "./ui/TeamMemberCard.astro";
     transform: scale(1.05);
   }
 
-  /* Accessibility improvements */
   .team-card {
     cursor: pointer;
   }
@@ -186,14 +302,24 @@ import TeamMemberCard from "./ui/TeamMemberCard.astro";
     color: inherit;
   }
 
-  /* Responsive adjustments */
   @media (max-width: 768px) {
     .team-card {
       margin-bottom: 1rem;
     }
+    
+    .about-title {
+      font-size: 2rem;
+    }
+
+    .mission-subtitle {
+      font-size: 1.5rem;
+    }
+
+    .categories-list {
+      margin-top: 2rem;
+    }
   }
 
-  /* Ensure smooth transitions on all interactive elements */
   .primary-image,
   .hover-image {
     transition: opacity 0.5s ease;
