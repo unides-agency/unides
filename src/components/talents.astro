@@ -1,5 +1,4 @@
 ---
-import Image from "astro/components/Image.astro";
 import ContentSection from "~/components/content-section.astro";
 import TalentModalComponent from "~/components/talent-modal-component.astro";
 import { getTalents } from "~/lib/talents";
@@ -12,56 +11,27 @@ let allPeople = [];
 try {
   const allTalents = await getTalents();
   const allCreatives = await getCreatives();
-  console.log('🔍 DEBUG - Raw fetched talents:', allTalents);
-  console.log('🔍 DEBUG - Raw fetched creatives:', allCreatives);
-  
-  // Check for missing required fields
-  allTalents.forEach((talent, index) => {
-    console.log(`🔍 Talent ${index + 1} (${talent.name}):`, {
-      id: talent.id,
-      name: talent.name,
-      specialty: talent.specialty || 'MISSING',
-      enabled: talent.enabled,
-      hasImage: !!talent.image,
-      hasDescription: !!talent.description
-    });
-  });
-  
-  allCreatives.forEach((creative, index) => {
-    console.log(`🔍 Creative ${index + 1} (${creative.name}):`, {
-      id: creative.id,
-      name: creative.name,
-      specialty: creative.specialty || 'MISSING',
-      enabled: creative.enabled,
-      hasImage: !!creative.image,
-      hasDescription: !!creative.description
-    });
-  });
   
   // Filter for enabled items only
   const enabledTalents = allTalents.filter(talent => talent.enabled == true);
   const enabledCreatives = allCreatives.filter(creative => creative.enabled == true);
-  console.log(`🔍 DEBUG - Enabled talents: ${enabledTalents.length}/${allTalents.length}`);
-  console.log(`🔍 DEBUG - Enabled creatives: ${enabledCreatives.length}/${allCreatives.length}`);
   
   // Add fallback specialty if missing
   talents = enabledTalents.map(t => ({ 
     ...t, 
     type: 'Talent',
-    specialty: t.specialty || 'Model' // Fallback if missing
+    specialty: t.specialty || 'Model'
   }));
   creatives = enabledCreatives.map(c => ({ 
     ...c, 
     type: 'Creative',
-    specialty: c.specialty || 'Creative' // Fallback if missing
+    specialty: c.specialty || 'Creative'
   }));
   
   allPeople = [...talents, ...creatives];
-  console.log('🔍 DEBUG - Final combined people:', allPeople);
-  console.log(`🔍 DEBUG - Total people to display: ${allPeople.length}`);
   
 } catch (error) {
-  console.error('❌ Failed to load talents or creatives:', error);
+  console.error('Failed to load talents or creatives:', error);
 }
 
 // Filtering logic
@@ -138,12 +108,14 @@ function getCount(type) {
           >
             <div class="aspect-[2/3] bg-default/20 flex items-center justify-center relative">
               {person.image && person.image.trim() !== "" ? (
-                <Image
+                <img
                   src={person.image}
                   alt={`${person.name} - ${person.specialty}`}
                   class="w-full h-full object-cover"
-                  width={200}
-                  height={300}
+                  width="280"
+                  height="420"
+                  loading="lazy"
+                  decoding="async"
                 />
               ) : (
                 <span class="text-default/60 text-xs">Photo Coming Soon</span>
@@ -205,12 +177,14 @@ function getCount(type) {
             >
               <div class="aspect-[3/4] bg-default/20 flex items-center justify-center relative">
                 {person.image && person.image.trim() !== "" ? (
-                  <Image
+                  <img
                     src={person.image}
                     alt={`${person.name} - ${person.specialty}`}
                     class="w-full h-full object-cover"
-                    width={160}
-                    height={200}
+                    width="180"
+                    height="240"
+                    loading="lazy"
+                    decoding="async"
                   />
                 ) : (
                   <span class="text-default/60 text-xs">Photo Coming Soon</span>
@@ -258,65 +232,26 @@ function getCount(type) {
 <script>
   // Client-side filtering functionality
   document.addEventListener('DOMContentLoaded', function() {
-    console.log('Setting up filter functionality');
-    
-    // Debug: Check if modal component is properly loaded
-    console.log('🔍 Checking modal availability immediately...');
-    console.log('Available window functions:', Object.keys(window).filter(key => 
-      key.toLowerCase().includes('modal') || key.toLowerCase().includes('talent')
-    ));
-    console.log('openTalentModal type:', typeof window.openTalentModal);
-    
-    // Check if modal DOM element exists
-    const modalElement = document.getElementById('talent-modal');
-    console.log('Modal DOM element found:', !!modalElement);
-    
-    // Add a delay to check again after components load
-    setTimeout(() => {
-      console.log('🔍 Checking modal availability after 1000ms...');
-      console.log('Available window functions:', Object.keys(window).filter(key => 
-        key.toLowerCase().includes('modal') || key.toLowerCase().includes('talent')
-      ));
-      console.log('openTalentModal type:', typeof window.openTalentModal);
-      const modalElementLater = document.getElementById('talent-modal');
-      console.log('Modal DOM element found after delay:', !!modalElementLater);
-    }, 1000);
-
     const filterButtons = document.querySelectorAll('.filter-btn');
     const desktopCards = document.querySelectorAll('#people-grid-desktop .talent-card');
     const mobileCards = document.querySelectorAll('#people-grid-mobile .talent-card');
-    const allTalentCards = document.querySelectorAll('.talent-card'); // Keep this for backward compatibility
     let currentFilter = 'ALL';
 
     // Set initial active state
     updateActiveButton('ALL');
 
-    // Debug logging
-    console.log('Desktop cards found:', desktopCards.length);
-    console.log('Mobile cards found:', mobileCards.length);
-    console.log('All talent cards found:', allTalentCards.length);
-    console.log('Screen width:', window.innerWidth);
-    console.log('Desktop grid element:', document.getElementById('people-grid-desktop'));
-    console.log('Desktop grid computed style:', getComputedStyle(document.getElementById('people-grid-desktop')).display);
-
-    // Mobile grid functionality (no carousel needed)
-    // Variables removed as carousel is no longer used
-
     // Ensure initial visibility of cards
     filterCards('ALL');
 
-    // Set up click handlers immediately
+    // Set up event delegation for card clicks
     setupClickHandlers();
     
-    // Also try setting up after we confirm modal is available
+    // Retry setup after modal loads (needed for async component loading)
     setTimeout(() => {
       if (typeof window.openTalentModal === 'function') {
-        console.log('🔧 Modal function found after delay, setting up handlers again');
         setupClickHandlers();
-      } else {
-        console.error('❌ Modal function still not found after 1000ms delay');
       }
-    }, 1000);
+    }, 500);
 
     filterButtons.forEach(button => {
       button.addEventListener('click', function() {
@@ -355,8 +290,6 @@ function getCount(type) {
     }
 
     function filterCards(filter) {
-      console.log('Filtering cards for:', filter);
-      
       // Filter desktop cards
       desktopCards.forEach(card => {
         const cardType = card.getAttribute('data-type');
@@ -372,7 +305,7 @@ function getCount(type) {
         }
         
         if (shouldShow) {
-          card.style.display = '';  // Reset to default display instead of 'block'
+          card.style.display = '';
           card.classList.add('fade-in');
         } else {
           card.style.display = 'none';
@@ -395,156 +328,80 @@ function getCount(type) {
         }
         
         if (shouldShow) {
-          card.style.display = '';  // Reset to default display instead of 'block'
+          card.style.display = '';
           card.classList.add('fade-in');
         } else {
           card.style.display = 'none';
           card.classList.remove('fade-in');
         }
       });
-      
-      console.log('Visible desktop cards:', Array.from(desktopCards).filter(card => card.style.display !== 'none').length);
-      console.log('Visible mobile cards:', Array.from(mobileCards).filter(card => card.style.display !== 'none').length);
     }
 
-    // Mobile grid functionality (no carousel functions needed)
-
-    // Function to set up click handlers
-    function setupClickHandlers() {
-      const currentAllTalentCards = document.querySelectorAll('.talent-card');
-      console.log('Setting up click handlers for', currentAllTalentCards.length, 'cards');
-      console.log('openTalentModal available:', typeof window.openTalentModal === 'function');
+    // Helper function to extract talent data from a card element
+    function getTalentDataFromCard(card) {
+      var imgs = card.getAttribute('data-talent-imgs');
+      var personalInfo = card.getAttribute('data-talent-personalinfo');
       
-      if (currentAllTalentCards.length === 0) {
-        console.warn('No talent cards found!');
-        return;
-      }
-      
-      currentAllTalentCards.forEach((card, index) => {
-        console.log(`Setting up click handler for card ${index + 1}:`, card.getAttribute('data-talent-name'));
-        
-        // Remove any existing click handler to avoid duplicates
-        card.removeEventListener('click', handleCardClick);
-        
-        card.addEventListener('click', handleCardClick);
-      });
-    }
-
-    // Card click handler function
-    function handleCardClick(e) {
-      e.preventDefault();
-      console.log('Card clicked:', this.getAttribute('data-talent-name'));
-
-      var id = this.getAttribute('data-talent-id');
-      var name = this.getAttribute('data-talent-name');
-      var specialties = this.getAttribute('data-talent-specialties');
-      var description = this.getAttribute('data-talent-description');
-      var image = this.getAttribute('data-talent-image');
-      var location = this.getAttribute('data-talent-location');
-      var birth = this.getAttribute('data-talent-birth');
-      var age = this.getAttribute('data-talent-age');
-      var height = this.getAttribute('data-talent-height');
-      var eyeColor = this.getAttribute('data-talent-eyecolor');
-      var hairColor = this.getAttribute('data-talent-haircolor');
-      var shoeSize = this.getAttribute('data-talent-shoesize');
-      var dressSize = this.getAttribute('data-talent-dresssize');
-      var imgs = this.getAttribute('data-talent-imgs');
-      var portfolioUrl = this.getAttribute('data-talent-portfoliourl');
-      var pdfUrl = this.getAttribute('data-talent-pdfurl');
-      var personalInfo = this.getAttribute('data-talent-personalinfo');
-
-      // Parse imgs JSON string back to array
       var imgsArray = [];
       if (imgs && imgs !== "") {
-        try {
-          imgsArray = JSON.parse(imgs);
-        } catch (e) {
-          console.error('Error parsing imgs:', e);
-        }
+        try { imgsArray = JSON.parse(imgs); } catch (e) {}
       }
-
-      // Parse personalInfo JSON string back to object
+      
       var personalInfoObj = {};
       if (personalInfo && personalInfo !== "") {
-        try {
-          personalInfoObj = JSON.parse(personalInfo);
-        } catch (e) {
-          console.error('Error parsing personalInfo:', e);
-        }
+        try { personalInfoObj = JSON.parse(personalInfo); } catch (e) {}
       }
-
-      console.log('Opening modal for talent:', { id, name, specialties, description, image, location, birth, age, height, eyeColor, hairColor, shoeSize, dressSize, imgsArray, portfolioUrl, pdfUrl, personalInfoObj });
-
-      // Set global event for openTalentModal
-      window.event = e;
-
-      // Call the modal function
-      if (typeof window.openTalentModal === 'function') {
-        console.log('Calling openTalentModal function');
-        window.openTalentModal(id, name, specialties, description, image, location, birth, age, height, eyeColor, hairColor, shoeSize, dressSize, imgsArray, portfolioUrl, pdfUrl, personalInfoObj);
-      } else {
-        console.error('openTalentModal function not found');
-      }
+      
+      return {
+        id: card.getAttribute('data-talent-id'),
+        name: card.getAttribute('data-talent-name'),
+        specialties: card.getAttribute('data-talent-specialties'),
+        description: card.getAttribute('data-talent-description'),
+        image: card.getAttribute('data-talent-image'),
+        location: card.getAttribute('data-talent-location'),
+        birth: card.getAttribute('data-talent-birth'),
+        age: card.getAttribute('data-talent-age'),
+        height: card.getAttribute('data-talent-height'),
+        eyeColor: card.getAttribute('data-talent-eyecolor'),
+        hairColor: card.getAttribute('data-talent-haircolor'),
+        shoeSize: card.getAttribute('data-talent-shoesize'),
+        dressSize: card.getAttribute('data-talent-dresssize'),
+        imgsArray: imgsArray,
+        portfolioUrl: card.getAttribute('data-talent-portfoliourl'),
+        pdfUrl: card.getAttribute('data-talent-pdfurl'),
+        personalInfoObj: personalInfoObj
+      };
     }
 
-    // Set up view profile button event listeners (keeping for backward compatibility)
-    var viewProfileBtns = document.querySelectorAll('.view-profile-btn');
-    console.log('Found', viewProfileBtns.length, 'view profile buttons');
-    
-    for (var i = 0; i < viewProfileBtns.length; i++) {
-      viewProfileBtns[i].addEventListener('click', function(e) {
+    // Event delegation for card clicks - single listener on parent containers
+    function setupEventDelegation() {
+      const desktopGrid = document.getElementById('people-grid-desktop');
+      const mobileGrid = document.getElementById('people-grid-mobile');
+      
+      function handleGridClick(e) {
+        const card = e.target.closest('.talent-card');
+        if (!card) return;
+        
         e.preventDefault();
-        var btn = e.currentTarget;
-        var id = btn.getAttribute('data-talent-id');
-        var name = btn.getAttribute('data-talent-name');
-        var specialties = btn.getAttribute('data-talent-specialties');
-        var description = btn.getAttribute('data-talent-description');
-        var image = btn.getAttribute('data-talent-image');
-        var location = btn.getAttribute('data-talent-location');
-        var birth = btn.getAttribute('data-talent-birth');
-        var age = btn.getAttribute('data-talent-age');
-        var height = btn.getAttribute('data-talent-height');
-        var eyeColor = btn.getAttribute('data-talent-eyecolor');
-        var hairColor = btn.getAttribute('data-talent-haircolor');
-        var shoeSize = btn.getAttribute('data-talent-shoesize');
-        var dressSize = btn.getAttribute('data-talent-dresssize');
-        var imgs = btn.getAttribute('data-talent-imgs');
-        var portfolioUrl = btn.getAttribute('data-talent-portfoliourl');
-        var pdfUrl = btn.getAttribute('data-talent-pdfurl');
-        var personalInfo = btn.getAttribute('data-talent-personalinfo');
+        const data = getTalentDataFromCard(card);
         
-        // Parse imgs JSON string back to array
-        var imgsArray = [];
-        if (imgs && imgs !== "") {
-          try {
-            imgsArray = JSON.parse(imgs);
-          } catch (e) {
-            console.error('Error parsing imgs:', e);
-          }
-        }
-
-        // Parse personalInfo JSON string back to object
-        var personalInfoObj = {};
-        if (personalInfo && personalInfo !== "") {
-          try {
-            personalInfoObj = JSON.parse(personalInfo);
-          } catch (e) {
-            console.error('Error parsing personalInfo:', e);
-          }
-        }
-        
-        console.log('Opening modal for talent:', { id, name, specialties, description, image, location, birth, age, height, eyeColor, hairColor, shoeSize, dressSize, imgsArray, portfolioUrl, pdfUrl });
-        
-        // Set global event for openTalentModal
-        window.event = e;
-        
-        // Call the modal function
         if (typeof window.openTalentModal === 'function') {
-          window.openTalentModal(id, name, specialties, description, image, location, birth, age, height, eyeColor, hairColor, shoeSize, dressSize, imgsArray, portfolioUrl, pdfUrl, personalInfoObj);
-        } else {
-          console.error('openTalentModal function not found');
+          window.openTalentModal(
+            data.id, data.name, data.specialties, data.description, data.image,
+            data.location, data.birth, data.age, data.height, data.eyeColor,
+            data.hairColor, data.shoeSize, data.dressSize, data.imgsArray,
+            data.portfolioUrl, data.pdfUrl, data.personalInfoObj
+          );
         }
-      });
+      }
+      
+      if (desktopGrid) desktopGrid.addEventListener('click', handleGridClick);
+      if (mobileGrid) mobileGrid.addEventListener('click', handleGridClick);
+    }
+
+    // Legacy function for backward compatibility
+    function setupClickHandlers() {
+      setupEventDelegation();
     }
   });
 </script>

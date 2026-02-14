@@ -235,11 +235,7 @@
 
 <script>
   // Initialize talent modal component
-  console.log('Talent modal component script running...');
   
-  // Always initialize to ensure it works
-  console.log('Initializing talent modal');
-
     // Lightbox state
     var lightboxPhotos = [];
     var lightboxCurrentIndex = 0;
@@ -317,15 +313,10 @@
     // Get talents data from the main page
     function getTalentsData() {
       const talentsDataElement = document.getElementById('talents-data');
-      console.log('Talents data element:', talentsDataElement);
       const dataText = talentsDataElement ? talentsDataElement.textContent : '[]';
-      console.log('Talents data text:', dataText);
       try {
-        const parsedData = JSON.parse(dataText);
-        console.log('Parsed talents data:', parsedData);
-        return parsedData;
+        return JSON.parse(dataText);
       } catch (error) {
-        console.error('Error parsing talents data:', error);
         return [];
       }
     }
@@ -654,14 +645,11 @@
 
     // Main modal open function - updated for drawer design
     function openTalentModal(id, name, specialties, description, image, location, birth, age, height, eyeColor, hairColor, shoeSize, dressSize, imgs, portfolioUrl, pdfUrl, personalInfo) {    
-      console.log('Opening talent modal for:', id);
-
       var modal = document.getElementById('talent-modal');
       var mobileDrawer = document.getElementById('talent-modal-mobile');
       var desktopDrawer = document.getElementById('talent-modal-desktop');
       
       if (!modal || !mobileDrawer || !desktopDrawer) {
-        console.error('Modal elements are missing!');
         return;
       }
 
@@ -702,8 +690,6 @@
           specialFeatures: []
         };
       }
-
-      console.log('Talent data being used:', talent);
 
       // Populate content for both mobile and desktop
       populateModalContent(talent, true);  // Mobile
@@ -751,27 +737,9 @@
     }
 
     // Make functions globally available
+    // Make functions globally available
     window.openTalentModal = openTalentModal;
     window.closeTalentModal = closeTalentModal;
-    
-    // Debug: Confirm functions are assigned
-    console.log('Modal functions assigned to window:', {
-      openTalentModal: typeof window.openTalentModal,
-      closeTalentModal: typeof window.closeTalentModal
-    });
-    
-    // Test modal elements exist
-    console.log('Modal elements check:', {
-      modal: !!document.getElementById('talent-modal'),
-      mobileDrawer: !!document.getElementById('talent-modal-mobile'),
-      desktopDrawer: !!document.getElementById('talent-modal-desktop')
-    });
-    
-    // Add test function to window for debugging
-    window.testModal = function() {
-      console.log('Testing modal...');
-      openTalentModal('test', 'Test Name', 'Test Specialty', 'Test description', '', 'Berlin', '1990', '30', '180', 'brown', 'black', '42', '38', [], '');
-    };
 
     // Set up event listeners
     document.addEventListener('DOMContentLoaded', function() {
