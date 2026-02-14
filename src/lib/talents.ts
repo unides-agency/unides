@@ -11,16 +11,22 @@ export interface Talent {
   imgs?: string[];
   location?: string;
   city?: string; // Add city field
-  age?: string;
+  age?: string | number;
   birth?: string; // Add birth field
   eyeColor?: string;
   hairColor?: string;
   shoeSize?: string;
   dressSize?: string;
+  clothingSize?: string; // Alias for dressSize
   height?: string;
+  pronouns?: string; // e.g., "he/him", "she/her"
+  bookingBase?: string; // location
+  sports?: string[]; // List of sports/activities
+  specialFeatures?: string[]; // Special features like "Bart, Brille"
   stats?: Record<string, any>;
   enabled?: boolean;
   pdfUrl?: string; // Add PDF URL field
+  portfolioUrl?: string; // Portfolio/Sedcard URL
 }
 
 export async function getTalents(): Promise<Talent[]> {

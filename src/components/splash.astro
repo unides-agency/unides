@@ -1,382 +1,69 @@
 ---
 import { Icon } from "astro-icon/components";
 import Image from "astro/components/Image.astro";
-import Starfield from "~/components/starfield.astro";
 ---
 
-<section class="relative h-full overflow-hidden hero-bg">
-  <div class="relative grid h-full place-items-center px-4">
-    <div class="text-center flex flex-col items-center gap-12">
+<section class="relative overflow-hidden bg-[#B794F6] pb-12">
+  <div class="relative grid place-items-center px-4 pt-32 pb-8">
+    <div class="text-center flex flex-col items-center gap-0 -space-y-2 md:-space-y-4">
       <!-- Logo -->
       <div class="hero-logo">
-        <Image src="/unides_agency_green.png" alt="Unides Agency" class="w-auto h-60 md:h-80 lg:h-100" width={800} height={400}/>
+        <Image src="/unides_agency_green.png" alt="Unides Agency" class="w-auto h-80 md:h-[30rem] lg:h-[40rem]" width={800} height={400}/>
       </div>
       
       <!-- Tagline -->
       <div class="hero-tagline-container">
-        <h1 class="hero-tagline">
-          <span class="mobile-line">rooted in <span class="hero-highlight">culture</span>.</span>
-          <span class="mobile-line">driven by <span class="hero-highlight">purpose</span>.</span>
-          <span class="desktop-line">rooted in <span class="hero-highlight">culture</span>. driven by <span class="hero-highlight">purpose</span>.</span>
-        </h1>
+        <p class="hero-tagline">
+          we represent <span class="hero-highlight">talents</span> that inspire
+        </p>
       </div>
     </div>
   </div>
 </section>
 
-<noscript>
-  <style>
-    #splash-bg-fallback {
-      display: block;
-    }
-  </style>
-</noscript>
-
 <style>
-  .logo-glow {
-    filter: drop-shadow(0 0 12px rgba(255, 255, 180, 0.8));
-    transition: filter 0.3s ease-in-out;
-  }
-  
-  .logo-glow:hover {
-    filter: drop-shadow(0 0 20px rgba(255, 255, 180, 0.9));
-  }
-  
-  .tagline {
-    font-family: 'Inter Variable', sans-serif;
-    font-weight: 700;
-    font-size: clamp(1.2rem, 2vw, 1.5rem);
-    letter-spacing: 0.5px;
-    color: rgba(255, 255, 255, 1);
-    text-shadow: 
-      0px 1px 3px rgba(0, 0, 0, 0.4),
-      0 2px 12px rgba(10, 53, 58, 0.4), 
-      0 0 8px rgba(217, 253, 18, 0.2);
-    text-align: center;
-    max-width: 28rem;
+  .hero-logo {
     opacity: 0;
-    transform: translateY(10px);
-    animation: fadeIn 0.8s ease-out forwards 0.6s;
-    line-height: 1.6;
+    transform: translateY(20px);
+    animation: fadeInUp 0.8s ease-out forwards 0.2s;
   }
   
-  .tagline-highlight {
-    color: #fd5d13;
-    font-weight: 600;
+  .hero-tagline-container {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.8s ease-out forwards 0.5s;
+  }
+  
+  .hero-tagline {
+    font-family: 'Jaro', sans-serif;
+    font-weight: normal;
+    font-size: clamp(2rem, 6vw, 3.5rem);
+    letter-spacing: 0.02em;
+    color: #FFFFFF;
+    text-align: center;
+    text-transform: lowercase;
+  }
+  
+  .hero-highlight {
+    color: #D9FD12;
+    font-family: 'Jaro', sans-serif;
+    font-weight: normal;
     position: relative;
-    display: inline-block;
-    text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.3);
   }
   
-  @keyframes fadeIn {
+  @keyframes fadeInUp {
     to {
       opacity: 1;
       transform: translateY(0);
     }
   }
-  
-  .texture-overlay {
-    position: absolute;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
-    opacity: 0.6;
-    z-index: 1;
-  }
-  
-  .gradient-shimmer {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, rgba(217, 253, 18, 0), rgba(217, 253, 18, 0.03) 25%, rgba(255, 143, 157, 0.05) 50%, rgba(253, 93, 19, 0.03) 75%, rgba(253, 93, 19, 0));
-    z-index: 2;
-    animation: shimmer 8s ease-in-out infinite alternate;
-  }
-  
-  @keyframes shimmer {
-    0% {
-      opacity: 0.4;
-      transform: translateX(-20%) translateY(-10%) scale(1.2);
-    }
-    100% {
-      opacity: 0.7;
-      transform: translateX(20%) translateY(10%) scale(1);
-    }
-  }
-  
-  .tropical-accent {
-    position: absolute;
-    inset: 0;
-    background-image: url("/images/palm-leaves.svg");
-    background-size: cover;
-    background-position: center;
-    z-index: 3;
-    opacity: 0.6;
-    mix-blend-mode: soft-light;
-    animation: sway 20s ease-in-out infinite alternate;
-  }
-  
-  .color-accent {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(80px);
-    mix-blend-mode: soft-light;
-    z-index: 2;
-  }
-  
-  .color-accent-1 {
-    width: 40%;
-    height: 40%;
-    background: radial-gradient(circle, rgba(253, 93, 19, 0.2) 0%, rgba(253, 93, 19, 0) 70%);
-    top: 10%;
-    right: 5%;
-    animation: pulse-1 15s ease-in-out infinite alternate;
-  }
-  
-  .color-accent-2 {
-    width: 35%;
-    height: 35%;
-    background: radial-gradient(circle, rgba(217, 253, 18, 0.15) 0%, rgba(217, 253, 18, 0) 70%);
-    bottom: 10%;
-    left: 5%;
-    animation: pulse-2 12s ease-in-out infinite alternate;
-  }
-  
-  .color-accent-3 {
-    width: 30%;
-    height: 30%;
-    background: radial-gradient(circle, rgba(255, 143, 157, 0.15) 0%, rgba(255, 143, 157, 0) 70%);
-    top: 50%;
-    left: 20%;
-    animation: pulse-3 18s ease-in-out infinite alternate;
-  }
-  
-  @keyframes pulse-1 {
-    0% {
-      opacity: 0.5;
-      transform: scale(0.9);
-    }
-    100% {
-      opacity: 0.8;
-      transform: scale(1.1);
-    }
-  }
-  
-  @keyframes pulse-2 {
-    0% {
-      opacity: 0.6;
-      transform: scale(1.1);
-    }
-    100% {
-      opacity: 0.3;
-      transform: scale(0.9);
-    }
-  }
-  
-  @keyframes pulse-3 {
-    0% {
-      opacity: 0.4;
-      transform: scale(1);
-    }
-    100% {
-      opacity: 0.7;
-      transform: scale(1.2);
-    }
-  }
-  
-  @keyframes sway {
-    0% {
-      transform: rotate(-1deg) scale(1.05);
-    }
-    100% {
-      transform: rotate(1deg) scale(0.95);
-    }
-  }
-  
-  .scroll-indicator {
-    position: absolute;
-    bottom: 3rem;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
-    opacity: 0;
-    animation: fade-in-delayed 1s ease-out forwards 2s;
-  }
-  
-  .scroll-arrow {
-    width: 1.5rem;
-    height: 0.5rem;
-    border-right: 3px solid var(--color-accent);
-    border-bottom: 3px solid var(--color-accent);
-    transform: rotate(45deg);
-    animation: bounce 2s infinite;
-  }
-  
-  .scroll-arrow:nth-child(2) {
-    animation-delay: 0.2s;
-    opacity: 0.7;
-  }
-  
-  .scroll-arrow:nth-child(3) {
-    animation-delay: 0.4s;
-    opacity: 0.4;
-  }
-  
-  @keyframes bounce {
-    0%, 100% {
-      transform: rotate(45deg) translate(0, 0);
-    }
-    50% {
-      transform: rotate(45deg) translate(5px, 5px);
-    }
-  }
-  
-  @keyframes fade-in-delayed {
-    to {
-      opacity: 0.8;
-    }
-  }
-  
-  .folklore-pattern {
-    position: absolute;
-    inset: 0;
-    background-image: url("/images/folklore-pattern.svg");
-    background-size: cover;
-    background-position: center;
-    z-index: 2;
-    opacity: 0.4;
-    mix-blend-mode: overlay;
-    animation: rotate-slow 60s linear infinite;
-  }
-  
-  @keyframes rotate-slow {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(360deg);
-    }
-  }
-  
-  .cultural-motifs {
-    position: absolute;
-    inset: 0;
-    background-image: url("/images/cultural-motifs.svg");
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    z-index: 1;
-    opacity: 0.7;
-    mix-blend-mode: multiply;
-    animation: float-motifs 25s ease-in-out infinite alternate;
-  }
-  
-  @keyframes float-motifs {
-    0% {
-      transform: translate(-10px, -10px) scale(1.02);
-    }
-    100% {
-      transform: translate(10px, 10px) scale(0.98);
-    }
-  }
-  
-  .brushstroke {
-    position: absolute;
-    border-radius: 50% 20% 50% 30%;
-    filter: blur(1px);
-    mix-blend-mode: soft-light;
-    z-index: 1;
-  }
-  
-  .brushstroke-1 {
-    width: 200px;
-    height: 80px;
-    background: linear-gradient(45deg, rgba(253, 93, 19, 0.08), rgba(217, 253, 18, 0.06));
-    top: 20%;
-    left: 10%;
-    transform: rotate(-15deg);
-    animation: drift-1 20s ease-in-out infinite alternate;
-  }
-  
-  .brushstroke-2 {
-    width: 150px;
-    height: 60px;
-    background: linear-gradient(-45deg, rgba(255, 143, 157, 0.07), rgba(253, 93, 19, 0.05));
-    bottom: 25%;
-    right: 15%;
-    transform: rotate(25deg);
-    animation: drift-2 18s ease-in-out infinite alternate;
-  }
-  
-  .brushstroke-3 {
-    width: 120px;
-    height: 50px;
-    background: linear-gradient(90deg, rgba(217, 253, 18, 0.06), rgba(255, 143, 157, 0.04));
-    top: 60%;
-    left: 70%;
-    transform: rotate(-30deg);
-    animation: drift-3 22s ease-in-out infinite alternate;
-  }
-  
-  @keyframes drift-1 {
-    0% {
-      transform: rotate(-15deg) translate(0, 0);
-      opacity: 0.6;
-    }
-    100% {
-      transform: rotate(-10deg) translate(20px, -10px);
-      opacity: 0.8;
-    }
-  }
-  
-  @keyframes drift-2 {
-    0% {
-      transform: rotate(25deg) translate(0, 0);
-      opacity: 0.5;
-    }
-    100% {
-      transform: rotate(30deg) translate(-15px, 15px);
-      opacity: 0.7;
-    }
-  }
-  
-  @keyframes drift-3 {
-    0% {
-      transform: rotate(-30deg) translate(0, 0);
-      opacity: 0.4;
-    }
-    100% {
-      transform: rotate(-25deg) translate(10px, -20px);
-      opacity: 0.6;
-    }
-  }
-
-  @keyframes float {
-    0% {
-      transform: translate3d(0, 0, 0);
-    }
-
-    100% {
-      transform: translate3d(0, 30px, 0);
-    }
-  }
-
-  #astronaut {
-    animation: float linear 2.5s infinite alternate;
-  }
 
   @media (prefers-reduced-motion: reduce) {
-    #astronaut {
-      @apply animate-none;
-    }
-
-    :global(#starfield) {
-      @apply hidden;
-    }
-
-    #splash-bg-fallback {
-      @apply block;
+    .hero-logo,
+    .hero-tagline-container {
+      animation: none;
+      opacity: 1;
+      transform: none;
     }
   }
 </style>
