@@ -49,6 +49,10 @@ a:not(.nav-link-new),
 /* Section-specific rectangle colors */
 .title-rectangle.talents {
   background-color: #A987FF; /* Purple */
+  height: 30%;
+  bottom: 5px;
+  left: 10%;
+  width: 100%;
 }
 
 .title-rectangle.about {

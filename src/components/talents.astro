@@ -91,9 +91,6 @@ function getCount(type) {
 ---
 
 <ContentSection title="talents" id="talents" sectionType="talents">
-  <Fragment slot="lead">
-    Discover our <span class="text-primary">exceptional talent & creative pool</span> ready to bring your vision to life.
-  </Fragment>
 
   {/* Filter Buttons */}
   <div class="flex flex-wrap gap-2 mb-6 justify-center" id="filter-buttons">
@@ -136,6 +133,7 @@ function getCount(type) {
             data-talent-dresssize={person.dressSize}
             data-talent-imgs={person.imgs ? JSON.stringify(person.imgs) : ''}
             data-talent-portfoliourl={person.portfolioUrl || ''}
+            data-talent-pdfurl={person.pdfUrl || ''}
             data-talent-personalinfo={person.personalInfo ? JSON.stringify(person.personalInfo) : ''}
           >
             <div class="aspect-[2/3] bg-default/20 flex items-center justify-center relative">
@@ -202,7 +200,8 @@ function getCount(type) {
               data-talent-dresssize={person.dressSize}
               data-talent-imgs={person.imgs ? JSON.stringify(person.imgs) : ''}
               data-talent-portfoliourl={person.portfolioUrl || ''}
-            data-talent-personalinfo={person.personalInfo ? JSON.stringify(person.personalInfo) : ''}
+              data-talent-pdfurl={person.pdfUrl || ''}
+              data-talent-personalinfo={person.personalInfo ? JSON.stringify(person.personalInfo) : ''}
             >
               <div class="aspect-[3/4] bg-default/20 flex items-center justify-center relative">
                 {person.image && person.image.trim() !== "" ? (
@@ -451,6 +450,7 @@ function getCount(type) {
       var dressSize = this.getAttribute('data-talent-dresssize');
       var imgs = this.getAttribute('data-talent-imgs');
       var portfolioUrl = this.getAttribute('data-talent-portfoliourl');
+      var pdfUrl = this.getAttribute('data-talent-pdfurl');
       var personalInfo = this.getAttribute('data-talent-personalinfo');
 
       // Parse imgs JSON string back to array
@@ -473,7 +473,7 @@ function getCount(type) {
         }
       }
 
-      console.log('Opening modal for talent:', { id, name, specialties, description, image, location, birth, age, height, eyeColor, hairColor, shoeSize, dressSize, imgsArray, portfolioUrl, personalInfoObj });
+      console.log('Opening modal for talent:', { id, name, specialties, description, image, location, birth, age, height, eyeColor, hairColor, shoeSize, dressSize, imgsArray, portfolioUrl, pdfUrl, personalInfoObj });
 
       // Set global event for openTalentModal
       window.event = e;
@@ -481,7 +481,7 @@ function getCount(type) {
       // Call the modal function
       if (typeof window.openTalentModal === 'function') {
         console.log('Calling openTalentModal function');
-        window.openTalentModal(id, name, specialties, description, image, location, birth, age, height, eyeColor, hairColor, shoeSize, dressSize, imgsArray, portfolioUrl, personalInfoObj);
+        window.openTalentModal(id, name, specialties, description, image, location, birth, age, height, eyeColor, hairColor, shoeSize, dressSize, imgsArray, portfolioUrl, pdfUrl, personalInfoObj);
       } else {
         console.error('openTalentModal function not found');
       }
@@ -510,6 +510,7 @@ function getCount(type) {
         var dressSize = btn.getAttribute('data-talent-dresssize');
         var imgs = btn.getAttribute('data-talent-imgs');
         var portfolioUrl = btn.getAttribute('data-talent-portfoliourl');
+        var pdfUrl = btn.getAttribute('data-talent-pdfurl');
         var personalInfo = btn.getAttribute('data-talent-personalinfo');
         
         // Parse imgs JSON string back to array
@@ -532,14 +533,14 @@ function getCount(type) {
           }
         }
         
-        console.log('Opening modal for talent:', { id, name, specialties, description, image, location, birth, age, height, eyeColor, hairColor, shoeSize, dressSize, imgsArray, portfolioUrl });
+        console.log('Opening modal for talent:', { id, name, specialties, description, image, location, birth, age, height, eyeColor, hairColor, shoeSize, dressSize, imgsArray, portfolioUrl, pdfUrl });
         
         // Set global event for openTalentModal
         window.event = e;
         
         // Call the modal function
         if (typeof window.openTalentModal === 'function') {
-          window.openTalentModal(id, name, specialties, description, image, location, birth, age, height, eyeColor, hairColor, shoeSize, dressSize, imgsArray, portfolioUrl, personalInfoObj);
+          window.openTalentModal(id, name, specialties, description, image, location, birth, age, height, eyeColor, hairColor, shoeSize, dressSize, imgsArray, portfolioUrl, pdfUrl, personalInfoObj);
         } else {
           console.error('openTalentModal function not found');
         }
@@ -693,10 +694,10 @@ function getCount(type) {
     color: white !important; /* White text for contrast */
   }
 
-  /* Yellow oval count badge */
+  /* Green oval count badge */
   .filter-count-badge {
-    background-color: #fbbf24; /* Yellow color */
-    color: #1f2937; /* Dark text for contrast */
+    background-color: #D9FD12; /* Green/lime color */
+    color: #0A353A; /* Dark teal text for contrast */
     padding: 0.25rem 0.625rem;
     border-radius: 9999px; /* Full rounded/oval shape */
     font-size: 0.75rem;
