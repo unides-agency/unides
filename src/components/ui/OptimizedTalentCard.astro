@@ -108,29 +108,16 @@ const initials = person.name.split(' ').map(n => n[0]).join('').toUpperCase().sl
 
     <!-- Info overlay -->
     <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent pt-3 px-4 pb-4 text-white">
-      <div class="space-y-1">
+      <div class="space-y-1.5">
         <h3 class="talent-name leading-tight truncate">{person.name}</h3>
 
-        <div class="flex flex-wrap gap-1 items-center">
-          {person.location && (
-            <div class="location-tag bg-black/40 text-white text-xs py-0.5 px-1.5 rounded-full backdrop-blur-sm flex items-center">
-              <span class="mr-1">📍</span>
-              <span class="truncate max-w-20">{person.location}</span>
-            </div>
-          )}
-        </div>
-
-        <div class="flex flex-wrap gap-1 items-center">
-          {person.specialties ? person.specialties.map(specialty => (
-            <span class="specialty-tag bg-black/40 text-white text-xs py-0.5 px-1.5 rounded-full backdrop-blur-sm">
-              {specialty}
+        {person.pronouns && (
+          <div class="flex items-center">
+            <span class="pronouns-tag bg-gradient-to-r from-purple-500/30 to-pink-500/30 text-white text-xs py-1 px-2.5 rounded-full backdrop-blur-sm font-medium border border-white/20">
+              {person.pronouns}
             </span>
-          )) : (
-            <span class="specialty-tag bg-black/40 text-white text-xs py-0.5 px-1.5 rounded-full backdrop-blur-sm">
-              {person.specialty}
-            </span>
-          )}
-        </div>
+          </div>
+        )}
       </div>
     </div>
   </div>
