@@ -107,9 +107,14 @@ import Layout from '../../layouts/Layout.astro';
                     : '<div class="h-12 w-12 rounded-full bg-gray-200 mr-4"></div>'
                 }
                 <div class="min-w-0 flex-1">
-                  <p class="text-sm font-medium text-indigo-600 truncate">
-                    ${talent.name}
-                  </p>
+                  <div class="flex items-center gap-2">
+                    <p class="text-sm font-medium text-indigo-600 truncate">
+                      ${talent.name}
+                    </p>
+                    <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${talent.type === 'creative' ? 'bg-purple-100 text-purple-800' : 'bg-blue-100 text-blue-800'}">
+                      ${talent.type === 'creative' ? 'Creative' : 'Talent'}
+                    </span>
+                  </div>
                   <p class="text-sm text-gray-500">
                     ${talent.specialty || 'No specialty'}
                   </p>

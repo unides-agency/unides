@@ -47,6 +47,19 @@ import Layout from '../../../layouts/Layout.astro';
               </div>
 
               <div>
+                <label for="type" class="block text-sm font-medium text-gray-700">Type *</label>
+                <select
+                  name="type"
+                  id="type"
+                  required
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                >
+                  <option value="talent">Talent</option>
+                  <option value="creative">Creative</option>
+                </select>
+              </div>
+
+              <div>
                 <label for="specialty" class="block text-sm font-medium text-gray-700">Specialty *</label>
                 <input
                   type="text"
@@ -327,6 +340,7 @@ import Layout from '../../../layouts/Layout.astro';
 
       (document.getElementById('talent-id') as HTMLInputElement).value = talent.id;
       (document.getElementById('name') as HTMLInputElement).value = talent.name;
+      (document.getElementById('type') as HTMLSelectElement).value = talent.type || 'talent';
       (document.getElementById('specialty') as HTMLInputElement).value = talent.specialty;
       (document.getElementById('description') as HTMLTextAreaElement).value = talent.description;
       (document.getElementById('location') as HTMLInputElement).value = talent.location || '';
@@ -412,6 +426,7 @@ import Layout from '../../../layouts/Layout.astro';
 
       const updateData: any = {
         name: formData.get('name') as string,
+        type: formData.get('type') as string,
         specialty: formData.get('specialty') as string,
         description: formData.get('description') as string,
         enabled: formData.get('enabled') === 'on',
