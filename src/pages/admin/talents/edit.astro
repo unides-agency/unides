@@ -1,6 +1,5 @@
 ---
 import Layout from '../../../layouts/Layout.astro';
-
 ---
 
 <Layout title="Edit Talent - Admin">
@@ -305,8 +304,15 @@ import Layout from '../../../layouts/Layout.astro';
   }
 
   async function loadTalent() {
-    const urlParts = window.location.pathname.split('/');
-    const talentId = urlParts[urlParts.length - 1];
+    // Get talent ID from query parameter: /admin/talents/edit?id=xyz
+    const urlParams = new URLSearchParams(window.location.search);
+    const talentId = urlParams.get('id');
+
+    if (!talentId) {
+      alert('No talent ID provided');
+      window.location.href = '/admin';
+      return;
+    }
 
     try {
       const talent = await getTalentById(talentId);

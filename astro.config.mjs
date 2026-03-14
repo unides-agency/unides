@@ -1,18 +1,14 @@
 import tailwind from "@astrojs/tailwind";
 import react from "@astrojs/react";
 import icon from "astro-icon";
-import node from "@astrojs/node";
 import { defineConfig } from "astro/config";
 
 export default defineConfig({
   // The base URL of your site (currently points to a Netlify demo)
   site: "https://unides.agency",
 
-  // Use server mode for API routes, pages can opt-in to prerender
-  output: "server",
-  adapter: node({
-    mode: "standalone"
-  }),
+  // Use static generation - fully static site for AWS Amplify
+  output: "static",
 
   // Active integrations
   integrations: [

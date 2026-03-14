@@ -1,7 +1,6 @@
 import type { APIRoute } from 'astro';
 import { generatePresignedUploadUrl, generateS3Key } from '../../lib/s3';
 
-export const prerender = false;
 
 export const POST: APIRoute = async ({ request }) => {
   try {
