@@ -8,8 +8,9 @@ export default defineConfig({
   // The base URL of your site (currently points to a Netlify demo)
   site: "https://unides.agency",
 
-  // Use hybrid mode: static by default, but admin routes are server-rendered
-  output: "hybrid",
+  // Use server mode with adapter for admin routes
+  // Pages with "export const prerender = false" will be server-rendered
+  output: "server",
   adapter: node({
     mode: "standalone"
   }),
