@@ -1,12 +1,19 @@
 import tailwind from "@astrojs/tailwind";
 import react from "@astrojs/react";
 import icon from "astro-icon";
+import node from "@astrojs/node";
 import { defineConfig } from "astro/config";
 
 export default defineConfig({
   // The base URL of your site (currently points to a Netlify demo)
   site: "https://unides.agency",
-  
+
+  // Use hybrid mode: static by default, but admin routes are server-rendered
+  output: "hybrid",
+  adapter: node({
+    mode: "standalone"
+  }),
+
   // Active integrations
   integrations: [
     tailwind({

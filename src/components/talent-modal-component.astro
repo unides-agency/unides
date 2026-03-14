@@ -128,12 +128,6 @@
             <p id="talent-modal-booking-value-mobile" class="text-sm text-gray-700 mt-1"></p>
           </div>
 
-          <!-- Sports/Activities -->
-          <div id="talent-modal-sports-section-mobile" class="hidden">
-            <h4 class="font-bold text-sm text-black">Sportler:in</h4>
-            <p id="talent-modal-sports-mobile" class="text-sm text-gray-700 mt-1"></p>
-          </div>
-
           <!-- Special Features -->
           <div id="talent-modal-features-section-mobile" class="hidden">
             <h4 class="font-bold text-sm text-black">Special Features</h4>
@@ -198,12 +192,6 @@
             <div id="talent-modal-booking-desktop" class="hidden">
               <h4 class="font-bold text-sm text-black">Location</h4>
               <p id="talent-modal-booking-value-desktop" class="text-sm text-gray-700 mt-1"></p>
-            </div>
-
-            <!-- Sports/Activities -->
-            <div id="talent-modal-sports-section-desktop" class="mt-4 hidden">
-              <h4 class="font-bold text-sm text-black">Sportler:in</h4>
-              <p id="talent-modal-sports-desktop" class="text-sm text-gray-700 mt-1 leading-relaxed"></p>
             </div>
 
             <!-- Special Features -->
@@ -354,10 +342,6 @@
       const bookingSection = document.getElementById(`talent-modal-booking${suffix}`);
       const bookingValue = document.getElementById(`talent-modal-booking-value${suffix}`);
       
-      // Sports elements
-      const sportsSection = document.getElementById(`talent-modal-sports-section${suffix}`);
-      const sportsValue = document.getElementById(`talent-modal-sports${suffix}`);
-      
       // Features elements
       const featuresSection = document.getElementById(`talent-modal-features-section${suffix}`);
       const featuresValue = document.getElementById(`talent-modal-features${suffix}`);
@@ -407,21 +391,18 @@
         }
       }
 
-      // Populate sports
-      if (sportsSection && sportsValue) {
-        if (talent.sports && Array.isArray(talent.sports) && talent.sports.length > 0) {
-          sportsSection.classList.remove('hidden');
-          sportsValue.textContent = talent.sports.join(', ');
-        } else {
-          sportsSection.classList.add('hidden');
-        }
-      }
-
-      // Populate special features
+      // Populate special features from specialties field
       if (featuresSection && featuresValue) {
-        if (talent.specialFeatures && Array.isArray(talent.specialFeatures) && talent.specialFeatures.length > 0) {
+        // Check specialties field first, then specialFeatures for backward compatibility
+        const validFeatures = talent.specialties && Array.isArray(talent.specialties)
+          ? talent.specialties.filter(f => f && typeof f === 'string' && f.trim().length > 0)
+          : (talent.specialFeatures && Array.isArray(talent.specialFeatures)
+            ? talent.specialFeatures.filter(f => f && typeof f === 'string' && f.trim().length > 0)
+            : []);
+
+        if (validFeatures.length > 0) {
           featuresSection.classList.remove('hidden');
-          featuresValue.textContent = talent.specialFeatures.join(', ');
+          featuresValue.textContent = validFeatures.join(', ');
         } else {
           featuresSection.classList.add('hidden');
         }
