@@ -2,12 +2,12 @@ import { S3Client, PutObjectCommand, DeleteObjectCommand } from '@aws-sdk/client
 
 // Server-side S3 client configuration
 export function getS3Client() {
-  const accessKeyId = import.meta.env.AWS_ACCESS_KEY_ID;
-  const secretAccessKey = import.meta.env.AWS_SECRET_ACCESS_KEY;
-  const region = import.meta.env.AWS_REGION;
+  const accessKeyId = import.meta.env.S3_ACCESS_KEY_ID;
+  const secretAccessKey = import.meta.env.S3_SECRET_ACCESS_KEY;
+  const region = import.meta.env.S3_REGION;
 
   if (!accessKeyId || !secretAccessKey || !region) {
-    throw new Error('AWS credentials not configured. Please set AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, and AWS_REGION in your .env file.');
+    throw new Error('S3 credentials not configured. Please set S3_ACCESS_KEY_ID, S3_SECRET_ACCESS_KEY, and S3_REGION in your .env file.');
   }
 
   return new S3Client({
@@ -21,9 +21,9 @@ export function getS3Client() {
 
 export function getS3Config() {
   return {
-    bucket: import.meta.env.AWS_S3_BUCKET || '',
-    folderPrefix: import.meta.env.AWS_S3_FOLDER_PREFIX || 'talents/',
-    region: import.meta.env.AWS_REGION || '',
+    bucket: import.meta.env.S3_BUCKET || '',
+    folderPrefix: import.meta.env.S3_FOLDER_PREFIX || 'talents/',
+    region: import.meta.env.S3_REGION || '',
   };
 }
 
@@ -36,7 +36,7 @@ export async function uploadToS3(
   const config = getS3Config();
 
   if (!config.bucket) {
-    throw new Error('AWS_S3_BUCKET not configured');
+    throw new Error('S3_BUCKET not configured');
   }
 
   const fullKey = `${config.folderPrefix}${key}`;
@@ -60,7 +60,7 @@ export async function deleteFromS3(url: string): Promise<void> {
   const config = getS3Config();
 
   if (!config.bucket) {
-    throw new Error('AWS_S3_BUCKET not configured');
+    throw new Error('S3_BUCKET not configured');
   }
 
   // Extract key from URL
