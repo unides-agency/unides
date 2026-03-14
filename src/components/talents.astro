@@ -1,29 +1,28 @@
 ---
 import ContentSection from "~/components/content-section.astro";
 import TalentModalComponent from "~/components/talent-modal-component.astro";
-import { getTalents } from "~/lib/talents";
-import { getCreatives } from "~/lib/creatives";
+import { getTalents, getCreatives } from "~/lib/talents";
 
-// Fetch talents and creatives from Firebase
+// Fetch talents and creatives from Firebase (now from same collection)
 let talents = [];
 let creatives = [];
 let allPeople = [];
 try {
   const allTalents = await getTalents();
   const allCreatives = await getCreatives();
-  
+
   // Filter for enabled items only
   const enabledTalents = allTalents.filter(talent => talent.enabled == true);
   const enabledCreatives = allCreatives.filter(creative => creative.enabled == true);
-  
+
   // Add fallback specialty if missing
-  talents = enabledTalents.map(t => ({ 
-    ...t, 
+  talents = enabledTalents.map(t => ({
+    ...t,
     type: 'Talent',
     specialty: t.specialty || 'Model'
   }));
-  creatives = enabledCreatives.map(c => ({ 
-    ...c, 
+  creatives = enabledCreatives.map(c => ({
+    ...c,
     type: 'Creative',
     specialty: c.specialty || 'Creative'
   }));

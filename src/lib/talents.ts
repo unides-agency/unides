@@ -4,6 +4,7 @@ import { db } from './firebase';
 export interface Talent {
   id: string;
   name: string;
+  type?: 'talent' | 'creative'; // Type to distinguish talents from creatives
   specialty: string;
   specialties?: string[]; // Add plural version for modal compatibility
   description: string;
@@ -24,6 +25,7 @@ export interface Talent {
   sports?: string[]; // List of sports/activities
   specialFeatures?: string[]; // Special features like "Bart, Brille"
   stats?: Record<string, any>;
+  personalInfo?: Record<string, any>; // For creatives' additional info
   enabled?: boolean;
   pdfUrl?: string; // Add PDF URL field
   portfolioUrl?: string; // Portfolio/Sedcard URL
@@ -34,12 +36,48 @@ export async function getTalents(): Promise<Talent[]> {
     const talentsRef = collection(db, 'talents');
     const querySnapshot = await getDocs(talentsRef);
 
+    const allItems = querySnapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    })) as Talent[];
+
+    // Filter to only return items with type='talent' or no type (for backwards compatibility)
+    return allItems.filter(item => !item.type || item.type === 'talent');
+  } catch (error) {
+    console.error('Error fetching talents:', error);
+    throw error;
+  }
+}
+
+export async function getCreatives(): Promise<Talent[]> {
+  try {
+    const talentsRef = collection(db, 'talents');
+    const querySnapshot = await getDocs(talentsRef);
+
+    const allItems = querySnapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    })) as Talent[];
+
+    // Filter to only return items with type='creative'
+    return allItems.filter(item => item.type === 'creative');
+  } catch (error) {
+    console.error('Error fetching creatives:', error);
+    throw error;
+  }
+}
+
+export async function getAllPeople(): Promise<Talent[]> {
+  try {
+    const talentsRef = collection(db, 'talents');
+    const querySnapshot = await getDocs(talentsRef);
+
     return querySnapshot.docs.map(doc => ({
       id: doc.id,
       ...doc.data()
     })) as Talent[];
   } catch (error) {
-    console.error('Error fetching talents:', error);
+    console.error('Error fetching all people:', error);
     throw error;
   }
 }

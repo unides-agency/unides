@@ -1,8 +1,8 @@
 import { use } from "react";
-import { getCreatives, type Creative } from "~/lib/creatives";
+import { getCreatives, type Talent } from "~/lib/talents";
 
-async function creativeList(): Promise<Creative[]> {
-  let creatives = [] as Creative[];
+async function creativeList(): Promise<Talent[]> {
+  let creatives = [] as Talent[];
   try {
     const allCreatives = await getCreatives();
     creatives = allCreatives

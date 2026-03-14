@@ -5,14 +5,18 @@ export interface FooterLink {
 }
 
 // Add interfaces for your data models
+// Note: Talents and Creatives are now in the same collection with a 'type' field
 export interface Talent {
   id: string;
   name: string;
+  type?: 'talent' | 'creative'; // Distinguish between talents and creatives
   specialty: string;
+  specialties?: string[]; // For creatives with multiple specialties
   description: string;
   image?: string;
   imgs?: string[];
   location?: string;
+  city?: string;
   birth?: string;
   eyeColor?: string;
   hairColor?: string;
@@ -25,24 +29,12 @@ export interface Talent {
   bookingBase?: string;
   sports?: string[];
   specialFeatures?: string[];
+  personalInfo?: Record<string, any>; // For creatives' additional info
   stats?: Record<string, any>;
   enabled?: boolean;
   pdfUrl?: string;
   portfolioUrl?: string;
 }
 
-export interface Creative {
-  id: string;
-  name: string;
-  specialty: string;
-  description: string;
-  image?: string;
-  imgs?: string[];
-  location?: string;
-  birth?: string;
-  specialties?: string[];
-  personalInfo?: Record<string, any>;
-  stats?: Record<string, any>;
-  enabled?: boolean;
-  pdfUrl?: string;
-}
+// Creative is now just an alias for Talent (same collection)
+export type Creative = Talent;
