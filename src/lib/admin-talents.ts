@@ -133,26 +133,44 @@ export async function uploadTalentImage(
 ): Promise<string> {
   try {
     const token = await getAuthToken();
-    const formData = new FormData();
-    formData.append('file', file);
-    formData.append('talentId', talentId);
-    formData.append('imageType', imageType);
 
-    const response = await fetch('/api/upload-image', {
+    // Step 1: Get pre-signed upload URL from server
+    const urlResponse = await fetch('/api/get-upload-url', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
       },
-      body: formData,
+      body: JSON.stringify({
+        filename: file.name,
+        contentType: file.type,
+        talentId,
+        uploadType: imageType,
+      }),
     });
 
-    if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.error || 'Failed to upload image');
+    if (!urlResponse.ok) {
+      const error = await urlResponse.json();
+      throw new Error(error.error || 'Failed to get upload URL');
     }
 
-    const data = await response.json();
-    return data.url;
+    const { uploadUrl, fileUrl } = await urlResponse.json();
+
+    // Step 2: Upload directly to S3 using pre-signed URL
+    const uploadResponse = await fetch(uploadUrl, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': file.type,
+      },
+      body: file,
+    });
+
+    if (!uploadResponse.ok) {
+      throw new Error(`Failed to upload file to S3: ${uploadResponse.statusText}`);
+    }
+
+    // Step 3: Return the public file URL
+    return fileUrl;
   } catch (error) {
     console.error('Error uploading image:', error);
     throw error;
@@ -163,29 +181,49 @@ export async function uploadTalentPdf(file: File, talentId: string): Promise<str
   try {
     console.log('Starting PDF upload for talent:', talentId);
     const token = await getAuthToken();
-    const formData = new FormData();
-    formData.append('file', file);
-    formData.append('talentId', talentId);
-    console.log('PDF FormData prepared, making request...');
 
-    const response = await fetch('/api/upload-pdf', {
+    // Step 1: Get pre-signed upload URL from server
+    console.log('Getting pre-signed upload URL...');
+    const urlResponse = await fetch('/api/get-upload-url', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
       },
-      body: formData,
+      body: JSON.stringify({
+        filename: file.name,
+        contentType: file.type,
+        talentId,
+        uploadType: 'pdf',
+      }),
     });
 
-    if (!response.ok) {
-      console.error('PDF upload failed with status:', response.status);
-      const error = await response.json();
-      console.error('PDF upload error response:', error);
-      throw new Error(error.error || 'Failed to upload PDF');
+    if (!urlResponse.ok) {
+      const error = await urlResponse.json();
+      console.error('Failed to get upload URL:', error);
+      throw new Error(error.error || 'Failed to get upload URL');
     }
 
-    const data = await response.json();
-    console.log('PDF uploaded successfully:', data.url);
-    return data.url;
+    const { uploadUrl, fileUrl } = await urlResponse.json();
+    console.log('Got pre-signed URL, uploading to S3...');
+
+    // Step 2: Upload directly to S3 using pre-signed URL
+    const uploadResponse = await fetch(uploadUrl, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': file.type,
+      },
+      body: file,
+    });
+
+    if (!uploadResponse.ok) {
+      console.error('S3 upload failed with status:', uploadResponse.status);
+      throw new Error(`Failed to upload PDF to S3: ${uploadResponse.statusText}`);
+    }
+
+    console.log('PDF uploaded successfully:', fileUrl);
+    // Step 3: Return the public file URL
+    return fileUrl;
   } catch (error) {
     console.error('Error uploading PDF:', error);
     throw error;

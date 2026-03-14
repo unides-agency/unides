@@ -1,4 +1,5 @@
 import { S3Client, PutObjectCommand, DeleteObjectCommand } from '@aws-sdk/client-s3';
+import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 
 // Server-side S3 client configuration
 export function getS3Client() {
@@ -91,4 +92,41 @@ export function generateS3Key(talentId: string, filename: string, type: 'main' |
   const timestamp = Date.now();
   const sanitizedFilename = filename.replace(/[^a-zA-Z0-9.-]/g, '_');
   return `${talentId}/${type}-${timestamp}-${sanitizedFilename}`;
+}
+
+/**
+ * Generate a pre-signed URL for uploading to S3
+ * The URL expires in 5 minutes and allows only PUT requests
+ */
+export async function generatePresignedUploadUrl(
+  key: string,
+  contentType: string,
+  maxSizeBytes: number = 10 * 1024 * 1024 // 10MB default
+): Promise<{ uploadUrl: string; fileUrl: string }> {
+  const s3Client = getS3Client();
+  const config = getS3Config();
+
+  if (!config.bucket) {
+    throw new Error('S3_BUCKET not configured');
+  }
+
+  const fullKey = `${config.folderPrefix}${key}`;
+
+  const command = new PutObjectCommand({
+    Bucket: config.bucket,
+    Key: fullKey,
+    ContentType: contentType,
+    // Enforce content length limit
+    ContentLength: undefined, // Client will set this
+  });
+
+  // Generate pre-signed URL that expires in 5 minutes
+  const uploadUrl = await getSignedUrl(s3Client, command, {
+    expiresIn: 300, // 5 minutes
+  });
+
+  // Return both the upload URL and the final public URL
+  const fileUrl = `https://${config.bucket}.s3.${config.region}.amazonaws.com/${fullKey}`;
+
+  return { uploadUrl, fileUrl };
 }

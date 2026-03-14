@@ -8,8 +8,7 @@ export default defineConfig({
   // The base URL of your site (currently points to a Netlify demo)
   site: "https://unides.agency",
 
-  // Use server mode with adapter for admin routes
-  // Pages with "export const prerender = false" will be server-rendered
+  // Use server mode for API routes, pages can opt-in to prerender
   output: "server",
   adapter: node({
     mode: "standalone"
