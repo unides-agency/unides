@@ -52,3 +52,7 @@ pids
 # Temporary folders
 tmp/
 temp/.env.backup
+
+# Firebase Service Account Keys (NEVER COMMIT THESE!)
+serviceAccountKey.json
+*-firebase-adminsdk-*.json
