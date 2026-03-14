@@ -1,0 +1,446 @@
+---
+export const prerender = false;
+import Layout from '../../../layouts/Layout.astro';
+---
+
+<Layout title="New Talent - Admin">
+  <div id="auth-check" class="hidden">
+    <div class="min-h-screen bg-gray-100">
+      <nav class="bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="flex justify-between h-16">
+            <div class="flex items-center">
+              <a href="/admin" class="text-xl font-bold">← Back to Dashboard</a>
+            </div>
+            <div class="flex items-center">
+              <button
+                id="logout-btn"
+                class="ml-4 px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-900"
+              >
+                Logout
+              </button>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <main class="max-w-4xl mx-auto py-6 sm:px-6 lg:px-8">
+        <div class="px-4 py-6 sm:px-0">
+          <h2 class="text-2xl font-semibold text-gray-900 mb-6">Create New Talent</h2>
+
+          <form id="talent-form" class="space-y-6 bg-white shadow px-4 py-5 sm:rounded-lg sm:p-6">
+            <div class="grid grid-cols-1 gap-6">
+              <!-- Name -->
+              <div>
+                <label for="name" class="block text-sm font-medium text-gray-700">Name *</label>
+                <input
+                  type="text"
+                  name="name"
+                  id="name"
+                  required
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                />
+              </div>
+
+              <!-- Specialty -->
+              <div>
+                <label for="specialty" class="block text-sm font-medium text-gray-700">Specialty *</label>
+                <input
+                  type="text"
+                  name="specialty"
+                  id="specialty"
+                  required
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  placeholder="e.g., Model, Actor, Dancer"
+                />
+              </div>
+
+              <!-- Description -->
+              <div>
+                <label for="description" class="block text-sm font-medium text-gray-700">Description *</label>
+                <textarea
+                  name="description"
+                  id="description"
+                  rows="4"
+                  required
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                ></textarea>
+              </div>
+
+              <!-- Main Image -->
+              <div>
+                <label for="image" class="block text-sm font-medium text-gray-700">Main Image</label>
+                <input
+                  type="file"
+                  name="image"
+                  id="image"
+                  accept="image/*"
+                  class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100"
+                />
+              </div>
+
+              <!-- Gallery Images -->
+              <div>
+                <label for="gallery" class="block text-sm font-medium text-gray-700">Gallery Images</label>
+                <input
+                  type="file"
+                  name="gallery"
+                  id="gallery"
+                  accept="image/*"
+                  multiple
+                  class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100"
+                />
+              </div>
+
+              <!-- PDF -->
+              <div>
+                <label for="pdf" class="block text-sm font-medium text-gray-700">Sedcard PDF</label>
+                <input
+                  type="file"
+                  name="pdf"
+                  id="pdf"
+                  accept="application/pdf"
+                  class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100"
+                />
+              </div>
+
+              <div class="grid grid-cols-2 gap-4">
+                <!-- Location -->
+                <div>
+                  <label for="location" class="block text-sm font-medium text-gray-700">Location</label>
+                  <input
+                    type="text"
+                    name="location"
+                    id="location"
+                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  />
+                </div>
+
+                <!-- City -->
+                <div>
+                  <label for="city" class="block text-sm font-medium text-gray-700">City</label>
+                  <input
+                    type="text"
+                    name="city"
+                    id="city"
+                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  />
+                </div>
+              </div>
+
+              <div class="grid grid-cols-2 gap-4">
+                <!-- Age -->
+                <div>
+                  <label for="age" class="block text-sm font-medium text-gray-700">Age</label>
+                  <input
+                    type="text"
+                    name="age"
+                    id="age"
+                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  />
+                </div>
+
+                <!-- Birth -->
+                <div>
+                  <label for="birth" class="block text-sm font-medium text-gray-700">Birth Date</label>
+                  <input
+                    type="text"
+                    name="birth"
+                    id="birth"
+                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  />
+                </div>
+              </div>
+
+              <div class="grid grid-cols-3 gap-4">
+                <!-- Height -->
+                <div>
+                  <label for="height" class="block text-sm font-medium text-gray-700">Height</label>
+                  <input
+                    type="text"
+                    name="height"
+                    id="height"
+                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  />
+                </div>
+
+                <!-- Eye Color -->
+                <div>
+                  <label for="eyeColor" class="block text-sm font-medium text-gray-700">Eye Color</label>
+                  <input
+                    type="text"
+                    name="eyeColor"
+                    id="eyeColor"
+                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  />
+                </div>
+
+                <!-- Hair Color -->
+                <div>
+                  <label for="hairColor" class="block text-sm font-medium text-gray-700">Hair Color</label>
+                  <input
+                    type="text"
+                    name="hairColor"
+                    id="hairColor"
+                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  />
+                </div>
+              </div>
+
+              <div class="grid grid-cols-3 gap-4">
+                <!-- Shoe Size -->
+                <div>
+                  <label for="shoeSize" class="block text-sm font-medium text-gray-700">Shoe Size</label>
+                  <input
+                    type="text"
+                    name="shoeSize"
+                    id="shoeSize"
+                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  />
+                </div>
+
+                <!-- Dress Size -->
+                <div>
+                  <label for="dressSize" class="block text-sm font-medium text-gray-700">Dress Size</label>
+                  <input
+                    type="text"
+                    name="dressSize"
+                    id="dressSize"
+                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  />
+                </div>
+
+                <!-- Pronouns -->
+                <div>
+                  <label for="pronouns" class="block text-sm font-medium text-gray-700">Pronouns</label>
+                  <input
+                    type="text"
+                    name="pronouns"
+                    id="pronouns"
+                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    placeholder="e.g., he/him, she/her, they/them"
+                  />
+                </div>
+              </div>
+
+              <!-- Special Features (comma-separated) -->
+              <div>
+                <label for="specialFeatures" class="block text-sm font-medium text-gray-700">Special Features</label>
+                <input
+                  type="text"
+                  name="specialFeatures"
+                  id="specialFeatures"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  placeholder="Comma-separated, e.g., Tattoos, Piercings"
+                />
+              </div>
+
+              <!-- Portfolio URL -->
+              <div>
+                <label for="portfolioUrl" class="block text-sm font-medium text-gray-700">Portfolio URL</label>
+                <input
+                  type="url"
+                  name="portfolioUrl"
+                  id="portfolioUrl"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                />
+              </div>
+
+              <!-- Enabled -->
+              <div class="flex items-start">
+                <div class="flex items-center h-5">
+                  <input
+                    id="enabled"
+                    name="enabled"
+                    type="checkbox"
+                    checked
+                    class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
+                  />
+                </div>
+                <div class="ml-3 text-sm">
+                  <label for="enabled" class="font-medium text-gray-700">Enabled</label>
+                  <p class="text-gray-500">Show this talent on the public website</p>
+                </div>
+              </div>
+            </div>
+
+            <div id="error-message" class="hidden text-red-600 text-sm"></div>
+            <div id="progress-message" class="hidden text-indigo-600 text-sm"></div>
+
+            <div class="flex justify-end space-x-3">
+              <a
+                href="/admin"
+                class="inline-flex justify-center py-2 px-4 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
+              >
+                Cancel
+              </a>
+              <button
+                type="submit"
+                id="submit-btn"
+                class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
+              >
+                Create Talent
+              </button>
+            </div>
+          </form>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <div id="loading-auth" class="min-h-screen flex items-center justify-center">
+    <p class="text-gray-500">Checking authentication...</p>
+  </div>
+</Layout>
+
+<script>
+  import { getCurrentUser, logOut } from '../../../lib/auth';
+  import { createTalent, uploadTalentImage, uploadTalentPdf } from '../../../lib/admin-talents';
+
+  async function checkAuth() {
+    const user = await getCurrentUser();
+
+    if (!user) {
+      window.location.href = '/admin/login';
+      return;
+    }
+
+    document.getElementById('loading-auth')?.classList.add('hidden');
+    document.getElementById('auth-check')?.classList.remove('hidden');
+  }
+
+  document.getElementById('logout-btn')?.addEventListener('click', async () => {
+    try {
+      await logOut();
+      window.location.href = '/admin/login';
+    } catch (error) {
+      console.error('Error logging out:', error);
+    }
+  });
+
+  const form = document.getElementById('talent-form') as HTMLFormElement;
+  const errorMessage = document.getElementById('error-message') as HTMLDivElement;
+  const progressMessage = document.getElementById('progress-message') as HTMLDivElement;
+  const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement;
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(form);
+    errorMessage.classList.add('hidden');
+    progressMessage.classList.remove('hidden');
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Creating...';
+
+    try {
+      // Check auth state before creating
+      const currentUser = await getCurrentUser();
+      console.log('Current user before create:', currentUser);
+
+      if (!currentUser) {
+        throw new Error('Not authenticated. Please log in again.');
+      }
+
+      progressMessage.textContent = 'Creating talent...';
+
+      const talentData: any = {
+        name: formData.get('name') as string,
+        specialty: formData.get('specialty') as string,
+        description: formData.get('description') as string,
+        enabled: formData.get('enabled') === 'on',
+      };
+
+      // Only add optional fields if they have values
+      const location = formData.get('location') as string;
+      if (location) talentData.location = location;
+
+      const city = formData.get('city') as string;
+      if (city) talentData.city = city;
+
+      const age = formData.get('age') as string;
+      if (age) talentData.age = age;
+
+      const birth = formData.get('birth') as string;
+      if (birth) talentData.birth = birth;
+
+      const height = formData.get('height') as string;
+      if (height) talentData.height = height;
+
+      const eyeColor = formData.get('eyeColor') as string;
+      if (eyeColor) talentData.eyeColor = eyeColor;
+
+      const hairColor = formData.get('hairColor') as string;
+      if (hairColor) talentData.hairColor = hairColor;
+
+      const shoeSize = formData.get('shoeSize') as string;
+      if (shoeSize) talentData.shoeSize = shoeSize;
+
+      const dressSize = formData.get('dressSize') as string;
+      if (dressSize) talentData.dressSize = dressSize;
+
+      const pronouns = formData.get('pronouns') as string;
+      if (pronouns) talentData.pronouns = pronouns;
+
+      const portfolioUrl = formData.get('portfolioUrl') as string;
+      if (portfolioUrl) talentData.portfolioUrl = portfolioUrl;
+
+      // Parse special features array - save to specialties field
+      const specialFeaturesStr = formData.get('specialFeatures') as string;
+      if (specialFeaturesStr) {
+        talentData.specialties = specialFeaturesStr.split(',').map((s) => s.trim()).filter(Boolean);
+      }
+
+      const talentId = await createTalent(talentData);
+      progressMessage.textContent = `Talent created with ID: ${talentId}`;
+
+      // Upload main image
+      const imageFile = (document.getElementById('image') as HTMLInputElement).files?.[0];
+      if (imageFile) {
+        progressMessage.textContent = 'Uploading main image...';
+        const imageUrl = await uploadTalentImage(imageFile, talentId, 'main');
+        await import('../../../lib/admin-talents').then(({ updateTalent }) =>
+          updateTalent(talentId, { image: imageUrl })
+        );
+      }
+
+      // Upload gallery images
+      const galleryFiles = (document.getElementById('gallery') as HTMLInputElement).files;
+      if (galleryFiles && galleryFiles.length > 0) {
+        progressMessage.textContent = 'Uploading gallery images...';
+        const galleryUrls: string[] = [];
+        for (let i = 0; i < galleryFiles.length; i++) {
+          const url = await uploadTalentImage(galleryFiles[i], talentId, 'gallery');
+          galleryUrls.push(url);
+        }
+        await import('../../../lib/admin-talents').then(({ updateTalent }) =>
+          updateTalent(talentId, { imgs: galleryUrls })
+        );
+      }
+
+      // Upload PDF
+      const pdfFile = (document.getElementById('pdf') as HTMLInputElement).files?.[0];
+      if (pdfFile) {
+        progressMessage.textContent = 'Uploading PDF...';
+        const pdfUrl = await uploadTalentPdf(pdfFile, talentId);
+        await import('../../../lib/admin-talents').then(({ updateTalent }) =>
+          updateTalent(talentId, { pdfUrl })
+        );
+      }
+
+      progressMessage.textContent = 'Success! Redirecting...';
+      setTimeout(() => {
+        window.location.href = '/admin';
+      }, 1000);
+    } catch (error: any) {
+      console.error('Error creating talent:', error);
+      errorMessage.textContent = error.message || 'Failed to create talent';
+      errorMessage.classList.remove('hidden');
+      progressMessage.classList.add('hidden');
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Create Talent';
+    }
+  });
+
+  checkAuth();
+</script>
+</Layout>
