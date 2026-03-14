@@ -51,4 +51,4 @@ pids
 
 # Temporary folders
 tmp/
-temp/
+temp/.env.backup
